@@ -1,99 +1,26 @@
 <script setup>
 import {RouterView} from 'vue-router'
 import Navbar from "@/components/Navbar.vue";
-import {ref} from "vue";
-
-const links = ref([
-  'Dashboard',
-  'Messages',
-  'Profile',
-  'Updates',
-]);
 </script>
 
 <template>
   <v-app id="inspire">
-    <v-app-bar
-        class="px-3"
-        density="compact"
-        flat
-    >
-      <v-avatar
-          class="hidden-md-and-up"
-          color="grey-darken-1"
-          size="32"
-      ></v-avatar>
-
-      <v-spacer></v-spacer>
-
-      <v-tabs
-          align-tabs="center"
-          color="grey-darken-2"
-      >
-        <v-tab
-            v-for="link in links"
-            :key="link"
-            :text="link"
-        ></v-tab>
-      </v-tabs>
-      <v-spacer></v-spacer>
-
-      <v-avatar
-          class="hidden-sm-and-down"
-          color="grey-darken-1"
-          size="32"
-      ></v-avatar>
-    </v-app-bar>
-
-    <v-main class="bg-grey-lighten-3">
-      <v-container>
-        <v-row>
-          <v-col
-              cols="12"
-              md="2"
-          >
-            <v-sheet
-                min-height="268"
-                rounded="lg"
-            >
-              <!--  -->
-            </v-sheet>
-          </v-col>
-
-          <v-col
-              cols="12"
-              md="8"
-          >
-            <v-sheet
-                min-height="70vh"
-                rounded="lg"
-            >
-              <!--  -->
-            </v-sheet>
-          </v-col>
-
-          <v-col
-              cols="12"
-              md="2"
-          >
-            <v-sheet
-                min-height="268"
-                rounded="lg"
-            >
-              <!--  -->
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </v-container>
+    <Navbar />
+    <v-main>
+      <router-view />
     </v-main>
   </v-app>
-  <RouterView/>
-
 </template>
 
 <style scoped>
-#app {
-  width: 100% !important;
-  min-height: 100%;
+#inspire {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.v-main {
+  flex-grow: 1;
+  background-color: white;
 }
 </style>

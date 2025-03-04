@@ -1,6 +1,7 @@
 @import './base.css';
 
 #app {
+  font-family: 'Nunito';
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;

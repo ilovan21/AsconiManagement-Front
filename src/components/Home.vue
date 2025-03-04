@@ -8,7 +8,5 @@ Home
     Button
   </v-btn>
 </template>
-
 <style scoped>
-
 </style>
