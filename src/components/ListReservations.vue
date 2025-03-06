@@ -3,10 +3,9 @@
 </script>
 
 <template>
-Home
-  <v-btn prepend-icon="$vuetify">
-    Button
-  </v-btn>
+List of reservation
 </template>
+
 <style scoped>
+
 </style>

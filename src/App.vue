@@ -1,11 +1,11 @@
 <script setup>
 import {RouterView} from 'vue-router'
-import Navbar from "@/components/Navbar.vue";
+import ClientNavbar from "@/components/ClientNavbar.vue";
+import ClientFooter from "@/components/ClientFooter.vue"
 </script>
 
 <template>
   <v-app id="inspire">
-    <Navbar />
     <v-main>
       <router-view />
     </v-main>
