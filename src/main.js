@@ -3,6 +3,10 @@ import './assets/main.css'
 import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCircleChevronRight } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faCircleChevronRight)
 
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
