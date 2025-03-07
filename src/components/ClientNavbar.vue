@@ -12,16 +12,16 @@ const imageOptions = [
 const selectedImage = ref(romania);
 
 const links = ref([
-  'HOME',
-  'WINERY',
-  'GUESTHOUSE',
-  'RESTAURANTS&POOL',
-  'EXPERIENCES',
-  'EVENTS',
-  'GALLERY',
-  'CSR',
-  'WINES',
-  'CONTACT US'
+  { name: 'HOME', url: '/' },
+  { name: 'WINERY', url: '/' },
+  { name: 'GUESTHOUSE', url: '/' },
+  { name: 'RESTAURANTS & POOL', url: '/restaurant' },
+  { name: 'EXPERIENCES', url: '/experiences' },
+  { name: 'EVENTS', url: '/' },
+  { name: 'GALLERY', url: '/' },
+  { name: 'CSR', url: '/' },
+  { name: 'WINES', url: '/' },
+  { name: 'CONTACT US', url: '/' }
 ]);
 </script>
 
@@ -40,13 +40,15 @@ const links = ref([
 
     <v-tabs align-tabs="center" color="#b9523b">
       <v-tab
+          :ripple="false"
+          class="item-page"
           v-for="link in links"
-          :key="link"
-          :text="link"
-          font-sans="font-sans"
-      ></v-tab>
+          :key="link.name"
+          :to="link.url"
+      >
+      {{ link.name }}
+      </v-tab>
     </v-tabs>
-
     <v-spacer></v-spacer>
 
     <v-img
@@ -63,5 +65,15 @@ const links = ref([
   object-fit: contain;
   width: 100%;
   height: 100%;
+}
+.item-page {
+  text-transform: none;
+  font-weight: normal;
+}
+
+.item-page:hover {
+  text-decoration: none;
+  background: none;
+  font-weight: normal;
 }
 </style>

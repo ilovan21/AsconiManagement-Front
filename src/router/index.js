@@ -16,6 +16,7 @@ const routes = [
     { path: "/auth", name: "auth", component: AuthPage },
     { path: "/experiences", name: "Experiences", component: ExperiencePage },
     { path: "/restaurant", name: "Restaurant", component: RestaurantPage },
+    { path: "/wines", name: "Wines", component: HomePage },
     { path: "/hall", name: "Halls", component: HallsPage },
     {
         path: "/reservation/:id",
@@ -46,14 +47,12 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
-});
-
-router.beforeEach((to, from, next) => {
-    const token = localStorage.getItem("token");
-    if (to.meta.requiresAuth && !token) {
-        next("/login");
-    } else {
-        next();
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition;
+        } else {
+            return { top: 0 };
+        }
     }
 });
 

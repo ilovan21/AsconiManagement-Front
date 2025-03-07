@@ -1,44 +1,23 @@
 <script setup>
 import { useRouter } from "vue-router";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-
-const router = useRouter();
-
 defineProps({
   title: { type: String, required: true },
   description: {type:String, required:false},
   list:{type:Array,required:true},
   additionalInfo: { type: String, default: '' },
   image: { type: String, required: true },
+  availability:{type:String,required:true},
+  contact:{type:String, default:'+373 (0)79988637'},
   buttonText: { type: String, default: 'Make a reservation' },
 });
 
-const reservationIds = {
-  "Casa cu Sobe": 1,
-  "Vinoteca": 2,
-  "Cerdac": 3,
-  "Casa de Vara": 4,
-  "Terrase Gaini": 5,
-  "Terrase Cuptor": 6,
-  "Terrase Bucatarie": 7,
-  "VIP": 8,
-  "Entree": 9,
-  "Salle Gauche": 10,
-  "Salle Droite":11,
-  "Terrase Sol Negru":12,
-  "Deuxieme Etage":13,
-  "Terrasse Sallcami":14
+const router = useRouter();
+
+const navigateToHall = (id) => {
+  router.push({ path: "/hall", hash: `#${id}` });
 };
 
-function redirectToReservation(section) {
-  const reservationId = reservationIds[section];
-
-  if (reservationId) {
-    router.push({ name: 'RestaurantReservationPage', params: { id: reservationId } });
-  } else {
-    console.warn("Service inconnu:", section);
-  }
-}
 </script>
 
 <template>
@@ -52,28 +31,38 @@ function redirectToReservation(section) {
           <v-list-item
               v-for="(button, index) in list"
               :key="index"
-              @click="button.action"
-              class=" list d-flex align-center"
+              @click="navigateToHall(button.id)"
+              :ripple="false"
+              class="hall d-flex align-center"
           >
             <template v-slot:prepend>
               <font-awesome-icon icon="circle-chevron-right" style="color: #000000; margin-right: 10px;" />
             </template>
             <v-list-item-content class="list-content">
-              <v-list-item-title>{{ button.text }}</v-list-item-title>
+              <v-list-item-title>{{ button.hall }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item class="additional-info">
+            <template v-slot:prepend>
+              <font-awesome-icon :icon="['fas', 'clock']" style="color: #000000; margin-right: 10px;" />
+            </template>
+            <v-list-item-content class="list-content">
+              <v-list-item-title>{{ availability }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item class="additional-info">
+            <template v-slot:prepend>
+              <font-awesome-icon :icon="['fas', 'phone']" style="color: #000000;margin-right: 10px;" />
+            </template>
+            <v-list-item-content class="list-content">
+              <v-list-item-title>{{ contact }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
         <v-btn
-            @click="redirectToReservation(title)"
             class="custom-button"
         >
           {{ "Menu And Wine List" }}
-        </v-btn>
-        <v-btn
-            @click="redirectToReservation(title)"
-            class="custom-button"
-        >
-          {{ buttonText }}
         </v-btn>
       </v-col>
       <v-col>
@@ -94,7 +83,7 @@ function redirectToReservation(section) {
   font-size: 50px;
   font-weight: 200;
   color: #000000;
-  padding: 0px 0px 10px;
+  padding: 10px;
 }
 
 .text.service-name {
@@ -118,7 +107,6 @@ function redirectToReservation(section) {
   align-self: flex-start;
   border-width: 1px;
   border-color: #b9523b;
-  border-radius: 0px;
 }
 p {
   text-align: center;
@@ -136,8 +124,11 @@ p {
   margin-left: 30px;
   margin-right: 10px;
 }
-.list{
-  margin-left: 10px;
+.additional-info{
+  margin-top: 10px;
 }
-
+.hall:hover {
+  background: none;
+  font-weight: normal;
+}
 </style>

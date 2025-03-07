@@ -1,12 +1,31 @@
 <script setup>
 import restaurant from "@/assets/restaurant.jpg"
-import element from "@/assets/traditional-element.png"
 import ImageComponent from "@/components/ImageComponent.vue";
 import ClientNavbar from "@/components/ClientNavbar.vue";
 import ClientFooter from "@/components/ClientFooter.vue";
 import HallCard from "@/components/HallCard.vue";
 import TraditionalElement from "@/components/TraditionalElement.vue";
+import {onMounted, watch} from "vue";
+import {useRoute} from "vue-router";
 
+const route = useRoute();
+
+const scrollToHash = () => {
+  if (route.hash) {
+    const element = document.querySelector(route.hash);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+};
+
+onMounted(() => {
+  scrollToHash();
+});
+
+watch(() => route.hash, () => {
+  scrollToHash();
+});
 </script>
 
 <template>
@@ -38,11 +57,7 @@ import TraditionalElement from "@/components/TraditionalElement.vue";
       ]"
       image="src/assets/casacusobe.jpg"
   />
-  <v-img
-      class="mx-0 align-center mt-1"
-      :src="element"
-      contain
-  ></v-img>
+  <TraditionalElement/>
   <HallCard
       id="3"
       title="Cerdac"
