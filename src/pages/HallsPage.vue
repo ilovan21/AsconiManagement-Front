@@ -7,8 +7,9 @@ import HallCard from "@/components/HallCard.vue";
 import TraditionalElement from "@/components/TraditionalElement.vue";
 import {onMounted, watch} from "vue";
 import {useRoute} from "vue-router";
-
 const route = useRoute();
+
+import { ref } from 'vue'
 
 const scrollToHash = () => {
   if (route.hash) {
@@ -37,26 +38,28 @@ watch(() => route.hash, () => {
       id="22"
       title="ASCONI Restaurant"
       :list="[
-          {text:'Casa cu Sobe',action: () => console.log('Casa cu Sobe')},
-          {text:'Cerdac',action: () => console.log('Cerdac')},
-          {text:'Vinoteca',action: () => console.log('Vinoteca')},
-          {text:'Casa de Vară', action:()=> console.log('Casa de Vară')},
-          {text:'Terasa de la Cuptor',action: () => console.log('Terasa Bucatarie')},
-          {text:'Terasa de la Găini',action: () => console.log('Terasa Cuptor')}
+          {text:'Casa cu Sobe'},
+          {text:'Cerdac'},
+          {text:'Vinoteca'},
+          {text:'Casa de Vară'},
+          {text:'Terasa de la Cuptor'},
+          {text:'Terasa de la Găini'}
       ]"
       image="src/assets/asconirest.jpg"
       button-text="Menu and Wine List"
   />
   <TraditionalElement/>
-  <HallCard
-      id="1"
-      title="Casa cu Sobe"
-     :list="[
+  <section ref="casacusobe">
+    <HallCard
+        id="1"
+        title="Casa cu Sobe"
+        :list="[
           {text:'Capacity: 72 pax'},
           {text:'Style: traditional, rustic'}
       ]"
-      image="src/assets/casacusobe.jpg"
-  />
+        image="src/assets/casacusobe.jpg"
+    />
+  </section>
   <TraditionalElement/>
   <HallCard
       id="3"
@@ -117,12 +120,12 @@ watch(() => route.hash, () => {
       id="20"
       title="SOL NEGRU Restaurant"
       :list="[
-          {text:'Casa cu Sobe',action: () => console.log('Casa cu Sobe')},
-          {text:'Cerdac',action: () => console.log('Cerdac')},
-          {text:'Vinoteca',action: () => console.log('Vinoteca')},
-          {text:'VIP',action: () => console.log('VIP')},
-          {text:'Terasa Bucatarie',action: () => console.log('Terasa Bucatarie')},
-          {text:'Terasa Cuptor',action: () => console.log('Terasa Cuptor')}
+          {text:'Casa cu Sobe'},
+          {text:'Cerdac'},
+          {text:'Vinoteca'},
+          {text:'VIP'},
+          {text:'Terasa Bucatarie'},
+          {text:'Terasa Cuptor'}
       ]"
       image="src/assets/solnegru2.jpg"
       button-text="Menu and Wine List"
@@ -181,6 +184,7 @@ watch(() => route.hash, () => {
       image="src/assets/terrace.jpeg"
   />
   <TraditionalElement/>
+
   <HallCard
       id="14"
       title="Terasa de la Salcâmi (Acacia Terrace)"
