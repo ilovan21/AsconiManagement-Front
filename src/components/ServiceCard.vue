@@ -12,8 +12,10 @@ defineProps({
   image: { type: String, required: true },
 });
 
-function redirectToReservation(serviceId) {
-  router.push({ name: 'ServiceReservationPage', params: { id: serviceId } });
+function redirectToReservation(serviceId,serviceTitle) {
+  router.push({ name: 'ServiceReservationPage',
+    params: { id: serviceId },
+    query: { title: serviceTitle } });
 }
 </script>
 
@@ -25,7 +27,7 @@ function redirectToReservation(serviceId) {
         <p class="about-text">{{ description }}</p>
         <p class="about-text" v-if="additionalInfo">{{ additionalInfo }}</p>
         <v-btn
-            @click="redirectToReservation(id)"
+            @click="redirectToReservation(id, title)"
             class="custom-button"
         >
           {{ buttonText }}
@@ -51,7 +53,7 @@ function redirectToReservation(serviceId) {
   font-size: 50px;
   font-weight: 200;
   color: #000000;
-  padding: 0px 0px 10px;
+  padding: 10px;
 }
 
 .text.service-name {
