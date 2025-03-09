@@ -40,7 +40,7 @@ const checkAvailability = async () => {
       date: serviceAvailabilityData.value.date,
       hour: serviceAvailabilityData.value.hour
     };
-
+    console.log(requestAvailability);
     const response = await axios.post("http://localhost:8080/api/service/public/check-availability", requestAvailability, {
       headers: { "Content-Type": "application/json" }
     });

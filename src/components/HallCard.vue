@@ -14,8 +14,10 @@ defineProps({
   buttonText: { type: String, default: 'Make A Reservation' },
 });
 
-function redirectToReservation(hallId) {
-    router.push({ name: 'RestaurantReservationPage', params: { id: hallId } });
+function redirectToReservation(hallId,hallName) {
+  router.push({ name: 'RestaurantReservationPage',
+    params: { id: hallId },
+    query: { title: hallName } });
 }
 </script>
 
@@ -40,7 +42,7 @@ function redirectToReservation(hallId) {
           </v-list-item>
         </v-list>
         <v-btn
-            @click="redirectToReservation(id)"
+            @click="redirectToReservation(id,title)"
             class="custom-button"
         >
           {{ buttonText }}
