@@ -17,6 +17,11 @@ const rules = computed(() => ({
   email: { required, email },
   phone: { required, minLength: minLength(10) },
 }));
+const checkAvailabilityRules = computed(() => ({
+  date: { required },
+  hour: { required },
+  nrPeople:{required}
+}));
 
 function formatForRequest(date) {
   if (date) {
@@ -80,6 +85,7 @@ const restaurantReservationData = ref({
 });
 
 const v$ = useVuelidate(rules, restaurantReservationData);
+const c$=useVuelidate(checkAvailabilityRules,restaurantAvailabilityData);
 
 const availability = ref(null);
 const availabilityMessage = ref("");
@@ -97,13 +103,27 @@ watch(restaurantAvailabilityData, (newData) => {
   leavingTime.value = newData.leavingTime;
   nrPeople.value = newData.nrPeople;
 });
-
+const errorMessage=ref(null);
 watch(restaurantAvailabilityData, () => {
   availability.value = null;
   reservationMessage.value = "";
 }, { deep: true });
-
+watch(() => restaurantAvailabilityData.value.nrPeople, (newValue) => {
+    const maxPeople = 20;
+  if (newValue > maxPeople) {
+    errorMessage.value = `Le nombre maximum autorisé est ${maxPeople}`;
+  } else if (newValue < 1) {
+    errorMessage.value = "Veuillez saisir au moins une personne.";
+  } else {
+    errorMessage.value = "";
+  }
+});
 const checkAvailability = async () => {
+  const isValid = await c$.value.$validate();
+  if (!isValid) {
+    console.error("Validation failed!");
+    return;
+  }
   availabilityErrorMessage.value = "";
   try {
     const requestAvailability = {
@@ -194,23 +214,28 @@ const reserveTable = async () => {
                     variant="outlined"
                     v-model="restaurantAvailabilityData.date"
                     :min="minDate"
-                :allowed-dates="isAllowedDate"></v-date-input>
+                :allowed-dates="isAllowedDate"
+                    :error-messages="c$.date.$errors.map(e => e.$message)"></v-date-input>
               <p class="form-text">Select the arriving hour</p>
               <v-text-field
                   v-model="restaurantAvailabilityData.arrivingTime"
                   variant="outlined"
-                  required></v-text-field>
+                  required
+                  :error-messages="c$.hour.$errors.map(e => e.$message)"></v-text-field>
               <p class="form-text">Select the leaving hour</p>
               <v-text-field
                   v-model="restaurantAvailabilityData.leavingTime"
                   variant="outlined"
-                  required></v-text-field>
+                  required
+                  :error-messages="c$.hour.$errors.map(e => e.$message)"></v-text-field>
               <p class="form-text">Select the number of people</p>
               <v-text-field
                   v-model="restaurantAvailabilityData.nrPeople"
                   variant="outlined"
                   required
-                  type="number"></v-text-field>
+                  :min="0"
+                  type="number"
+                  :error-messages="errorMessage"></v-text-field>
               <v-btn class="custom-button" @click="checkAvailability">Check Availability</v-btn>
               <p v-if="availabilityErrorMessage" class="message">{{ availabilityErrorMessage }}</p>
             </v-form>
