@@ -2,14 +2,15 @@
 import { useRoute } from 'vue-router';
 import ClientNavbar from "@/components/ClientNavbar.vue";
 import ClientFooter from "@/components/ClientFooter.vue";
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import axios from "axios";
 import experiences from "@/assets/experiences.jpg";
 import ImageComponent from "@/components/ImageComponent.vue";
 import image from "@/assets/baking.jpg";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
-
+import { watch } from "vue";
+import { VDateInput } from 'vuetify/labs/VDateInput';
 
 const rules = computed(() => ({
   nameSurname: { required },
@@ -17,15 +18,56 @@ const rules = computed(() => ({
   phone: { required, minLength: minLength(10) },
 }));
 
-
+function formatForRequest(date) {
+  if (date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  return '';
+}
 const route = useRoute();
 const hallId = route.params.id;
 const hallName = route.query.title;
 const isBookingInProgress = ref(false);
 
+const currentDate = new Date();
+const minDate = currentDate.toISOString().split('T')[0];
+const disabledDates = ref([]);
+
+onMounted(() => {
+  getUnavailableDates(hallId);
+});
+const getUnavailableDates = async (hallId) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/api/unavailable-dates/hall?hallId=${hallId}`);
+    if (Array.isArray(response.data)) {
+      disabledDates.value = response.data.map(date => {
+        const dateObj = new Date(date);
+        return dateObj.toISOString().split('T')[0];
+      });
+      console.log("dates", disabledDates);
+    } else {
+      console.error('Invalid data format:', response.data);
+    }
+  } catch (error) {
+    console.error('Error fetching disabled dates:', error);
+  }
+};
+
+const isAllowedDate = (dateToCheck) => {
+  const date = new Date(dateToCheck);
+  const localDate = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+  const formattedDate = localDate.toISOString().split('T')[0];
+  const uniqueDisabledDates = [...new Set(disabledDates.value)];
+
+  return !uniqueDisabledDates.includes(formattedDate);
+};
+
 const restaurantAvailabilityData = ref({
   nrPeople: "",
-  date: "",
+  date: null,
   arrivingTime: "",
   leavingTime:""
 });
@@ -49,34 +91,48 @@ const leavingTime=ref("");
 const nrPeople = ref("");
 const tableId=ref(null);
 
+watch(restaurantAvailabilityData, (newData) => {
+  date.value = newData.date;
+  arrivingTime.value = newData.arrivingTime;
+  leavingTime.value = newData.leavingTime;
+  nrPeople.value = newData.nrPeople;
+});
+
+watch(restaurantAvailabilityData, () => {
+  availability.value = null;
+  reservationMessage.value = "";
+}, { deep: true });
+
 const checkAvailability = async () => {
+  availabilityErrorMessage.value = "";
   try {
     const requestAvailability = {
       nrPeople: restaurantAvailabilityData.value.nrPeople,
       hallId: hallId,
-      date: restaurantAvailabilityData.value.date,
+      date: formatForRequest(restaurantAvailabilityData.value.date),
       arrivingTime: restaurantAvailabilityData.value.arrivingTime,
-      leavingTime:restaurantAvailabilityData.value.leavingTime
+      leavingTime: restaurantAvailabilityData.value.leavingTime
     };
     console.log(requestAvailability);
     const response = await axios.post("http://localhost:8080/api/restaurant/public/check-availability", requestAvailability, {
       headers: { "Content-Type": "application/json" }
     });
-    availabilityMessage.value=response.data.message;
-    availability.value = response.data.available;
-    availabilityMessage.value = response.data.message;
-    date.value = response.data.date;
-    arrivingTime.value = response.data.arrivingTime;
-    leavingTime.value = response.data.leavingTime;
-    nrPeople.value = response.data.nrPeople;
-    tableId.value= response.data.tableId;
 
-  } catch (error) {
-    if (error.response && error.response.status === 409) {
-      availabilityErrorMessage.value= error.response.data.message;
+    if (response.data.available) {
+      availability.value = true;
+      availabilityMessage.value = response.data.message;
+      date.value = response.data.date;
+      arrivingTime.value = response.data.arrivingTime;
+      leavingTime.value = response.data.leavingTime;
+      nrPeople.value = response.data.nrPeople;
+      tableId.value = response.data.tableId;
     } else {
-      availabilityErrorMessage.value = 'Erreur.';
+      availability.value = false;
+      availabilityErrorMessage.value = "Aucune table n'est disponible pour les détails spécifiés.";
     }
+  } catch (error) {
+    availability.value = false;
+    availabilityErrorMessage.value = "Erreur";
   }
 };
 
@@ -112,7 +168,7 @@ const reserveTable = async () => {
   } catch (error) {
     console.error("Error while reserving:", error);
     if (error.response.status === 409) {
-      console.log("eroere 409");
+      console.log("eroare 409");
       reservationMessage.value = error.response.data;
     } else {
       reservationMessage.value = "Erreur. Essayer à nouveau.";
@@ -127,23 +183,36 @@ const reserveTable = async () => {
   <ClientNavbar />
   <ImageComponent :src="experiences" />
   <v-container class="mx-auto">
-    <v-row justify="center">
+    <v-row justify="center" align="start">
       <v-col cols="12" md="6">
         <v-card class="pa-5" elevation="0">
           <h1 class="text-title">Book a table in {{ hallName }}</h1>
           <v-card-text>
             <v-form>
-              <p class="form-text">Select the number of people</p>
-              <v-text-field v-model="restaurantAvailabilityData.nrPeople" variant="outlined" required></v-text-field>
               <p class="form-text">Select the date</p>
-              <v-text-field v-model="restaurantAvailabilityData.date" variant="outlined" required></v-text-field>
+                <v-date-input
+                    variant="outlined"
+                    v-model="restaurantAvailabilityData.date"
+                    :min="minDate"
+                :allowed-dates="isAllowedDate"></v-date-input>
               <p class="form-text">Select the arriving hour</p>
-              <v-text-field  v-model="restaurantAvailabilityData.arrivingTime" variant="outlined" required></v-text-field>
+              <v-text-field
+                  v-model="restaurantAvailabilityData.arrivingTime"
+                  variant="outlined"
+                  required></v-text-field>
               <p class="form-text">Select the leaving hour</p>
-              <v-text-field v-model="restaurantAvailabilityData.leavingTime" variant="outlined" required></v-text-field>
+              <v-text-field
+                  v-model="restaurantAvailabilityData.leavingTime"
+                  variant="outlined"
+                  required></v-text-field>
+              <p class="form-text">Select the number of people</p>
+              <v-text-field
+                  v-model="restaurantAvailabilityData.nrPeople"
+                  variant="outlined"
+                  required
+                  type="number"></v-text-field>
               <v-btn class="custom-button" @click="checkAvailability">Check Availability</v-btn>
               <p v-if="availabilityErrorMessage" class="message">{{ availabilityErrorMessage }}</p>
-
             </v-form>
           </v-card-text>
         </v-card>
@@ -153,8 +222,8 @@ const reserveTable = async () => {
             class="mt-3 align-center mt-1"
             :src="image"
             contain
-            width="500"
-            height="490"
+            width="450"
+            height="450"
         ></v-img>
       </v-col>
     </v-row>

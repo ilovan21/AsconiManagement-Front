@@ -18,21 +18,7 @@ import TraditionalElement from "@/components/TraditionalElement.vue";
   <p>From our passion for hospitality was born the idea to develop the tourist part of the winery.
     Our goal is to keep rural traditions intact, while maintaining the standards and new trends of wine tourism.</p>
 <TraditionalElement/>
-  <RestaurantCard
-      title="Asconi Restaurant"
-      description="With the aim of showcasing the most authentic Moldovan traditions, the winery’s first restaurant, ASCONI brings you the true heritage, tastes and aromas of Moldova. Together with our kitchen team, we have researched our families’ recipes and compiled our favorites, bringing you authentic tastes, cooked with fresh ingredients and sprinkled with love, just like Grandmother used to make it!"
-      additionalInfo="ASCONI restaurant covers a couple of halls and terraces:"
-      :list="[
-    {hall: 'Casa cu Sobe', id:'1'},
-    {hall: 'Cerdac', id:'3'},
-    {hall: 'Vinoteca', id:'2'},
-    {hall: 'Casa de Vară', id:'4'},
-    {hall: 'Terasa de la Cuptor', id:'5'},
-    {hall: 'Terasa de la Găini', id:'6'}
-  ]"
-      image="src/assets/vinoteca.jpg"
-      availability="Daily from 11:00 to 22:00"
-  />
+  74
   <TraditionalElement/>
   <RestaurantCard
       title="Sol Negru Restaurant"
