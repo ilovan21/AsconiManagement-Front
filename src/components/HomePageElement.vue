@@ -4,40 +4,27 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 defineProps({
-  id:{type:String,required :true},
   title: { type: String, required: true },
   description: { type: String, required: true },
   additionalInfo: { type: String, default: '' },
-  buttonText: { type: String, default: 'Make A Reservation' },
   image: { type: String, required: true },
 });
 
-function redirectToReservation(serviceId,serviceTitle,image) {
-  router.push({ name: 'ServiceReservationPage',
-    params: { id: serviceId },
-    query: { title: serviceTitle , imagePath: encodeURIComponent(image)} });
-}
 </script>
 
 <template>
   <v-container class="mx-auto">
     <v-row>
-      <v-col>
+      <v-col cols="6">
         <h2 class="text service-name">{{ title }}</h2>
         <p class="about-text">{{ description }}</p>
         <p class="about-text" v-if="additionalInfo">{{ additionalInfo }}</p>
-        <v-btn
-            @click="redirectToReservation(id, title, image)"
-            class="custom-button"
-        >
-          {{ buttonText }}
-        </v-btn>
       </v-col>
       <v-col>
         <v-img
             class="mt-3 align-center mt-1"
             :src="image"
-            contain
+            Cover
             width="500"
             height="490"
         ></v-img>

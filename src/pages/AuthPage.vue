@@ -8,6 +8,7 @@ import ClientNavbar from "@/components/ClientNavbar.vue";
 import ClientFooter from "@/components/ClientFooter.vue";
 
 const showPassword = ref(false);
+const nameSurname=ref("");
 
 const loginData = ref({
   email: "",
@@ -60,10 +61,19 @@ const login = async () => {
     localStorage.setItem("token", response.data.token);
     console.log("Login successful, redirecting...");
 
+    nameSurname.value=response.data.name;
+    console.log("email: ", response.data.email);
+
     await new Promise((resolve) => setTimeout(resolve, 100));
 
     if (response.data.role === "ROLE_ADMIN") {
-      router.push("/admin");
+      router.push({
+        path:'/admin',
+        query: {
+          nameSurname:nameSurname.value,
+          email:response.data.email
+        }
+      });
     } else if (response.data.role === "ROLE_HOSTESS") {
       router.push("/list");
     } else if (response.data.role === "ROLE_PERSONNEL") {

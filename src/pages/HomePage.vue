@@ -1,106 +1,45 @@
 <script setup>
-import { useRoute } from 'vue-router';
-import { computed, onMounted, ref } from 'vue';
-import axios from 'axios';
-import { VDateInput } from 'vuetify/labs/VDateInput';
-
-const route = useRoute();
-const reservationId = "1";
-const serviceTitle = route.query.title;
-const date = ref(null);
-const hour = ref(null);
-const nrPeople = ref(null);
-const errorMessage = ref("");
-const currentDate = new Date();
-const minDate = currentDate.toISOString().split('T')[0];
-const disabledDates = ref([]);
-
-onMounted(() => {
-  getUnavailableDates(reservationId);
-});
-const getUnavailableDates = async (reservationId) => {
-  try {
-    const response = await axios.get(`http://localhost:8080/api/unavailable-dates/service?serviceId=${reservationId}`);
-    if (Array.isArray(response.data)) {
-      disabledDates.value = [...response.data];
-    } else {
-      console.error('Invalid data format:', response.data);
-    }
-  } catch (error) {
-    console.error('Error fetching disabled dates:', error);
-  }
-};
-const isAllowedDate = (dateToCheck) => {
-  const formattedDate = dateToCheck.toISOString().split('T')[0];
-  const extractedDates = [...disabledDates.value];
-  console.log('Checking Date:', formattedDate);
-  console.log('Disabled Dates in Function:', extractedDates);
-
-  return !extractedDates.includes(formattedDate);
-};
-
-
+import ClientNavbar from "@/components/ClientNavbar.vue";
+import ClientFooter from "@/components/ClientFooter.vue";
+import ImageComponent from "@/components/ImageComponent.vue";
+import homeImage from "@/assets/asconi.jpg";
+import TraditionalElement from "@/components/TraditionalElement.vue";
+import ServiceCard from "@/components/ServiceCard.vue";
+import HomePageElement from "@/components/HomePageElement.vue";
 
 </script>
 
 <template>
-  <v-container class="mx-auto">
-    <v-row justify="center" align="start">
-      <v-col cols="12" md="6">
-        <v-card class="pa-5" elevation="0">
-          <h1 class="text-title">Book a place for {{ serviceTitle }}</h1>
-          <v-card-text>
-            <v-form>
-              <p class="form-text">Select the date</p>
-              <v-date-input
-                  variant="outlined"
-                  v-model="date"
-                  :min="minDate"
-                  :allowed-dates="isAllowedDate"
-              ></v-date-input>
-              <p class="form-text">Select the hour</p>
-              <v-text-field v-model="hour" variant="outlined" required></v-text-field>
-              <p class="form-text">Select the number of people</p>
-              <v-text-field
-                  v-model="nrPeople"
-                  variant="outlined"
-                  required
-                  :min="0"
-                  type="number"
-                  :error-messages="errorMessage"
-              ></v-text-field>
-              <v-btn class="custom-button">Check Availability</v-btn>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <ClientNavbar/>
+  <ImageComponent :src="homeImage" />
+  <TraditionalElement/>
+  <h2 class="text">Asconi Winery</h2>
+  <TraditionalElement/>
+  <HomePageElement
+               title="Asconi Winery"
+               image="src/assets/asconi-winery-home.png"
+               description="Wine, food, and hospitality runs through the veins of every Moldovan, however for us it has a separate place in our hearts. For us this is more than just a business, it’s the fruit of our passion and hard work. Every single bottle, dish and the entire atmosphere within, is created with love. We strive for the highest quality of wine, mouthwatering meals and warmest welcomes.
+As Vince Lombardi once said “Perfection is not attainable but if we chase perfection we can catch excellence!”">
+  </HomePageElement>
+  <TraditionalElement/>
+  <HomePageElement
+      title="The Production"
+      image="src/assets/tour.jpg"
+      description="Using the latest Italian technology, Asconi Winery has a production of over 3 million bottles per year, focusing mainly on white and red wines. The winery also produces roses, sparkling and dessert wines in more exclusive productions.
+Stainless steel tanks for both fermentation and storage that can hold up to 30,000, 60,000 and 150,000 liters each, juice concentrator*, a state-of-the-art bottling line with a speed of 8,000 bottles per hour – all these add to the quality of our wines."
+      additional-info="*A juice concentrator is used to produce concentrated juice from the grapes in order to produce semi dry, semi sweet and sweet wines."></HomePageElement>
+  <TraditionalElement/>
+  <h2 class="text"></h2>
+  <TraditionalElement/>
+  <ClientFooter/>
 </template>
-
 <style scoped>
-.text-title {
-  margin-left: 20px;
-  font-weight: 200;
-}
-.form-text {
-  margin-left: 2px;
-  margin-bottom: 10px;
-}
-.custom-button {
-  min-width: fit-content;
-  padding: 40px 30px;
-  color: #b9523b;
-  font-size: 17px;
+.text{
+  text-align: center;
   font-family: 'Nunito', Helvetica, Arial, Lucida, sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: flex-start;
-  border-width: 1px;
-  border-color: #b9523b;
-  border-radius: 0px;
+  font-size: 50px;
+  font-weight: 200;
+  color: #000000;
+  padding: 10px;
 }
 </style>

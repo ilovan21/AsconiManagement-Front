@@ -6,7 +6,7 @@ import {computed, onMounted, ref} from "vue";
 import axios from "axios";
 import experiences from "@/assets/experiences.jpg";
 import ImageComponent from "@/components/ImageComponent.vue";
-import image from "@/assets/baking.jpg";
+ import image from "@/assets/tasting.jpg";
 import { required, email, minLength } from "@vuelidate/validators";
 import { watch } from "vue";
 import { VDateInput } from 'vuetify/labs/VDateInput';
@@ -14,21 +14,24 @@ import useVuelidate from "@vuelidate/core";
 const route = useRoute();
 const reservationId = route.params.id;
 const serviceTitle = route.query.title;
+// const image = route.query.imagePath ? decodeURIComponent(route.query.imagePath) : "/assets/tasting.jpg";
 const currentDate = new Date();
 const minDate = currentDate.toISOString().split('T')[0];
 const disabledDates = ref([]);
+const serviceHours=ref([]);
 
 onMounted(() => {
   getUnavailableDates(reservationId);
+  getServiceHours(reservationId);
 });
+
 const getUnavailableDates = async (reservationId) => {
   try {
     const response = await axios.get(`http://localhost:8080/api/unavailable-dates/service?serviceId=${reservationId}`);
     if (Array.isArray(response.data)) {
-      // Ensure all dates are in YYYY-MM-DD format
       disabledDates.value = response.data.map(date => {
         const dateObj = new Date(date);
-        return dateObj.toISOString().split('T')[0]; // Standardize the format
+        return dateObj.toISOString().split('T')[0];
       });
       console.log("dates", disabledDates);
     } else {
@@ -48,7 +51,16 @@ const isAllowedDate = (dateToCheck) => {
   return !uniqueDisabledDates.includes(formattedDate);
 };
 
-
+const getServiceHours = async (reservationId) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/api/service/public/${reservationId}/get-hours`);
+    const hoursList=[...response.data];
+    serviceHours.value=hoursList.map(hour => hour.slice(0, -3));
+    console.log("res:",  serviceHours);
+  } catch (error) {
+    console.error('Error fetching hours:', error);
+  }
+};
 
 const rules = computed(() => ({
   nameSurname: { required },
@@ -223,11 +235,12 @@ const reserveService = async () => {
                   :allowed-dates="isAllowedDate"
                   :error-messages="c$.date.$errors.map(e => e.$message)"></v-date-input>
               <p class="form-text">Select the hour</p>
-              <v-text-field
+              <v-select
                   v-model="serviceAvailabilityData.hour"
+                  :items="serviceHours"
+                  :error-messages="c$.hour.$errors.map(e => e.$message)"
                   variant="outlined"
-                  required
-                  :error-messages="c$.hour.$errors.map(e => e.$message)"></v-text-field>
+              ></v-select>
               <p class="form-text">Select the number of people</p>
               <v-text-field
                   v-model="serviceAvailabilityData.nrPeople"
@@ -244,7 +257,7 @@ const reserveService = async () => {
       </v-col>
       <v-col>
         <v-img
-            class="mt-3 align-center mt-1"
+            class="image-service"
             :src="image"
             contain
             width="500"
@@ -300,6 +313,10 @@ const reserveService = async () => {
 </template>
 
 <style scoped>
+.image-service{
+  margin-left: 60px;
+  margin-top:25px;
+}
 .text-title{
   margin-left: 20px;
   font-weight: 200;

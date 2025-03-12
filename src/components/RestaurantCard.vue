@@ -29,8 +29,9 @@ const navigateToHall = (id) => {
         <p class="about-text" v-if="additionalInfo">{{ additionalInfo }}</p>
         <v-list>
           <v-list-item
-              v-for="(button, index) in list"
-              :key="index"
+              v-for="button in list"
+              :key="button.id"
+              :id="button.hash"
               @click="navigateToHall(button.id)"
               :ripple="false"
               class="hall d-flex align-center"

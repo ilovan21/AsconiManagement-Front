@@ -12,11 +12,7 @@ import TraditionalElement from "@/components/TraditionalElement.vue";
 <template>
   <ClientNavbar/>
   <ImageComponent :src="experiences" />
-  <v-img
-      class="mx-0 align-center"
-      :src="element"
-      contain
-  ></v-img>
+  <TraditionalElement/>
   <h2 class="text">Experiences &amp; Activities</h2>
   <p>From our passion for hospitality was born the idea to develop the tourist part of the winery.
     Our goal is to keep rural traditions intact, while maintaining the standards and new trends of wine tourism.</p>

@@ -9,6 +9,8 @@ import ServiceReservationPage from "@/pages/ServiceReservationPage.vue";
 import RestaurantPage from "@/pages/RestaurantPage.vue";
 import HallsPage from "@/pages/HallsPage.vue";
 import RestaurantReservationPage from "@/pages/RestaurantReservationPage.vue";
+import AdminListPage from "@/pages/AdminListPage.vue";
+import AdminManagementPage from "@/pages/AdminManagementPage.vue";
 
 const routes = [
     { path: "/", name: "home", component: HomePage },
@@ -32,7 +34,7 @@ const routes = [
     },
     {
         path: "/admin",
-        name: "admin",
+        name: "admin-overview",
         component: AdminPage,
         meta: { requiresAuth: true }
     },
@@ -40,6 +42,18 @@ const routes = [
         path: "/list",
         name: "ReservationList",
         component: ListReservations,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/admin-listing",
+        name: "BookingListingPage",
+        component: AdminListPage,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/admin-manage",
+        name: "Management",
+        component: AdminManagementPage,
         meta: { requiresAuth: true }
     }
 ];
@@ -51,7 +65,7 @@ const router = createRouter({
         if (savedPosition) {
             return savedPosition;
         } else {
-            return { top: 0 };
+            return {top: 0};
         }
     }
 });

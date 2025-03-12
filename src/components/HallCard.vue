@@ -1,23 +1,25 @@
 <script setup>
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const router = useRouter();
 
 defineProps({
-  id:{type:String,required :true},
-  title: { type: String, required: true },
-  description: {type:String, required:false},
-  list:{type:Array,required:true},
-  additionalInfo: { type: String, default: '' },
-  image: { type: String, required: true },
-  buttonText: { type: String, default: 'Make A Reservation' },
+  id: {type: String, required: true},
+  title: {type: String, required: true},
+  description: {type: String, required: false},
+  list: {type: Array, required: true},
+  additionalInfo: {type: String, default: ''},
+  image: {type: String, required: true},
+  buttonText: {type: String, default: 'Make A Reservation'},
 });
 
-function redirectToReservation(hallId,hallName) {
-  router.push({ name: 'RestaurantReservationPage',
-    params: { id: hallId },
-    query: { title: hallName } });
+function redirectToReservation(hallId, hallName) {
+  router.push({
+    name: 'RestaurantReservationPage',
+    params: {id: hallId},
+    query: {title: hallName}
+  });
 }
 </script>
 
@@ -34,7 +36,7 @@ function redirectToReservation(hallId,hallName) {
               class=" list d-flex align-center"
           >
             <template v-slot:prepend>
-              <font-awesome-icon icon="circle-chevron-right" style="color: #000000; margin-right: 10px;" />
+              <font-awesome-icon icon="circle-chevron-right" style="color: #000000; margin-right: 10px;"/>
             </template>
             <v-list-item-content class="list-content">
               <v-list-item-title>{{ button.text }}</v-list-item-title>
@@ -68,10 +70,12 @@ function redirectToReservation(hallId,hallName) {
   color: #000000;
   padding: 0px 0px 10px;
 }
+
 .text.service-name {
   margin-left: 20px;
   text-align: left;
 }
+
 .custom-button {
   margin-top: 20px;
   margin-left: 20px;
@@ -90,6 +94,7 @@ function redirectToReservation(hallId,hallName) {
   border-color: #b9523b;
   border-radius: 0px;
 }
+
 p {
   text-align: center;
   font-size: 17px;
@@ -100,13 +105,15 @@ p {
   margin-left: 300px;
   margin-right: 300px;
 }
+
 .about-text {
   margin-top: 30px;
   text-align: justify;
   margin-left: 30px;
   margin-right: 10px;
 }
-.list{
+
+.list {
   margin-left: 10px;
 }
 

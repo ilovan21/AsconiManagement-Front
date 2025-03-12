@@ -86,23 +86,23 @@ export default {
   data: () => ({
     links: [
       { name: 'HOME', url: '/' },
-      { name: 'THE WINERY', url: '/about-us' },
-      { name: 'GUEST HOUSE', url: '/team' },
+      { name: 'THE WINERY', url: '#' },
+      { name: 'GUEST HOUSE', url: '#' },
       { name: 'RESTAURANT', url: '/restaurant' },
       { name: 'EXPERIENCES', url: '/experiences' },
-      { name: 'EVENTS', url: '/contact' },
-      { name: 'GALLERY', url: '/contact' },
-      { name: 'CSR', url: '/contact' },
-      { name: 'WINES', url: '/contact' },
-      { name: 'CONTACT US', url: '/contact' }
+      { name: 'EVENTS', url: '#' },
+      { name: 'GALLERY', url: '#' },
+      { name: 'CSR', url: '#' },
+      { name: 'WINES', url: '#' },
+      { name: 'CONTACT US', url: '#' }
     ],
     links2: [
-      { name: 'PRIVACY POLICY', url: '/privacy-policy' },
-      { name: 'TERMS OF SERVICE', url: '/terms' },
-      { name: 'SHIPPING POLICY', url: '/faq' },
-      { name: 'TERMS AND CONDITIONS', url: '/faq' },
-      { name: 'SECURITY POLICY AND CARD PAYMENTS', url: '/faq' },
-      { name: 'FOOD SAFETY POLICY', url: '/faq' },
+      { name: 'PRIVACY POLICY', url: '#' },
+      { name: 'TERMS OF SERVICE', url: '#' },
+      { name: 'SHIPPING POLICY', url: '#' },
+      { name: 'TERMS AND CONDITIONS', url: '#' },
+      { name: 'SECURITY POLICY AND CARD PAYMENTS', url: '#' },
+      { name: 'FOOD SAFETY POLICY', url: '#' },
     ],
   }),
 }
