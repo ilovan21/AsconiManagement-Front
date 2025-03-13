@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
 import Reservation from "@/components/Reservation.vue";
 import AuthPage from "@/pages/AuthPage.vue";
-import AdminPage from "@/pages/AdminPage.vue";
+import AdminPage from "@/pages/AdminPages/AdminPage.vue";
 import ListReservations from "@/components/ListReservations.vue";
 import ExperiencePage from "@/pages/ExperiencePage.vue";
 import ServiceReservationPage from "@/pages/ServiceReservationPage.vue";
@@ -10,7 +10,11 @@ import RestaurantPage from "@/pages/RestaurantPage.vue";
 import HallsPage from "@/pages/HallsPage.vue";
 import RestaurantReservationPage from "@/pages/RestaurantReservationPage.vue";
 import AdminListPage from "@/pages/AdminListPage.vue";
-import AdminManagementPage from "@/pages/AdminManagementPage.vue";
+import RestaurantManagement from "@/pages/AdminPages/RestaurantManagement.vue";
+import RestaurantBookingListing from "@/pages/AdminPages/RestaurantBookingListing.vue";
+import TourismBookingListing from "@/pages/AdminPages/TourismBookingListing.vue";
+import TourismOverview from "@/pages/AdminPages/TourismOverview.vue";
+import TourismManagement from "@/pages/AdminPages/TourismManagement.vue";
 
 const routes = [
     { path: "/", name: "home", component: HomePage },
@@ -33,27 +37,38 @@ const routes = [
         props: true
     },
     {
-        path: "/admin",
-        name: "admin-overview",
+        path: "/overview/restaurant",
+        name: "AdminRestaurantOverview",
         component: AdminPage,
         meta: { requiresAuth: true }
     },
-    {
-        path: "/list",
-        name: "ReservationList",
-        component: ListReservations,
+    {   path: "/overview/tourism",
+        name: "TourismOverview",
+        component: TourismOverview,
         meta: { requiresAuth: true }
     },
     {
-        path: "/admin-listing",
-        name: "BookingListingPage",
-        component: AdminListPage,
+        path: "/management/restaurant",
+        name: "RestaurantManagement",
+        component: RestaurantManagement,
         meta: { requiresAuth: true }
     },
     {
-        path: "/admin-manage",
-        name: "Management",
-        component: AdminManagementPage,
+        path: "/management/tourism",
+        name: "TourismManagement",
+        component: TourismManagement,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/listing/tourism",
+        name: "TourismBookingListing",
+        component: TourismBookingListing,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: "/listing/restaurant",
+        name: "RestaurantBookingListing",
+        component: RestaurantBookingListing,
         meta: { requiresAuth: true }
     }
 ];

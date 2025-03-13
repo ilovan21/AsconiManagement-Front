@@ -14,7 +14,6 @@ import useVuelidate from "@vuelidate/core";
 const route = useRoute();
 const reservationId = route.params.id;
 const serviceTitle = route.query.title;
-// const image = route.query.imagePath ? decodeURIComponent(route.query.imagePath) : "/assets/tasting.jpg";
 const currentDate = new Date();
 const minDate = currentDate.toISOString().split('T')[0];
 const disabledDates = ref([]);
@@ -270,7 +269,7 @@ const reserveService = async () => {
   <v-row>
     <v-col cols="12" md="6">
       <div v-if="availability === true">
-        <p class="booking-details">Place booked on: {{ date }} at {{ hour }} for {{ nrPeople }} people.</p>
+        <p class="booking-details">Place booked on: {{ date }} at {{ hour.slice(0,-3) }} for {{ nrPeople }} people.</p>
         <v-card class="pa-5" elevation="0">
           <v-card-title class="text-h5">Booking Details</v-card-title>
           <v-card-text>

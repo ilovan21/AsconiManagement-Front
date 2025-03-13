@@ -19,7 +19,8 @@ const rules = computed(() => ({
 }));
 const checkAvailabilityRules = computed(() => ({
   date: { required },
-  hour: { required },
+  arrivingTime: { required },
+  leavingTime: { required },
   nrPeople:{required}
 }));
 
@@ -71,7 +72,7 @@ const isAllowedDate = (dateToCheck) => {
 };
 
 const restaurantAvailabilityData = ref({
-  nrPeople: "",
+  nrPeople: 1,
   date: null,
   arrivingTime: "",
   leavingTime:""
@@ -96,7 +97,6 @@ const arrivingTime = ref("");
 const leavingTime=ref("");
 const nrPeople = ref("");
 const tableId=ref(null);
-
 watch(restaurantAvailabilityData, (newData) => {
   date.value = newData.date;
   arrivingTime.value = newData.arrivingTime;
@@ -104,12 +104,13 @@ watch(restaurantAvailabilityData, (newData) => {
   nrPeople.value = newData.nrPeople;
 });
 const errorMessage=ref(null);
+
 watch(restaurantAvailabilityData, () => {
   availability.value = null;
   reservationMessage.value = "";
 }, { deep: true });
 watch(() => restaurantAvailabilityData.value.nrPeople, (newValue) => {
-    const maxPeople = 20;
+  const maxPeople = 20;
   if (newValue > maxPeople) {
     errorMessage.value = `Le nombre maximum autorisé est ${maxPeople}`;
   } else if (newValue < 1) {
@@ -155,7 +156,8 @@ const checkAvailability = async () => {
     availabilityErrorMessage.value = "Erreur";
   }
 };
-
+const successMessage=ref(null);
+const message=ref(null);
 const reserveTable = async () => {
   const isValid = await v$.value.$validate();
   if (!isValid) {
@@ -181,21 +183,28 @@ const reserveTable = async () => {
     const response = await axios.post("http://localhost:8080/api/restaurant/public/reserve", requestReservation, {
       headers: { "Content-Type": "application/json" }
     });
-    if (response.status === 200 || response.status === 201) {
-      console.log("Reservation successful:", response.data);
-      reservationMessage.value = "Table réservée avec succès!";
-    }
+    successMessage.value = "Réservation effectuée avec succès !";
+    message.value = true;
+
+    setTimeout(() => {
+      restaurantReservationData.value = {
+        nameSurname: "",
+        email: "",
+        phone: "",
+        specifications: ""
+      };
+      restaurantAvailabilityData.value = {
+        date: null,
+        arrivingTime: "",
+        leavingTime: "",
+        nrPeople: "1"
+      };
+    }, 3000);
+
   } catch (error) {
-    console.error("Error while reserving:", error);
-    if (error.response.status === 409) {
-      console.log("eroare 409");
-      reservationMessage.value = error.response.data;
-    } else {
-      reservationMessage.value = "Erreur. Essayer à nouveau.";
-    }
-  } finally {
-  isBookingInProgress.value = false;
-    }
+    console.error("error:", error);
+    errorMessage.value = "Une erreur s'est produite lors de la réservation.";
+  }
 };
 </script>
 
@@ -221,13 +230,13 @@ const reserveTable = async () => {
                   v-model="restaurantAvailabilityData.arrivingTime"
                   variant="outlined"
                   required
-                  :error-messages="c$.hour.$errors.map(e => e.$message)"></v-text-field>
+                  :error-messages="c$.arrivingTime.$errors.map(e => e.$message)"></v-text-field>
               <p class="form-text">Select the leaving hour</p>
               <v-text-field
                   v-model="restaurantAvailabilityData.leavingTime"
                   variant="outlined"
                   required
-                  :error-messages="c$.hour.$errors.map(e => e.$message)"></v-text-field>
+                  :error-messages="c$.leavingTime.$errors.map(e => e.$message)"></v-text-field>
               <p class="form-text">Select the number of people</p>
               <v-text-field
                   v-model="restaurantAvailabilityData.nrPeople"
@@ -257,7 +266,7 @@ const reserveTable = async () => {
     <v-row>
       <v-col cols="12" md="6">
         <div v-if="availability === true">
-          <p class="booking-details">Table booked in {{hallName}} on {{ date }} at {{ arrivingTime }} for {{ nrPeople }} people.</p>
+          <p class="booking-details">Table booked in {{hallName}} on {{ date }} at {{ arrivingTime.slice(0,-3) }} for {{ nrPeople }} people.</p>
           <v-card class="pa-5" elevation="0">
             <v-card-title class="text-h5">Booking Details</v-card-title>
             <v-card-text>
@@ -288,7 +297,12 @@ const reserveTable = async () => {
                     class="custom-button"
                     @click="reserveTable"
                     :disabled="isBookingInProgress">Confirm Booking</v-btn>
-                <p v-if="reservationMessage" class="message">{{ reservationMessage }}</p>
+                <p v-if="errorMessage" class="message">{{ errorMessage }}</p>
+                <div v-if="successMessage" class="message">
+                  <v-snackbar v-model="message" color="success" timeout="3000">
+                    Reservation confirmed successfully!
+                  </v-snackbar>
+                </div>
               </v-form>
             </v-card-text>
           </v-card>
