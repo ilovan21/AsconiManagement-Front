@@ -29,12 +29,21 @@ As Vince Lombardi once said “Perfection is not attainable but if we chase perf
 Stainless steel tanks for both fermentation and storage that can hold up to 30,000, 60,000 and 150,000 liters each, juice concentrator*, a state-of-the-art bottling line with a speed of 8,000 bottles per hour – all these add to the quality of our wines."
       additional-info="*A juice concentrator is used to produce concentrated juice from the grapes in order to produce semi dry, semi sweet and sweet wines."></HomePageElement>
   <TraditionalElement/>
-  <h2 class="text"></h2>
+  <h2 class="text"> “Perfection is not attainable but if we chase perfection we can catch excellence!”</h2>
   <TraditionalElement/>
+  <HomePageElement
+      title="Family Passsion"
+      image="src/assets/as.jpg"
+      description="Asconi Winery is a family business founded in 1994, which aims at producing the best possible wine, using the latest technology, whilst maintaining the traditions of the local people.
+As a family business, Asconi Winery is a home, the local people are our community and the local traditions our heritage, thus we are excited to share our home with you. "
+      additional-info="Visit our winery, discover our wines, taste our food and share our success and accomplishments with us, because no matter where you are from, you will always have a home at Asconi Winery."></HomePageElement>
+
   <ClientFooter/>
 </template>
 <style scoped>
 .text{
+  margin-left: 200px;
+  margin-right: 200px;
   text-align: center;
   font-family: 'Nunito', Helvetica, Arial, Lucida, sans-serif;
   font-size: 50px;

@@ -34,21 +34,21 @@ import TraditionalElement from "@/components/TraditionalElement.vue";
       availability="Daily from 11:00 to 22:00"
   />
   <TraditionalElement/>
-<!--  <RestaurantCard-->
-<!--      title="Sol Negru Restaurant"-->
-<!--      description="With the aim of showcasing the most authentic Moldovan traditions, the winery’s first restaurant, ASCONI brings you the true heritage, tastes and aromas of Moldova. Together with our kitchen team, we have researched our families’ recipes and compiled our favorites, bringing you authentic tastes, cooked with fresh ingredients and sprinkled with love, just like Grandmother used to make it!"-->
-<!--      additionalInfo="SOL NEGRU restaurant covers a couple of halls and terraces:"-->
-<!--      :list="[-->
-<!--    {hall: 'entrance', id:'1'},-->
-<!--    {hall: 'Cerdac', id:'3'},-->
-<!--    {hall: 'Vinoteca', id:'2'},-->
-<!--    {hall: 'Casa de Vară', id:'4'},-->
-<!--    {hall: 'Terasa de la Cuptor', id:'5'},-->
-<!--    {hall: 'Terasa de la Găini', id:'6'}-->
-<!--  ]"-->
-<!--      image="src/assets/solnegru.jpg"-->
-<!--      availability="Only on weekends, from 11:00 AM to 10:00 PM"-->
-<!--  />-->
+  <RestaurantCard
+      title="Sol Negru Restaurant"
+      description="With the aim of showcasing the most authentic Moldovan traditions, the winery’s first restaurant, ASCONI brings you the true heritage, tastes and aromas of Moldova. Together with our kitchen team, we have researched our families’ recipes and compiled our favorites, bringing you authentic tastes, cooked with fresh ingredients and sprinkled with love, just like Grandmother used to make it!"
+      additionalInfo="ASCONI restaurant covers a couple of halls and terraces:"
+      :list="[
+              {hall: 'Entrance', id:'8'},
+              {hall: '2nd Floor', id:'9'},
+              {hall: 'Left Room', id:'10'},
+              {hall: 'Right Room', id:'11'},
+              {hall: 'SN Terrace', id:'12'},
+              {hall: 'Accacia Terrace', id:'13'}
+            ]"
+      image="src/assets/solnegru2.jpg"
+      availability="Only in weekends, from 11:00 to 22:00"
+  />
 
   <TraditionalElement/>
   <ClientFooter/>

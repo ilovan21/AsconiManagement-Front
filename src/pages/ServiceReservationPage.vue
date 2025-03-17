@@ -192,7 +192,6 @@ const reserveService = async () => {
     });
     successMessage.value = "Réservation effectuée avec succès !";
     message.value = true;
-
     setTimeout(() => {
       serviceReservationData.value = {
         nameSurname: "",
@@ -206,7 +205,7 @@ const reserveService = async () => {
         hour: "",
         nrPeople: "1"
       };
-    }, 3000);
+    }, 1500);
 
   } catch (error) {
     console.error("error:", error);
@@ -292,12 +291,18 @@ const reserveService = async () => {
                   variant="outlined"
                   required
                   :error-messages="v$.phone.$errors.map(e => e.$message)"></v-text-field>
-              <v-text-field label="Preferred Language" v-model="serviceReservationData.language" variant="outlined" required></v-text-field>
+              <v-select
+                  v-model="serviceReservationData.language"
+                  label="Language"
+                  :items="['Romanian', 'French', 'English']"
+                  :error-messages="c$.hour.$errors.map(e => e.$message)"
+                  variant="outlined"
+              ></v-select>
               <v-text-field label="Specifications" v-model="serviceReservationData.specifications" variant="outlined"></v-text-field>
               <v-btn class="custom-button" @click="reserveService">Confirm Booking</v-btn>
               <p v-if="errorMessage" class="message">{{ errorMessage }}</p>
               <div v-if="successMessage" class="message">
-              <v-snackbar v-model="message" color="success" timeout="3000">
+              <v-snackbar v-model="message" color="success" timeout="1500">
                 Reservation confirmed successfully!
               </v-snackbar>
               </div>

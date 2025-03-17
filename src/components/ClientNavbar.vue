@@ -13,15 +13,15 @@ const selectedImage = ref(romania);
 
 const links = ref([
   { name: 'HOME', url: '/' },
-  { name: 'WINERY', url: '#' },
-  { name: 'GUESTHOUSE', url: '#' },
+  { name: 'WINERY', url: 'events' },
+  { name: 'GUESTHOUSE', url: '/guesthouse' },
   { name: 'RESTAURANTS & POOL', url: '/restaurant' },
   { name: 'EXPERIENCES', url: '/experiences' },
-  { name: 'EVENTS', url: '#' },
-  { name: 'GALLERY', url: '#' },
-  { name: 'CSR', url: '#' },
-  { name: 'WINES', url: '#' },
-  { name: 'CONTACT US', url: '#' }
+  { name: 'EVENTS', url: '/events' },
+  { name: 'GALLERY', url: '/gallery' },
+  { name: 'CSR', url: '/csr' },
+  { name: 'WINES', url: '/gallery' },
+  { name: 'CONTACT US', url: '/auth' }
 ]);
 </script>
 

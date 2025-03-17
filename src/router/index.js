@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
 import Reservation from "@/components/Reservation.vue";
 import AuthPage from "@/pages/AuthPage.vue";
+import GuestHousePage from "@/pages/GuestHousePage.vue";
 import AdminPage from "@/pages/AdminPages/AdminPage.vue";
 import ListReservations from "@/components/ListReservations.vue";
 import ExperiencePage from "@/pages/ExperiencePage.vue";
@@ -15,6 +16,9 @@ import RestaurantBookingListing from "@/pages/AdminPages/RestaurantBookingListin
 import TourismBookingListing from "@/pages/AdminPages/TourismBookingListing.vue";
 import TourismOverview from "@/pages/AdminPages/TourismOverview.vue";
 import TourismManagement from "@/pages/AdminPages/TourismManagement.vue";
+import EventsPage from "@/pages/EventsPage.vue";
+import GalleryPage from "@/pages/GalleryPage.vue";
+import CSRPage from "@/pages/CSRPage.vue";
 
 const routes = [
     { path: "/", name: "home", component: HomePage },
@@ -24,6 +28,11 @@ const routes = [
     { path: "/restaurant", name: "Restaurant", component: RestaurantPage },
     { path: "/wines", name: "Wines", component: HomePage },
     { path: "/hall", name: "Halls", component: HallsPage },
+    { path: "/guesthouse", name: "GuestHouse", component: GuestHousePage },
+    { path: "/events", name: "Events", component: EventsPage },
+    { path: "/gallery", name: "Gallery", component: GalleryPage },
+    { path: "/csr", name: "Csr", component: CSRPage },
+
     {
         path: "/reservation/:id",
         name: "ServiceReservationPage",
