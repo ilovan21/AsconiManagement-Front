@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router';
 import ClientNavbar from "@/components/ClientNavbar.vue";
 import ClientFooter from "@/components/ClientFooter.vue";
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, ref, toRaw} from "vue";
 import axios from "axios";
 import experiences from "@/assets/experiences.jpg";
 import ImageComponent from "@/components/ImageComponent.vue";
@@ -11,6 +11,9 @@ import useVuelidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { watch } from "vue";
 import { VDateInput } from 'vuetify/labs/VDateInput';
+
+let hours=["11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30",
+  "16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30"];
 
 const rules = computed(() => ({
   nameSurname: { required },
@@ -53,8 +56,6 @@ const getUnavailableDates = async (hallId) => {
         const dateObj = new Date(date);
         return dateObj.toISOString().split('T')[0];
       });
-      disabledDates.value.push(minDate);
-      console.log("dates", disabledDates);
     } else {
       console.error('Invalid data format:', response.data);
     }
@@ -98,6 +99,19 @@ const arrivingTime = ref("");
 const leavingTime=ref("");
 const nrPeople = ref("");
 const tableId=ref(null);
+
+watch(restaurantAvailabilityData, async (newValue) => {
+  newValue = toRaw(newValue)
+  if (formatForRequest(newValue.date) === minDate) {
+    const today = new Date();
+    const time = today.getHours() + ":" + today.getMinutes();
+    hours = hours.filter((hour) => {
+      return hour >= time;
+    });
+    console.log("available hours: ", hours);
+  }
+}, {deep: true});
+
 watch(restaurantAvailabilityData, (newData) => {
   date.value = newData.date;
   arrivingTime.value = newData.arrivingTime;
@@ -228,11 +242,12 @@ const reserveTable = async () => {
                 :allowed-dates="isAllowedDate"
                     :error-messages="c$.date.$errors.map(e => e.$message)"></v-date-input>
               <p class="form-text">Select the arriving hour</p>
-              <v-text-field
+              <v-select
                   v-model="restaurantAvailabilityData.arrivingTime"
+                  :items="hours"
+                  :error-messages="c$.arrivingTime.$errors.map(e => e.$message)">
                   variant="outlined"
-                  required
-                  :error-messages="c$.arrivingTime.$errors.map(e => e.$message)"></v-text-field>
+              ></v-select>
               <p class="form-text">Select the leaving hour</p>
               <v-text-field
                   v-model="restaurantAvailabilityData.leavingTime"
