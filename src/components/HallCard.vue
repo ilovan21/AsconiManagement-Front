@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 const router = useRouter();
 
 defineProps({
+  hash:{type:String, required:true},
   id: {type: String, required: true},
   title: {type: String, required: true},
   description: {type: String, required: false},
@@ -24,7 +25,7 @@ function redirectToReservation(hallId, hallName) {
 </script>
 
 <template>
-  <v-container class="mx-auto">
+  <v-container class="mx-auto" :id="hash">
     <v-row>
       <v-col cols="6">
         <h2 class="text service-name">{{ title }}</h2>
@@ -72,6 +73,7 @@ function redirectToReservation(hallId, hallName) {
 }
 
 .text.service-name {
+  margin-top:100px;
   margin-left: 20px;
   text-align: left;
 }

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {createRouter, createWebHistory} from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
 import Reservation from "@/components/Reservation.vue";
 import AuthPage from "@/pages/AuthPage.vue";
@@ -21,17 +21,17 @@ import GalleryPage from "@/pages/GalleryPage.vue";
 import CSRPage from "@/pages/CSRPage.vue";
 
 const routes = [
-    { path: "/", name: "home", component: HomePage },
-    { path: "/reservation", name: "reservation", component: Reservation },
-    { path: "/auth", name: "auth", component: AuthPage },
-    { path: "/experiences", name: "Experiences", component: ExperiencePage },
-    { path: "/restaurant", name: "Restaurant", component: RestaurantPage },
-    { path: "/wines", name: "Wines", component: HomePage },
-    { path: "/hall", name: "Halls", component: HallsPage },
-    { path: "/guesthouse", name: "GuestHouse", component: GuestHousePage },
-    { path: "/events", name: "Events", component: EventsPage },
-    { path: "/gallery", name: "Gallery", component: GalleryPage },
-    { path: "/csr", name: "Csr", component: CSRPage },
+    {path: "/", name: "home", component: HomePage},
+    {path: "/reservation", name: "reservation", component: Reservation},
+    {path: "/auth", name: "auth", component: AuthPage},
+    {path: "/experiences", name: "Experiences", component: ExperiencePage},
+    {path: "/restaurant", name: "Restaurant", component: RestaurantPage},
+    {path: "/wines", name: "Wines", component: HomePage},
+    {path: "/hall", name: "Halls", component: HallsPage},
+    {path: "/guesthouse", name: "GuestHouse", component: GuestHousePage},
+    {path: "/events", name: "Events", component: EventsPage},
+    {path: "/gallery", name: "Gallery", component: GalleryPage},
+    {path: "/csr", name: "Csr", component: CSRPage},
 
     {
         path: "/reservation/:id",
@@ -49,48 +49,48 @@ const routes = [
         path: "/overview/restaurant",
         name: "AdminRestaurantOverview",
         component: AdminPage,
-        meta: { requiresAuth: true }
+        meta: {requiresAuth: true}
     },
-    {   path: "/overview/tourism",
+    {
+        path: "/overview/tourism",
         name: "TourismOverview",
         component: TourismOverview,
-        meta: { requiresAuth: true }
+        meta: {requiresAuth: true}
     },
     {
         path: "/management/restaurant",
         name: "RestaurantManagement",
         component: RestaurantManagement,
-        meta: { requiresAuth: true }
+        meta: {requiresAuth: true}
     },
     {
         path: "/management/tourism",
         name: "TourismManagement",
         component: TourismManagement,
-        meta: { requiresAuth: true }
+        meta: {requiresAuth: true}
     },
     {
         path: "/listing/tourism",
         name: "TourismBookingListing",
         component: TourismBookingListing,
-        meta: { requiresAuth: true }
+        meta: {requiresAuth: true}
     },
     {
         path: "/listing/restaurant",
         name: "RestaurantBookingListing",
         component: RestaurantBookingListing,
-        meta: { requiresAuth: true }
+        meta: {requiresAuth: true}
     }
 ];
 
 const router = createRouter({
     history: createWebHistory(),
     routes,
-    scrollBehavior(to, from, savedPosition) {
-        if (savedPosition) {
-            return savedPosition;
-        } else {
-            return {top: 0};
+    scrollBehavior(to) {
+        if (to.hash) {
+            return {el: to.hash}
         }
+        return { top: 0 }
     }
 });
 

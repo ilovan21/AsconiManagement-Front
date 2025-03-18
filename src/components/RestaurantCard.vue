@@ -31,8 +31,7 @@ const navigateToHall = (id) => {
           <v-list-item
               v-for="button in list"
               :key="button.id"
-              :id="button.hash"
-              @click="navigateToHall(button.id)"
+              @click="$router.push({path:'/hall', hash:`#${button.hash}`})"
               :ripple="false"
               class="hall d-flex align-center"
           >
@@ -40,7 +39,7 @@ const navigateToHall = (id) => {
               <font-awesome-icon icon="circle-chevron-right" style="color: #000000; margin-right: 10px;" />
             </template>
             <v-list-item-content class="list-content">
-              <v-list-item-title>{{ button.hall }}</v-list-item-title>
+              <v-list-item-title>{{ button.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item class="additional-info">

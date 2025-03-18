@@ -21,7 +21,7 @@ const links = ref([
   { name: 'GALLERY', url: '/gallery' },
   { name: 'CSR', url: '/csr' },
   { name: 'WINES', url: '/gallery' },
-  { name: 'CONTACT US', url: '/auth' }
+  { name: 'CONNECT', url: '/auth' }
 ]);
 </script>
 

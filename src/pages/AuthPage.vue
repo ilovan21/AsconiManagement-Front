@@ -37,7 +37,8 @@ const rules = computed(() => ({
 const v$ = useVuelidate(rules, registerData);
 const vLogin = useVuelidate(loginRules, loginData);
 
-
+const message=ref(null);
+const errorLoginMessage=ref(null);
 const login = async () => {
   const isValid = await vLogin.value.$validate();
   if (!isValid) {
@@ -65,7 +66,6 @@ const login = async () => {
     userStore.setUser(response.data.name, response.data.email, response.data.role, response.data.token);
 
     await new Promise((resolve) => setTimeout(resolve, 100));
-
     if (response.data.role === "ROLE_ADMIN") {
       router.push("/overview/restaurant");
     } else if (response.data.role === "ROLE_HOSTESS") {
@@ -76,6 +76,8 @@ const login = async () => {
       router.push("/");
     }
   } catch (error) {
+    message.value = true;
+    errorLoginMessage.value ="Email or password incorrect!"
     console.error("Login error:", error);
   }
 };
@@ -133,6 +135,9 @@ const register = async () => {
                   required
                   :error-messages="vLogin.password.$errors.map(e => e.$message)"
               ></v-text-field>
+              <div v-if="errorLoginMessage" class="errorMessage">
+                <p>{{errorLoginMessage}}</p>
+              </div>
               <v-checkbox label="Remember me" v-model="loginData.remember"></v-checkbox>
               <v-btn class="custom-button" @click="login">Log In</v-btn>
               <p class="mt-2 text-caption text-start">
@@ -223,6 +228,12 @@ const register = async () => {
 }
 a {
   color: #b9523b;
+}
+.errorMessage{
+  padding: 0px;
+  font-size: 12px;
+  margin-left: 15px;
+  color: rgba(185, 82, 59, 0.85);
 }
 </style>
 

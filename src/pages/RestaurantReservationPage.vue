@@ -53,6 +53,7 @@ const getUnavailableDates = async (hallId) => {
         const dateObj = new Date(date);
         return dateObj.toISOString().split('T')[0];
       });
+      disabledDates.value.push(minDate);
       console.log("dates", disabledDates);
     } else {
       console.error('Invalid data format:', response.data);
@@ -220,6 +221,7 @@ const reserveTable = async () => {
             <v-form>
               <p class="form-text">Select the date</p>
                 <v-date-input
+                    prepend-icon=""
                     variant="outlined"
                     v-model="restaurantAvailabilityData.date"
                     :min="minDate"
@@ -266,7 +268,7 @@ const reserveTable = async () => {
     <v-row>
       <v-col cols="12" md="6">
         <div v-if="availability === true">
-          <p class="booking-details">Table booked in {{hallName}} on {{ date }} at {{ arrivingTime.slice(0,-3) }} for {{ nrPeople }} people.</p>
+          <p class="booking-details">Table available in {{hallName}} on {{ date }} at {{ arrivingTime.slice(0,-3) }} for {{ nrPeople }} people.</p>
           <v-card class="pa-5" elevation="0">
             <v-card-title class="text-h5">Booking Details</v-card-title>
             <v-card-text>
