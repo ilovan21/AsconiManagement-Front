@@ -112,6 +112,10 @@ onMounted(() => {
 watch(filterData, () => {
   getReservations();
 },{deep:true});
+const monthNames = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
 </script>
 
@@ -175,6 +179,17 @@ watch(filterData, () => {
           </v-col>
         </v-row>
       </v-container>
+      <v-container pa-0>
+        <v-row>
+          <v-col cols="6" pa-0>
+          </v-col>
+          <v-col cols="6" class="custom-col" pa-0>
+            <v-btn
+                :ripple="false"
+                icon="mdi-plus" size="small"></v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
       <v-container class="pa-0">
         <div v-if="!responseStatus" class="no-result-section">
         <v-empty-state
@@ -189,7 +204,7 @@ watch(filterData, () => {
               <v-card-title class="card-components d-flex align-center">
                 <span class="category-time text-left" style="flex: 1;">{{ item.arrivingTime.slice(0, -3) }} - {{ item.leavingTime.slice(0, -3) }}</span>
                 <span class="card-text text-left" style="flex: 7;">{{ item.nameSurname }}, {{ item.nrPeople }} personnes</span>
-                <span class="category-hall text-right" style="flex: 1;">{{ item.hall.hallName }}</span>
+                <span class="category-hall text-right" style="flex: 1;">{{ item.hallName }}</span>
               </v-card-title>
             </v-card>
           </v-col>
@@ -257,5 +272,15 @@ watch(filterData, () => {
   justify-content: center;
   align-items: center;
 }
+.custom-col{
+  display:flex;
+  justify-content:center;
+}
+.custom-col{
+  margin-left: auto;
+  display: flex;
+  justify-content: end;
+}
+
 </style>
 

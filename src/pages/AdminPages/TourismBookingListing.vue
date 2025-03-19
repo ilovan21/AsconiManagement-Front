@@ -115,10 +115,6 @@ watch(filterData, () => {
               class="custom-col"
           >
             <v-sheet class="pa-2 mb-2 mt-2">
-              <v-responsive
-                  class="mx-auto"
-                  max-width="300"
-              >
                 <v-text-field
                     v-model="filterData.nameSurname"
                     style="width: 200px; height: 40px;"
@@ -127,8 +123,19 @@ watch(filterData, () => {
                     hide-details="auto"
                     label="Find by name"
                 ></v-text-field>
-              </v-responsive>
             </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-container ma-0>
+        <v-row>
+          <v-col cols="6" ma-0>
+          </v-col>
+          <v-col cols="6" class="custom-col" ma-0>
+            <v-btn
+                :ripple="false"
+                icon="mdi-plus" size="small">
+            </v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -213,6 +220,15 @@ watch(filterData, () => {
   display:flex;
   justify-content: center;
   align-items: center;
+}
+.custom-col{
+  display:flex;
+  justify-content:center;
+}
+.custom-col{
+  margin-left: auto;
+  display: flex;
+  justify-content: end;
 }
 </style>
 

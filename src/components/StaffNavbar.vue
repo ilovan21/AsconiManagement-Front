@@ -44,7 +44,10 @@ function handleLogout() {
 </script>
 
 <template>
-    <v-navigation-drawer v-model="drawer" elevation="2" class="b-navigation-drawer">
+    <v-navigation-drawer
+        v-model="drawer"
+        elevation="2"
+        class="b-navigation-drawer">
       <v-img class="logo-image" :src="logo" height="70" width="180" Cover></v-img>
 
       <v-sheet class="pa-4" color="white">
