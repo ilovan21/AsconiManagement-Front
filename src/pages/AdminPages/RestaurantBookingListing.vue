@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from 'vue'
+import {onMounted, ref, shallowRef} from 'vue'
 import { useRoute } from 'vue-router';
 import StaffNavbar from '@/components/StaffNavbar.vue'
 import { VDateInput } from 'vuetify/labs/VDateInput';
@@ -7,6 +7,7 @@ import axios from "axios";
 const currentDate = new Date();
 const currentFormatedDate = currentDate.toISOString().split('T')[0];
 import { watch } from 'vue';
+import ReservationDetailsCard from "@/components/ReservationDetailsCard.vue";
 const reservations=ref([]);
 function formatForRequest(date) {
   if (date) {
@@ -17,6 +18,7 @@ function formatForRequest(date) {
   }
   return '';
 }
+const dialog = shallowRef(false)
 const halls = [
   {
     id: 0,
@@ -85,6 +87,18 @@ const filterData = ref({
   hallId: 0,
   nameSurname: ""
 });
+const reservationDetails = ref({
+  nrPeople:"",
+  hallName:"",
+  date:"",
+  arrivingTime:"",
+  leavingTime:"",
+  nameSurname:"",
+  email:"",
+  phone:"",
+  specification:"",
+  tableIds:[]
+});
 
 const responseStatus = ref(false);
 const getReservations = async () => {
@@ -99,7 +113,7 @@ const getReservations = async () => {
           }
         });
     reservations.value = response.data;
-    console.log("reservations : ",reservations.value);
+
   } catch (error) {
     console.error('Error fetching the reservations:', error);
     reservations.value = [];
@@ -116,7 +130,26 @@ const monthNames = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
+const position = { X: 150, Y: 0}
 
+const getReservationDetails = async (id)=>{
+  try {
+    const response = await axios.get(`http://localhost:8080/api/restaurant/public/view/get/${id}`);
+    reservationDetails.value.nrPeople=response.data.nrPeople;
+    reservationDetails.value.hallName=response.data.hallName;
+    reservationDetails.value.date=response.data.date;
+    reservationDetails.value.arrivingTime=response.data.arrivingTime;
+    reservationDetails.value.leavingTime=response.data.leavingTime;
+    reservationDetails.value.nameSurname=response.data.nameSurname;
+    reservationDetails.value.email=response.data.email;
+    reservationDetails.value.phone=response.data.phone;
+    reservationDetails.value.specification=response.data.specification;
+    reservationDetails.value.tableIds=response.data.tableIds;
+    console.log("detalii: ",reservationDetails.value.tableIds);
+  } catch (error) {
+    console.error('Error fetching reservation details:', error);
+  }
+};
 </script>
 
 <template>
@@ -162,19 +195,14 @@ const monthNames = [
               class="custom-col"
           >
             <v-sheet class="pa-2 mb-2 mt-2">
-              <v-responsive
-                  class="mx-auto"
-                  max-width="300"
-              >
-                <v-text-field
-                    v-model="filterData.nameSurname"
-                    style="width: 200px; height: 40px;"
-                    variant="outlined"
-                    density="compact"
-                    hide-details="auto"
-                    label="Find by name"
-                ></v-text-field>
-              </v-responsive>
+              <v-text-field
+                  v-model="filterData.nameSurname"
+                  style="width: 200px; height: 40px;"
+                  variant="outlined"
+                  density="compact"
+                  hide-details="auto"
+                  label="Find by name"
+              ></v-text-field>
             </v-sheet>
           </v-col>
         </v-row>
@@ -192,23 +220,32 @@ const monthNames = [
       </v-container>
       <v-container class="pa-0">
         <div v-if="!responseStatus" class="no-result-section">
-        <v-empty-state
-            icon="mdi-magnify"
-            title="Aucun résultat trouvé."
-        ></v-empty-state>
+          <v-empty-state
+              icon="mdi-magnify"
+              title="Aucun résultat trouvé."
+          ></v-empty-state>
         </div>
         <div v-if="responseStatus">
-        <v-row class="list-row">
-          <v-col v-for="(item, index) in reservations" :key="item.id" class="list-col">
-            <v-card link class="reservation-card">
-              <v-card-title class="card-components d-flex align-center">
-                <span class="category-time text-left" style="flex: 1;">{{ item.arrivingTime.slice(0, -3) }} - {{ item.leavingTime.slice(0, -3) }}</span>
-                <span class="card-text text-left" style="flex: 7;">{{ item.nameSurname }}, {{ item.nrPeople }} personnes</span>
-                <span class="category-hall text-right" style="flex: 1;">{{ item.hallName }}</span>
-              </v-card-title>
-            </v-card>
-          </v-col>
-        </v-row>
+          <v-row class="list-row">
+            <v-col v-for="(item, index) in reservations" :key="item.id" class="list-col">
+              <v-dialog
+                  v-model="dialog"
+                  max-width="800"
+                  :style="{ top: position.Y + 'px', left: position.X + 'px', position: 'absolute' }"
+              >
+                <template v-slot:activator="{ props: activatorProps }">
+                  <v-card link class="reservation-card" v-bind="activatorProps" @click="getReservationDetails(item.id)">
+                    <v-card-title class="card-components d-flex align-center">
+                      <span class="category-time text-left" style="flex: 1;">{{ item.arrivingTime.slice(0, -3) }} - {{ item.leavingTime.slice(0, -3) }}</span>
+                      <span class="card-text text-left" style="flex: 7;">{{ item.nameSurname }}, {{ item.nrPeople }} personnes</span>
+                      <span class="category-hall text-right" style="flex: 1;">{{ item.hallName }}</span>
+                    </v-card-title>
+                  </v-card>
+                </template>
+                <ReservationDetailsCard :reservationDetails="reservationDetails" :dialog="dialog" @update:dialog="dialog = $event"/>
+              </v-dialog>
+            </v-col>
+          </v-row>
         </div>
       </v-container>
     </v-main>

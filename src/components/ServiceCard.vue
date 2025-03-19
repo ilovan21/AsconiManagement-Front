@@ -18,7 +18,6 @@ function redirectToReservation(serviceId,serviceTitle,image) {
     query: { title: serviceTitle , imagePath: encodeURIComponent(image)} });
 }
 </script>
-
 <template>
   <v-container class="mx-auto">
     <v-row>
