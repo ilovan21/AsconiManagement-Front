@@ -7,7 +7,7 @@ import axios from "axios";
 const currentDate = new Date();
 const currentFormatedDate = currentDate.toISOString().split('T')[0];
 import { watch } from 'vue';
-import ReservationDetailsCard from "@/components/ReservationDetailsCard.vue";
+import ReservationRestaurantDetailsCard from "@/components/ReservationRestaurantDetailsCard.vue";
 const reservations=ref([]);
 function formatForRequest(date) {
   if (date) {
@@ -88,6 +88,7 @@ const filterData = ref({
   nameSurname: ""
 });
 const reservationDetails = ref({
+  id:"",
   nrPeople:"",
   hallName:"",
   date:"",
@@ -106,7 +107,6 @@ const getReservations = async () => {
   console.log(dateToSend);
   try {
     const token=localStorage.getItem('user_token');
-    console.log("Token: ",token);
     const response = await axios.get(`http://localhost:8080/api/restaurant/public/view/filtered?date=${dateToSend}&hallId=${filterData.value.hallId}&nameSurname=${filterData.value.nameSurname}`,
         {headers: {
             'Authorization': `Bearer ${token}`
@@ -134,7 +134,13 @@ const position = { X: 150, Y: 0}
 
 const getReservationDetails = async (id)=>{
   try {
-    const response = await axios.get(`http://localhost:8080/api/restaurant/public/view/get/${id}`);
+    const token=localStorage.getItem('user_token');
+    const response = await axios.get(`http://localhost:8080/api/restaurant/public/view/get/${id}`,
+        {headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+    reservationDetails.value.id=response.data.id;
     reservationDetails.value.nrPeople=response.data.nrPeople;
     reservationDetails.value.hallName=response.data.hallName;
     reservationDetails.value.date=response.data.date;
@@ -145,10 +151,13 @@ const getReservationDetails = async (id)=>{
     reservationDetails.value.phone=response.data.phone;
     reservationDetails.value.specification=response.data.specification;
     reservationDetails.value.tableIds=response.data.tableIds;
-    console.log("detalii: ",reservationDetails.value.tableIds);
+    console.log("detalii: ",reservationDetails.value.id);
   } catch (error) {
     console.error('Error fetching reservation details:', error);
   }
+};
+const handleReservationDeleted = (reservation_id) => {
+  reservations.value = reservations.value.filter(reservation => reservation.id !== reservation_id);
 };
 </script>
 
@@ -242,7 +251,11 @@ const getReservationDetails = async (id)=>{
                     </v-card-title>
                   </v-card>
                 </template>
-                <ReservationDetailsCard :reservationDetails="reservationDetails" :dialog="dialog" @update:dialog="dialog = $event"/>
+                <ReservationRestaurantDetailsCard
+                    :reservationDetails="reservationDetails"
+                    :dialog="dialog"
+                    @update:dialog="dialog = $event"
+                    @reservation-deleted="handleReservationDeleted"/>
               </v-dialog>
             </v-col>
           </v-row>

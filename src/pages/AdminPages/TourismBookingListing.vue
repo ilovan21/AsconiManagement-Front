@@ -5,7 +5,9 @@ import StaffNavbar from '@/components/StaffNavbar.vue'
 import { VDateInput } from 'vuetify/labs/VDateInput';
 import axios from "axios";
 const currentDate = new Date();
-import { watch } from 'vue';
+import { watch, shallowRef } from 'vue';
+import ReservationRestaurantDetailsCard from "@/components/ReservationRestaurantDetailsCard.vue";
+import ReservationServiceDetailsCard from "@/components/ReservationServiceDetailsCard.vue";
 const reservations=ref([]);
 function formatForRequest(date) {
   if (date) {
@@ -16,6 +18,9 @@ function formatForRequest(date) {
   }
   return '';
 }
+
+const dialog = shallowRef(false);
+
 const services = [
   {
     id: 0,
@@ -73,6 +78,41 @@ watch(filterData, () => {
   getReservations();
 },{deep:true});
 
+const position = { X: 150, Y: 0}
+
+const getReservationDetails = async (id)=>{
+  try {
+    const response = await axios.get(`http://localhost:8080/api/service/public/view/get/${id}`);
+    reservationDetails.value.id=response.data.id;
+    reservationDetails.value.nrPeople=response.data.nrPeople;
+    reservationDetails.value.serviceName=response.data.touristicServiceName;
+    reservationDetails.value.date=response.data.date;
+    reservationDetails.value.hour=response.data.hour;
+    reservationDetails.value.nameSurname=response.data.nameSurname;
+    reservationDetails.value.email=response.data.email;
+    reservationDetails.value.phone=response.data.phone;
+    reservationDetails.value.specification=response.data.specification;
+    reservationDetails.value.language=response.data.language;
+    console.log("name service: ", reservationDetails.value.serviceName);
+  } catch (error) {
+    console.error('Error fetching reservation details:', error);
+  }
+};
+const reservationDetails = ref({
+  id:"",
+  nrPeople:"",
+  serviceName:"",
+  date:"",
+  hour:"",
+  nameSurname:"",
+  email:"",
+  phone:"",
+  specification:"",
+  language:""
+});
+const handleDeletedReservation = (reservation_id) =>{
+  reservations.value=reservations.value.filter(reservation => reservation.id !== reservation_id);
+};
 </script>
 
 <template>
@@ -149,13 +189,27 @@ watch(filterData, () => {
         <div v-if="responseStatus">
           <v-row class="list-row">
             <v-col v-for="(item, index) in reservations" :key="item.id" class="list-col">
-              <v-card link class="reservation-card">
-                <v-card-title class="card-components d-flex align-center">
-                  <span class="category-time text-left" style="flex: 1;">{{ item.hour.slice(0, -3) }}</span>
-                  <span class="card-text text-left" style="flex: 7;">{{ item.nameSurname }}, {{ item.nrPeople }} personnes</span>
-                  <span class="category-hall text-right" style="flex: 1;">{{ item.touristicService.name }}</span>
-                </v-card-title>
-              </v-card>
+              <v-dialog
+                  v-model="dialog"
+                  max-width="800"
+                  scrim="false"
+                  :style="{ top: position.Y + 'px', left: position.X + 'px', position: 'absolute' }"
+              >
+                <template v-slot:activator="{ props: activatorProps }">
+                  <v-card link class="reservation-card" v-bind="activatorProps" @click="getReservationDetails(item.id)">
+                    <v-card-title class="card-components d-flex align-center">
+                      <span class="category-time text-left" style="flex: 1;">{{ item.hour.slice(0, -3) }}</span>
+                      <span class="card-text text-left" style="flex: 7;">{{ item.nameSurname }}, {{ item.nrPeople }} personnes</span>
+                      <span class="category-hall text-right" style="flex: 1;">{{ item.serviceName }}</span>
+                    </v-card-title>
+                  </v-card>
+                </template>
+                <ReservationServiceDetailsCard
+                    :reservationDetails="reservationDetails"
+                    :dialog="dialog"
+                    @update:dialog="dialog = $event"
+                    @reservation-deleted="handleDeletedReservation"/>/>
+              </v-dialog>
             </v-col>
           </v-row>
         </div>

@@ -1,6 +1,6 @@
 <script setup>
 import { shallowRef } from 'vue'
-import ReservationDetailsCard from "@/components/ReservationDetailsCard.vue";
+import ReservationRestaurantDetailsCard from "@/components/ReservationRestaurantDetailsCard.vue";
 const position1 = { X: 420, Y: 240 }
 const dialog = shallowRef(false)
 </script>
@@ -21,7 +21,7 @@ const dialog = shallowRef(false)
         ></v-btn>
       </template>
 
-      <ReservationDetailsCard :dialog="dialog" @update:dialog="dialog = $event"/>
+      <ReservationRestaurantDetailsCard :dialog="dialog" @update:dialog="dialog = $event"/>
     </v-dialog>
   </div>
 </template>

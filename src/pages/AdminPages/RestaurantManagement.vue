@@ -7,7 +7,7 @@ import axios from "axios";
 const currentDate = new Date();
 const currentFormatedDate = currentDate.toISOString().split('T')[0];
 import { watch } from 'vue';
-import ReservationDetailsCard from "@/components/ReservationDetailsCard.vue";
+import ReservationRestaurantDetailsCard from "@/components/ReservationRestaurantDetailsCard.vue";
 const reservations=ref([]);
 function formatForRequest(date) {
   if (date) {
@@ -211,7 +211,7 @@ const position = { X: 150, Y: 0}
                 </v-card-title>
               </v-card>
                 </template>
-                <ReservationDetailsCard :dialog="dialog" @update:dialog="dialog = $event"/>
+                <ReservationRestaurantDetailsCard :dialog="dialog" @update:dialog="dialog = $event"/>
               </v-dialog>
             </v-col>
           </v-row>
