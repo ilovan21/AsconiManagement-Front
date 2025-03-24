@@ -173,6 +173,8 @@ const checkAvailability = async () => {
 };
 const successMessage=ref(null);
 const message=ref(null);
+
+
 const reserveTable = async () => {
   const isValid = await v$.value.$validate();
   if (!isValid) {
@@ -259,7 +261,7 @@ const reserveTable = async () => {
                   v-model="restaurantAvailabilityData.nrPeople"
                   variant="outlined"
                   required
-                  :min="0"
+                  :min="1"
                   type="number"
                   :error-messages="errorMessage"></v-text-field>
               <v-btn class="custom-button" @click="checkAvailability">Check Availability</v-btn>

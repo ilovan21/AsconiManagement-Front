@@ -1,6 +1,5 @@
 <script setup>
 import {onMounted, ref, shallowRef} from 'vue'
-import { useRoute } from 'vue-router';
 import StaffNavbar from '@/components/StaffNavbar.vue'
 import { VDateInput } from 'vuetify/labs/VDateInput';
 import axios from "axios";
@@ -8,6 +7,7 @@ const currentDate = new Date();
 const currentFormatedDate = currentDate.toISOString().split('T')[0];
 import { watch } from 'vue';
 import ReservationRestaurantDetailsCard from "@/components/ReservationRestaurantDetailsCard.vue";
+import AddReservation from "@/components/AddReservation.vue";
 const reservations=ref([]);
 function formatForRequest(date) {
   if (date) {
@@ -19,6 +19,7 @@ function formatForRequest(date) {
   return '';
 }
 const dialog = shallowRef(false)
+const addDialog = shallowRef(false)
 const halls = [
   {
     id: 0,
@@ -217,15 +218,20 @@ const handleReservationDeleted = (reservation_id) => {
         </v-row>
       </v-container>
       <v-container pa-0>
-        <v-row>
-          <v-col cols="6" pa-0>
-          </v-col>
-          <v-col cols="6" class="custom-col" pa-0>
+            <v-dialog
+                v-model="addDialog"
+                max-width="800px"
+                max-height="600px"
+                :style="{ top: position.Y + 'px', left: position.X + 'px', position: 'absolute' }"
+            >
+            <template v-slot:activator="{ props: activatorProps }">
             <v-btn
                 :ripple="false"
+                v-bind="activatorProps"
                 icon="mdi-plus" size="small"></v-btn>
-          </v-col>
-        </v-row>
+            </template>
+              <AddReservation/>
+              </v-dialog>
       </v-container>
       <v-container class="pa-0">
         <div v-if="!responseStatus" class="no-result-section">

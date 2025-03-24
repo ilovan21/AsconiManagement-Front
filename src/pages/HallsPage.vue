@@ -10,7 +10,6 @@ import {useRoute} from "vue-router";
 
 const route = useRoute();
 
-import {ref} from 'vue'
 import {hallList, hallList2} from "@/constants/hallList.js";
 
 const scrollToHash = (hash) => {
