@@ -62,7 +62,6 @@ const getServiceHours = async (reservationId) => {
   }
 };
 
-
 const rules = computed(() => ({
   nameSurname: {required},
   email: {required, email},

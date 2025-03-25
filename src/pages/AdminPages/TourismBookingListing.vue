@@ -6,8 +6,8 @@ import { VDateInput } from 'vuetify/labs/VDateInput';
 import axios from "axios";
 const currentDate = new Date();
 import { watch, shallowRef } from 'vue';
-import ReservationRestaurantDetailsCard from "@/components/ReservationRestaurantDetailsCard.vue";
 import ReservationServiceDetailsCard from "@/components/ReservationServiceDetailsCard.vue";
+import AddServiceReservation from "@/components/AddServiceReservation.vue";
 const reservations=ref([]);
 function formatForRequest(date) {
   if (date) {
@@ -20,6 +20,7 @@ function formatForRequest(date) {
 }
 
 const dialog = shallowRef(false);
+const addDialog = shallowRef(false);
 
 const services = [
   {
@@ -64,7 +65,6 @@ const getReservations = async () => {
           }
         });
     reservations.value = response.data;
-    console.log("reservations : ",reservations.value);
   } catch (error) {
     console.error('Error fetching the reservations:', error);
     reservations.value = [];
@@ -93,6 +93,7 @@ const getReservationDetails = async (id)=>{
     reservationDetails.value.phone=response.data.phone;
     reservationDetails.value.specification=response.data.specification;
     reservationDetails.value.language=response.data.language;
+    console.log("received response: ", response.data);
     console.log("name service: ", reservationDetails.value.serviceName);
   } catch (error) {
     console.error('Error fetching reservation details:', error);
@@ -167,17 +168,21 @@ const handleDeletedReservation = (reservation_id) =>{
           </v-col>
         </v-row>
       </v-container>
-      <v-container ma-0>
-        <v-row>
-          <v-col cols="6" ma-0>
-          </v-col>
-          <v-col cols="6" class="custom-col" ma-0>
+      <v-container pa-0>
+        <v-dialog
+            v-model="addDialog"
+            max-width="800px"
+            max-height="600px"
+            :style="{ top: position.Y + 'px', left: position.X + 'px', position: 'absolute' }"
+        >
+          <template v-slot:activator="{ props: activatorProps }">
             <v-btn
                 :ripple="false"
-                icon="mdi-plus" size="small">
-            </v-btn>
-          </v-col>
-        </v-row>
+                v-bind="activatorProps"
+                icon="mdi-plus" size="small"></v-btn>
+          </template>
+          <AddServiceReservation/>
+        </v-dialog>
       </v-container>
       <v-container class="pa-0">
         <div v-if="!responseStatus" class="no-result-section">
@@ -200,7 +205,7 @@ const handleDeletedReservation = (reservation_id) =>{
                     <v-card-title class="card-components d-flex align-center">
                       <span class="category-time text-left" style="flex: 1;">{{ item.hour.slice(0, -3) }}</span>
                       <span class="card-text text-left" style="flex: 7;">{{ item.nameSurname }}, {{ item.nrPeople }} personnes</span>
-                      <span class="category-hall text-right" style="flex: 1;">{{ item.serviceName }}</span>
+                      <span class="category-hall text-right" style="flex: 1;">{{ item.touristicServiceName }}</span>
                     </v-card-title>
                   </v-card>
                 </template>

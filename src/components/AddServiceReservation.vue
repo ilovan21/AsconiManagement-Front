@@ -4,44 +4,40 @@ import axios from "axios";
 import {watch} from "vue";
 import {VDateInput} from 'vuetify/labs/VDateInput';
 
-const toast = useToast();
 import {computed, ref} from 'vue'
 import {email, minLength, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 
-const tables = [21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 31, 32, 33, 34];
 const reservationData = ref({
-  name: '',
+  nameSurname: '',
   email: '',
   phone: '',
-  specifications: '',
-  tableIds: []
+  language:'',
+  specifications: ''
 });
 const availabilityData = ref({
-  hall: null,
+  service: null,
   date: null,
-  arrivingTime: '',
-  leavingTime: '',
+  hour: '',
   nrPeople: '1'
 });
 
 const checkAvailabilityRules = computed(() => ({
-  hall: {required},
+  service: {required},
   date: {required},
-  arrivingTime: {required},
-  leavingTime: {required},
+  hour: {required},
   nrPeople: {required}
 }));
 const rules = computed(() => ({
-  tableIds: {required: (value) => Array.isArray(value) && value.length > 0 || 'At least one table must be selected'},
-  name: {required},
+  language: {required},
+  nameSurname: {required},
   email: {required, email},
   phone: {required, minLength: minLength(10)},
 }));
 
 const handleNext = () =>{
   if (e1.value === steps.value ) {
-    reserveTable();
+    reserveService();
   }
   else {
     e1.value++;
@@ -49,74 +45,28 @@ const handleNext = () =>{
 }
 const c$ = useVuelidate(checkAvailabilityRules, availabilityData);
 const v$ = useVuelidate(rules, reservationData);
-const isAvailable = ref(null);
-const halls = [
+const languages = [ 'Romanian', 'French', 'English'];
+const services = [
   {
     id: 1,
-    name: 'Casa Cu Sobe',
-    restaurant: 'Asconi',
+    name: 'Tour'
   },
   {
     id: 2,
-    name: 'Vinoteca',
-    restaurant: 'Asconi',
+    name: 'Tasting'
   },
   {
     id: 3,
-    name: 'Cerdac',
-    restaurant: 'Asconi',
+    name: 'Wine Painting'
   },
   {
     id: 4,
-    name: 'Casa De Vara',
-    restaurant: 'Asconi',
-  },
-  {
-    id: 5,
-    name: 'Terasa de la Gaini',
-    restaurant: 'Asconi',
-  },
-  {
-    id: 6,
-    name: 'Terasa de la Cuptor',
-    restaurant: 'Asconi',
-  },
-  {
-    id: 9,
-    name: 'Entrance',
-    restaurant: 'Sol Negru',
-  },
-  {
-    id: 10,
-    name: 'Left Room',
-    restaurant: 'Sol Negru',
-  },
-  {
-    id: 11,
-    name: 'Right Room',
-    restaurant: 'Sol Negru',
-  },
-  {
-    id: 13,
-    name: '2nd Floor',
-    restaurant: 'Sol Negru',
-  },
-  {
-    id: 14,
-    name: 'Terasa Salcami',
-    restaurant: 'Sol Negru',
+    name: 'Baking Workshop'
   }
 ]
-
-let hours = ["10:00", "10:30", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
-  "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30"];
+let serviceHours = ref([]);
 const availability = ref(null);
-const availabilityMessage = ref("");
 const availabilityErrorMessage = ref("");
-const date = ref("");
-const arrivingTime = ref("");
-const leavingTime = ref("");
-const nrPeople = ref("");
 
 const errorMessage = ref(null);
 watch(() => availabilityData.value.nrPeople, (newValue) => {
@@ -130,52 +80,6 @@ watch(() => availabilityData.value.nrPeople, (newValue) => {
   }
 });
 
-function stringToIntegerArray(stringArray) {
-  if (Array.isArray(stringArray)) {
-    return stringArray.map(id => parseInt(id, 10));
-  }
-  console.error('Error');
-  return [];
-}
-
-const checkAvailability = async () => {
-  const isValid = await c$.value.$validate();
-  if (!isValid) {
-    console.log("Formular invalid");
-    return;
-  }
-  availabilityErrorMessage.value = "";
-  try {
-    const requestAvailability = {
-      nrPeople: availabilityData.value.nrPeople,
-      hallId: availabilityData.value.hall,
-      date: formatForRequest(availabilityData.value.date),
-      arrivingTime: availabilityData.value.arrivingTime,
-      leavingTime: availabilityData.value.leavingTime
-    };
-    console.log(requestAvailability);
-    const response = await axios.post("http://localhost:8080/api/restaurant/public/check-availability", requestAvailability, {
-      headers: {"Content-Type": "application/json"}
-    });
-
-    if (response.data.available) {
-      availability.value = true;
-      availabilityMessage.value = response.data.message;
-      date.value = response.data.date;
-      arrivingTime.value = response.data.arrivingTime;
-      leavingTime.value = response.data.leavingTime;
-      nrPeople.value = response.data.nrPeople;
-      reservationData.value.tableIds = response.data.tableId;
-    } else {
-      availability.value = false;
-      availabilityErrorMessage.value = "Aucune table n'est disponible pour les détails spécifiés.";
-    }
-  } catch (error) {
-    availability.value = false;
-    availabilityErrorMessage.value = "Erreur";
-  }
-};
-
 function formatForRequest(date) {
   if (date) {
     const year = date.getFullYear();
@@ -185,20 +89,19 @@ function formatForRequest(date) {
   }
   return '';
 }
-
 const currentDate = new Date();
 const minDate = currentDate.toISOString().split('T')[0];
 const disabledDates = ref([]);
 
-const getUnavailableDates = async (hallId) => {
+const getUnavailableDates = async (reservationId) => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/unavailable-dates/hall?hallId=${hallId}`);
+    const response = await axios.get(`http://localhost:8080/api/unavailable-dates/service?serviceId=${reservationId}`);
     if (Array.isArray(response.data)) {
       disabledDates.value = response.data.map(date => {
         const dateObj = new Date(date);
         return dateObj.toISOString().split('T')[0];
       });
-      console.log("disabledDates:", disabledDates.value);
+      console.log("dates", disabledDates);
     } else {
       console.error('Invalid data format:', response.data);
     }
@@ -214,19 +117,25 @@ const isAllowedDate = (dateToCheck) => {
   const uniqueDisabledDates = [...new Set(disabledDates.value)];
   return !uniqueDisabledDates.includes(formattedDate);
 };
+const getServiceHours = async (reservationId) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/api/service/public/${reservationId}/get-hours`);
+    const hoursList = [...response.data];
+    serviceHours.value = hoursList.map(hour => hour.slice(0, -3));
+    console.log("Fetched hours:", serviceHours);
+  } catch (error) {
+    console.error('Error fetching hours:', error);
+  }
+};
 
-watch(() => reservationData.value.hall, async (newHallId) => {
-  await getUnavailableDates(newHallId);
+watch(() => availabilityData.value.service, async (newServiceId) => {
+  await getUnavailableDates(newServiceId);
+  await getServiceHours(newServiceId);
 });
+
 
 const e1 = ref(1)
 const steps = ref(2)
-
-
-watch(reservationData.tableIds, (newData) => {
-  reservationData.tableIds.value = newData;
-});
-
 
 const successMessage = ref(null);
 const message = ref("");
@@ -235,7 +144,30 @@ function ensureArray(value) {
   return Array.isArray(value) ? value : [value];
 }
 
-const reserveTable = async () => {
+const checkAvailability = async () => {
+  const isValid = await c$.value.$validate();
+  if (!isValid) {
+    console.error("Validation failed!");
+    return;
+  }
+  availabilityErrorMessage.value = "";
+  try {
+    const requestAvailability = {
+      serviceId: availabilityData.value.service,
+      nrPeople: availabilityData.value.nrPeople,
+      date: formatForRequest(availabilityData.value.date),
+      hour: availabilityData.value.hour
+    };
+    console.log(requestAvailability);
+    const response = await axios.post("http://localhost:8080/api/service/public/check-availability", requestAvailability, {
+      headers: {"Content-Type": "application/json"}
+    });
+  } catch (error) {
+    availability.value = false;
+    availabilityErrorMessage.value = "No available spots.";
+  }
+};
+const reserveService = async () => {
   const isValid = await v$.value.$validate();
   if (!isValid) {
     console.error("Validation failed!");
@@ -243,35 +175,32 @@ const reserveTable = async () => {
   }
   try {
     const requestReservation = {
-      nrPeople: availabilityData.value.nrPeople,
-      hallId: availabilityData.value.hall,
-      date: formatForRequest(availabilityData.value.date),
-      arrivingTime: availabilityData.value.arrivingTime,
-      leavingTime: availabilityData.value.leavingTime,
-      nameSurname: reservationData.value.name,
+      touristicServiceId: availabilityData.value.service,
+      nameSurname: reservationData.value.nameSurname,
       email: reservationData.value.email,
       phone: reservationData.value.phone,
-      specifications: reservationData.value.specifications,
-      tableIds: ensureArray(reservationData.value.tableIds)
+      date: availabilityData.value.date,
+      hour: String(availabilityData.value.hour).slice(0, 5),
+      language: reservationData.value.language,
+      nrPeople: Number(availabilityData.value.nrPeople),
+      specifications: reservationData.value.specifications
     };
-    console.log("converted array: ", requestReservation.tableIds);
-    console.log("request: ", requestReservation);
+    console.log("Request payload:", requestReservation);
 
-    const response = await axios.post("http://localhost:8080/api/restaurant/public/reserve", requestReservation, {
+    const response = await axios.post("http://localhost:8080/api/service/public/reserve", requestReservation, {
       headers: {"Content-Type": "application/json"}
     });
-    successMessage.value = true;
-    message.value = "Réservation effectuée avec succès !";
-
+    successMessage.value = "Réservation effectuée avec succès !";
+    message.value = true;
   } catch (error) {
     console.error("error:", error);
-    message.value = error.response?.data?.message || "Une erreur s'est produite lors de la réservation.";
+    errorMessage.value = "Une erreur s'est produite lors de la réservation.";
   }
 };
 </script>
 <template>
   <v-stepper v-model="e1" class="stepper-container">
-    <template v-slot:default="{ prev, next }">
+    <template v-slot:default="{ prev }">
       <v-stepper-header>
         <template v-for="n in steps" :key="`${n}-step`">
           <v-stepper-item
@@ -304,21 +233,20 @@ const reserveTable = async () => {
                     <v-card-text>
                       <v-form>
                         <v-row no gutters class="pa-2">
-                          <v-col class="ma-0 pa-0">
-                            <p class="form-text">Select the hall</p>
+                          <v-col cols="6" class="ma-0 pa-0 pr-2">
+                            <p class="form-text">Select the service</p>
                             <v-select
+                                style="width: 100%"
                                 density="compact"
                                 variant="outlined"
-                                v-model="availabilityData.hall"
-                                :error-messages="c$.hall.$errors.map(e => e.$message)"
-                                :items="halls"
+                                v-model="availabilityData.service"
+                                :error-messages="c$.service.$errors.map(e => e.$message)"
+                                :items="services"
                                 item-title="name"
                                 item-value="id"
                             ></v-select>
                           </v-col>
-                        </v-row>
-                        <v-row no-gutters>
-                          <v-col cols="6" class="ma-0 pr-2">
+                          <v-col cols="6" class="ma-0 pa-0">
                             <p class="form-text">Select the date</p>
                             <v-date-input
                                 style="width: 100%"
@@ -330,6 +258,19 @@ const reserveTable = async () => {
                                 :allowed-dates="isAllowedDate"
                                 :error-messages="c$.date.$errors.map(e => e.$message)"
                             ></v-date-input>
+                          </v-col>
+                        </v-row>
+                        <v-row no-gutters>
+                          <v-col cols="6" class="ma-0 pr-2">
+                            <p class="form-text">Select the hour</p>
+                            <v-select
+                                style="width: 100%"
+                                density="compact"
+                                v-model="availabilityData.hour"
+                                variant="outlined"
+                                :error-messages="c$.hour.$errors.map(e => e.$message)"
+                                :items="serviceHours">
+                              ></v-select>
                           </v-col>
                           <v-col cols="6" class="ma-0 pa-0">
                             <p class="form-text">Select the number of people</p>
@@ -345,53 +286,20 @@ const reserveTable = async () => {
                           </v-col>
                         </v-row>
                         <v-row no-gutters>
-                          <v-col cols="6" class="pr-2 ma-0">
-                            <p class="form-text">Select the arriving hour</p>
+                          <v-col cols="6" class="ma-0">
+                            <p class="form-text">Select the language</p>
                             <v-select
                                 style="width: 100%"
                                 density="compact"
-                                v-model="availabilityData.arrivingTime"
+                                v-model="reservationData.language"
                                 variant="outlined"
-                                :error-messages="c$.arrivingTime.$errors.map(e => e.$message)"
-                                :items="hours">
-                              >
-                            </v-select>
-                          </v-col>
-                          <v-col cols="6" class="pa-0 ma-0">
-                            <p class="form-text">Select the leaving hour</p>
-                            <v-select
-                                variant="outlined"
-                                style="width: 100%"
-                                density="compact"
-                                v-model="availabilityData.leavingTime"
-                                :error-messages="c$.leavingTime.$errors.map(e => e.$message)"
-                                :items="hours">
+                                :error-messages="c$.hour.$errors.map(e => e.$message)"
+                                :items="languages">
                               >
                             </v-select>
                           </v-col>
                         </v-row>
                         <v-row no-gutters>
-                          <v-col cols="4" class="pr-2 ma-0">
-                            <p class="form-text">Table IDs</p>
-                            <v-select
-                                variant="outlined"
-                                density="compact"
-                                style="width: 100%"
-                                v-model="reservationData.tableIds"
-                                :items="tables"
-                                multiple
-                            >
-                              <template v-slot:selection="{ item, index }">
-                                <v-chip v-if="index < 2" :text="item.title"></v-chip>
-
-                                <span
-                                    v-if="index === 2"
-                                    class="text-grey text-caption align-self-center"
-                                > (+{{ reservationData.tableIds.length - 2 }} others) </span>
-                              </template>
-                            </v-select>
-                          </v-col>
-
                           <v-col cols="6" class="pl-2 ma-0 d-flex align-center ">
                             <v-btn elevation="0" style="height: 40px; background-color: rgba(200,194,192,0.56)"
                                    @click="checkAvailability">Get
@@ -410,7 +318,6 @@ const reserveTable = async () => {
               <v-row no-gutters justify="center" align="start">
                 <v-col cols="12" md="12">
                   <v-card class="pa-0" elevation="0">
-
                     <h1 class="text-title">Personal Information</h1>
                     <v-card-text>
                       <v-form>
@@ -420,7 +327,7 @@ const reserveTable = async () => {
                             <v-text-field
                                 density="compact"
                                 variant="outlined"
-                                :error-messages="v$.name.$errors.map(e => e.$message)"
+                                :error-messages="v$.nameSurname.$errors.map(e => e.$message)"
                                 v-model="reservationData.name"
                             ></v-text-field>
                           </v-col>
