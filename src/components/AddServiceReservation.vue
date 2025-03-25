@@ -1,12 +1,17 @@
 <script setup>
 import {useToast} from 'vue-toastification';
 import axios from "axios";
-import {watch} from "vue";
+import {defineEmits, defineProps, watch} from "vue";
 import {VDateInput} from 'vuetify/labs/VDateInput';
 
 import {computed, ref} from 'vue'
 import {email, minLength, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+
+const props = defineProps({
+  dialog: { type: Boolean, required: true }
+});
+const emit = defineEmits(["update:dialog", "reservations-added"]);
 
 const reservationData = ref({
   nameSurname: '',
@@ -133,16 +138,17 @@ watch(() => availabilityData.value.service, async (newServiceId) => {
   await getServiceHours(newServiceId);
 });
 
-
+watch(()=> availabilityData.value.nrPeople, async () => {
+  console.log("nrPeople", availabilityData.value.nrPeople);
+  if(availabilityData.value.nrPeople) {
+    await checkAvailability();
+  }
+});
 const e1 = ref(1)
 const steps = ref(2)
 
 const successMessage = ref(null);
 const message = ref("");
-
-function ensureArray(value) {
-  return Array.isArray(value) ? value : [value];
-}
 
 const checkAvailability = async () => {
   const isValid = await c$.value.$validate();
@@ -162,6 +168,8 @@ const checkAvailability = async () => {
     const response = await axios.post("http://localhost:8080/api/service/public/check-availability", requestAvailability, {
       headers: {"Content-Type": "application/json"}
     });
+    console.log(response.data);
+    availability.value= true;
   } catch (error) {
     availability.value = false;
     availabilityErrorMessage.value = "No available spots.";
@@ -185,6 +193,10 @@ const reserveService = async () => {
       nrPeople: Number(availabilityData.value.nrPeople),
       specifications: reservationData.value.specifications
     };
+    setTimeout(() => {
+      emit('reservation-added');
+      emit('update:dialog', false);
+    }, 1000);
     console.log("Request payload:", requestReservation);
 
     const response = await axios.post("http://localhost:8080/api/service/public/reserve", requestReservation, {
@@ -273,20 +285,6 @@ const reserveService = async () => {
                               ></v-select>
                           </v-col>
                           <v-col cols="6" class="ma-0 pa-0">
-                            <p class="form-text">Select the number of people</p>
-                            <v-text-field
-                                style="width: 100%"
-                                density="compact"
-                                v-model="availabilityData.nrPeople"
-                                :error-messages="errorMessage"
-                                variant="outlined"
-                                required
-                                :min="1"
-                                type="number"></v-text-field>
-                          </v-col>
-                        </v-row>
-                        <v-row no-gutters>
-                          <v-col cols="6" class="ma-0">
                             <p class="form-text">Select the language</p>
                             <v-select
                                 style="width: 100%"
@@ -300,10 +298,20 @@ const reserveService = async () => {
                           </v-col>
                         </v-row>
                         <v-row no-gutters>
-                          <v-col cols="6" class="pl-2 ma-0 d-flex align-center ">
-                            <v-btn elevation="0" style="height: 40px; background-color: rgba(200,194,192,0.56)"
-                                   @click="checkAvailability">Get
-                            </v-btn>
+                          <v-col cols="6" class="ma-0 pr-2">
+                            <p class="form-text">Select the number of people</p>
+                            <v-text-field
+                                style="width: 100%"
+                                density="compact"
+                                v-model="availabilityData.nrPeople"
+                                :error-messages="errorMessage"
+                                variant="outlined"
+                                required
+                                :min="1"
+                                type="number"></v-text-field>
+                            <div v-if="availability === true" class="ma-0 pa-0">
+                              <h5>Places available!</h5>
+                            </div>
                           </v-col>
                         </v-row>
                       </v-form>
@@ -328,7 +336,7 @@ const reserveService = async () => {
                                 density="compact"
                                 variant="outlined"
                                 :error-messages="v$.nameSurname.$errors.map(e => e.$message)"
-                                v-model="reservationData.name"
+                                v-model="reservationData.nameSurname"
                             ></v-text-field>
                           </v-col>
                         </v-row>
@@ -386,6 +394,7 @@ const reserveService = async () => {
     </template>
   </v-stepper>
 </template>
+
 <style>
 v-stepper-header {
   display: none;

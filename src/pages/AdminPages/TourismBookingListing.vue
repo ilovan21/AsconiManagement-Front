@@ -4,7 +4,6 @@ import { useRoute } from 'vue-router';
 import StaffNavbar from '@/components/StaffNavbar.vue'
 import { VDateInput } from 'vuetify/labs/VDateInput';
 import axios from "axios";
-const currentDate = new Date();
 import { watch, shallowRef } from 'vue';
 import ReservationServiceDetailsCard from "@/components/ReservationServiceDetailsCard.vue";
 import AddServiceReservation from "@/components/AddServiceReservation.vue";
@@ -111,6 +110,9 @@ const reservationDetails = ref({
   specification:"",
   language:""
 });
+const handleAddedReservation = () =>{
+  getReservations();
+};
 const handleDeletedReservation = (reservation_id) =>{
   reservations.value=reservations.value.filter(reservation => reservation.id !== reservation_id);
 };
@@ -181,7 +183,9 @@ const handleDeletedReservation = (reservation_id) =>{
                 v-bind="activatorProps"
                 icon="mdi-plus" size="small"></v-btn>
           </template>
-          <AddServiceReservation/>
+          <AddServiceReservation :dialog="addDialog"
+                                 @update:dialog="addDialog = $event"
+                                 @reservation-added="handleAddedReservation"/>
         </v-dialog>
       </v-container>
       <v-container class="pa-0">
