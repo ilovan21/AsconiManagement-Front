@@ -53,7 +53,7 @@ function handleLogout() {
       <v-sheet class="pa-4" color="white">
         <v-list>
           <v-list-item
-              prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
+              prepend-avatar="https://static.vecteezy.com/system/resources/previews/030/504/836/non_2x/avatar-account-flat-isolated-on-transparent-background-for-graphic-and-web-design-default-social-media-profile-photo-symbol-profile-and-people-silhouette-user-icon-vector.jpg"
               :subtitle="userStore.email"
               :title="userStore.name"
           ></v-list-item>

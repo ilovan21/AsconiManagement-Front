@@ -32,7 +32,6 @@ const getUnavailableDates = async (reservationId) => {
         const dateObj = new Date(date);
         return dateObj.toISOString().split('T')[0];
       });
-      //disabledDates.value.push(minDate);
       console.log("dates", disabledDates);
     } else {
       console.error('Invalid data format:', response.data);
@@ -171,9 +170,12 @@ const checkAvailability = async () => {
       hour.value = response.data.hour;
       nrPeople.value = response.data.nrPeople;
     }
+    else{
+      availabilityErrorMessage.value = "Pas de places disponibles.";
+    }
   } catch (error) {
     availability.value = false;
-    availabilityErrorMessage.value = "No available spots.";
+    availabilityErrorMessage.value = "Pas de places disponibles.";
   }
 };
 const reserveService = async () => {
@@ -231,10 +233,10 @@ const reserveService = async () => {
     <v-row justify="center" align="start">
       <v-col cols="12" md="6">
         <v-card class="pa-5" elevation="0">
-          <h1 class="text-title">Book a place for {{ serviceTitle }}</h1>
+          <h1 class="text-title">Réservez une place pour {{ serviceTitle }}</h1>
           <v-card-text>
             <v-form>
-              <p class="form-text">Select the date</p>
+              <p class="form-text">Sélectionnez la date</p>
               <v-date-input
                   prepend-icon=""
                   variant="outlined"
@@ -242,14 +244,14 @@ const reserveService = async () => {
                   :min="minDate"
                   :allowed-dates="isAllowedDate"
                   :error-messages="c$.date.$errors.map(e => e.$message)"></v-date-input>
-              <p class="form-text">Select the hour</p>
+              <p class="form-text">Sélectionnez l'heure</p>
               <v-select
                   v-model="serviceAvailabilityData.hour"
                   :items="serviceHours"
                   :error-messages="c$.hour.$errors.map(e => e.$message)"
                   variant="outlined"
               ></v-select>
-              <p class="form-text">Select the number of people</p>
+              <p class="form-text">Sélectionnez le nombre de personnes</p>
               <v-text-field
                   v-model="serviceAvailabilityData.nrPeople"
                   variant="outlined"
@@ -257,7 +259,7 @@ const reserveService = async () => {
                   :min="0"
                   type="number"
                   :error-messages="errorMessage"></v-text-field>
-              <v-btn class="custom-button" @click="checkAvailability">Check Availability</v-btn>
+              <v-btn class="custom-button" @click="checkAvailability">Vérifier la disponibilité</v-btn>
               <p v-if="availabilityErrorMessage" class="message">{{ availabilityErrorMessage }}</p>
             </v-form>
           </v-card-text>
@@ -278,10 +280,10 @@ const reserveService = async () => {
     <v-row>
       <v-col cols="12" md="6">
         <div v-if="availability === true">
-          <p class="booking-details">Place available on {{ date }} at {{ hour.slice(0, -3) }} for {{ nrPeople }}
+          <p class="booking-details">Place disponible le {{ date }} à {{ hour.slice(0, -3) }} pour {{ nrPeople }}
             people.</p>
           <v-card class="pa-5" elevation="0">
-            <v-card-title class="text-h5">Booking Details</v-card-title>
+            <v-card-title class="text-h5">Détails de la réservation</v-card-title>
             <v-card-text>
               <v-form>
                 <v-text-field
@@ -311,7 +313,7 @@ const reserveService = async () => {
                 ></v-select>
                 <v-text-field label="Specifications" v-model="serviceReservationData.specifications"
                               variant="outlined"></v-text-field>
-                <v-btn class="custom-button" @click="reserveService">Confirm Booking</v-btn>
+                <v-btn class="custom-button" @click="reserveService">Confirmer Reservation</v-btn>
                 <p v-if="errorMessage" class="message">{{ errorMessage }}</p>
                 <div v-if="successMessage" class="message">
                   <v-snackbar v-model="message" color="success" timeout="1500">

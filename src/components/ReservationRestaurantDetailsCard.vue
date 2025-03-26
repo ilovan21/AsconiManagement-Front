@@ -95,7 +95,7 @@ const deleteReservation = async (reservation_id) => {
           <v-btn text="Supprimer" variant="plain" @click="deleteReservation(reservationDetails.id)"></v-btn>
           <v-btn text="Modifier" variant="plain"></v-btn>
         </v-col>
-        <v-col offset="7" class="text-end">
+        <v-col offset="4" class="text-end">
           <v-btn text="Fermer" variant="plain" @click="emit('update:dialog', false)"></v-btn>
         </v-col>
       </v-row>

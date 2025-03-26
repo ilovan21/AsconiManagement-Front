@@ -323,12 +323,12 @@ const reserveTable = async () => {
               <v-row no-gutters justify="center" align="start">
                 <v-col cols="12" md="12">
                   <v-card class="pa-0" elevation="0">
-                    <h1 class="text-title">Add Reservation</h1>
+                    <h1 class="text-title">Ajouter reservation</h1>
                     <v-card-text>
                       <v-form>
                         <v-row no gutters class="pa-2">
                           <v-col class="ma-0 pa-0">
-                            <p class="form-text">Select the hall</p>
+                            <p class="form-text">Sélectionnez la salle</p>
                             <v-select
                                 density="compact"
                                 variant="outlined"
@@ -342,7 +342,7 @@ const reserveTable = async () => {
                         </v-row>
                         <v-row no-gutters>
                           <v-col cols="6" class="ma-0 pr-2">
-                            <p class="form-text">Select the date</p>
+                            <p class="form-text">Sélectionnez la date</p>
                             <v-date-input
                                 style="width: 100%"
                                 density="compact"
@@ -355,7 +355,7 @@ const reserveTable = async () => {
                             ></v-date-input>
                           </v-col>
                           <v-col cols="6" class="ma-0 pa-0">
-                            <p class="form-text">Select the number of people</p>
+                            <p class="form-text">Sélectionnez le nombre de personnes</p>
                             <v-text-field
                                 style="width: 100%"
                                 density="compact"
@@ -369,7 +369,7 @@ const reserveTable = async () => {
                         </v-row>
                         <v-row no-gutters>
                           <v-col cols="6" class="pr-2 ma-0">
-                            <p class="form-text">Select the arriving hour</p>
+                            <p class="form-text">Sélectionnez l'heure d'arrivée</p>
                             <v-select
                                 style="width: 100%"
                                 density="compact"
@@ -381,7 +381,7 @@ const reserveTable = async () => {
                             </v-select>
                           </v-col>
                           <v-col cols="6" class="pa-0 ma-0">
-                            <p class="form-text">Select the leaving hour</p>
+                            <p class="form-text">Sélectionnez l'heure de départ</p>
                             <v-select
                                 variant="outlined"
                                 style="width: 100%"
@@ -417,7 +417,7 @@ const reserveTable = async () => {
 
                           <v-col cols="6" class="pl-2 ma-0 d-flex align-center ">
                             <v-btn elevation="0" style="height: 40px; background-color: rgba(200,194,192,0.56)"
-                                   @click="checkAvailability">Get
+                                   @click="checkAvailability">Obtenir table
                             </v-btn>
                           </v-col>
                         </v-row>
@@ -434,12 +434,12 @@ const reserveTable = async () => {
                 <v-col cols="12" md="12">
                   <v-card class="pa-0" elevation="0">
 
-                    <h1 class="text-title">Personal Information</h1>
+                    <h1 class="text-title">Informations Personnelles</h1>
                     <v-card-text>
                       <v-form>
                         <v-row no-gutters>
                           <v-col class="ma-0 pa-0">
-                            <p class="form-text">Name Surname</p>
+                            <p class="form-text">Nom</p>
                             <v-text-field
                                 density="compact"
                                 variant="outlined"
@@ -459,7 +459,7 @@ const reserveTable = async () => {
                             ></v-text-field>
                           </v-col>
                           <v-col cols="6" class="ma-0 pa-0">
-                            <p class="form-text">Phone</p>
+                            <p class="form-text">Telephone</p>
                             <v-text-field
                                 density="compact"
                                 variant="outlined"
@@ -486,7 +486,7 @@ const reserveTable = async () => {
               </v-row>
               <div v-if="successMessage" class="message">
                 <v-snackbar v-model="successMessage" color="success" timeout="3000">
-                  Reservation added successfully!
+                  Réservation ajoutée avec succès !
                 </v-snackbar>
               </div>
             </v-container>
@@ -495,7 +495,7 @@ const reserveTable = async () => {
       </v-stepper-window>
       <v-stepper-actions
           :disabled="e1 === 1 ? 'prev' : false"
-          :next-text="e1 === steps ? 'Make Reservation' : 'Next'"
+          :next-text="e1 === steps ? 'Confirmer reservation' : 'Suivant'"
           @click:next="handleNext"
           @click:prev="prev"
       />

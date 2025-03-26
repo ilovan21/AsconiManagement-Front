@@ -78,7 +78,7 @@ const deleteReservation = async (reservation_id) => {
     <v-divider></v-divider>
     <v-card-actions>
       <v-row>
-        <v-col cols="12">
+        <v-col>
           <v-btn text="Supprimer" variant="plain" @click="deleteReservation(reservationDetails.id)"></v-btn>
           <v-btn text="Modifier" variant="plain"></v-btn>
         </v-col>

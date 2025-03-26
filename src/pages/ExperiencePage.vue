@@ -23,7 +23,7 @@ import TraditionalElement from "@/components/TraditionalElement.vue";
       description="Avez-vous déjà vu la chaleur de la vinification? Le rosé est-il un mélange de vins blancs et de vins rouges ? Quelle est la différence entre coupage et cépage ? Pourquoi le vin de glace a-t-il un arôme et un goût si intenses ?
        Réservez une visite de notre domaine et vous trouverez les réponses à toutes ces questions et bien plus encore."
       additionalInfo="La visite est guidée et dure 30 minutes."
-      buttonText="Reserver un place"
+      buttonText="Reserver "
       image="src/assets/tour.jpg"
   />
   <TraditionalElement/>
@@ -33,7 +33,7 @@ import TraditionalElement from "@/components/TraditionalElement.vue";
       description="Vous êtes-vous déjà demandé ce qui rend chaque vin unique en termes de goût et d'arôme ?Réservez une séance de dégustation et découvrez le monde fascinant du vin, apprenez les secrets derrière chaque bouteille et explorez
       les accords parfaits qui sublimeront votre expérience culinaire."
       additionalInfo="La dégustation dure un maximum de 45 minutes, en fonction du nombre de vins choisis."
-      buttonText="Reserver un place"
+      buttonText="Reserver"
       image="src/assets/tasting.jpg"
   />
 <TraditionalElement/>
@@ -43,7 +43,7 @@ import TraditionalElement from "@/components/TraditionalElement.vue";
       description="L'un des meilleurs aspects de la Moldavie est notre plăcintă, une pâtisserie sucrée ou salée avec des garnitures variées, allant de la citrouille au fromage cottage, aux pommes de terre et bien plus encore. Ici, à Asconi, nous sommes connus pour nos
       plăcinte."
       additionalInfo="Réservez dès maintenant votre masterclass de pâtisserie, afin de pouvoir préparer votre propre plăcintă plus tard !"
-      buttonText="Reserver un place"
+      buttonText="Reserver"
       image="src/assets/baking.jpg"
   />
 <TraditionalElement/>
@@ -56,7 +56,7 @@ Réservez maintenant et découvrez cette forme d'art unique avec Vasile Botnaru 
 vous repartirez avec une bouteille de vin dont l'étiquette sera peinte par vous-même !
 "
       additionalInfo=""
-      buttonText="Reserver un place"
+      buttonText="Reserver"
       image="src/assets/wine-art.jpeg"
   />
 <TraditionalElement/>

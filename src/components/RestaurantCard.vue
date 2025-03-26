@@ -62,7 +62,7 @@ const navigateToHall = (id) => {
         <v-btn
             class="custom-button"
         >
-          {{ "Menu And Wine List" }}
+          {{ "Menu et Carte des Vins" }}
         </v-btn>
       </v-col>
       <v-col>

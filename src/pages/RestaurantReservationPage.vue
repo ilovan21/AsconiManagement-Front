@@ -275,7 +275,7 @@ const reserveTable = async () => {
                   :min="1"
                   type="number"
                   :error-messages="errorMessage"></v-text-field>
-              <v-btn class="custom-button" @click="checkAvailability">Vérifier la disponibilité</v-btn>
+              <v-btn class="custom-button" @click="checkAvailability">Vérifier disponibilité</v-btn>
               <p v-if="availabilityErrorMessage" class="message">{{ availabilityErrorMessage }}</p>
             </v-form>
           </v-card-text>
