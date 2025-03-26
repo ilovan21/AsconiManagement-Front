@@ -1,13 +1,19 @@
 <script setup>
 import {useToast} from 'vue-toastification';
 import axios from "axios";
-import {watch} from "vue";
+import {defineEmits, defineProps, watch} from "vue";
 import {VDateInput} from 'vuetify/labs/VDateInput';
 
 const toast = useToast();
 import {computed, ref} from 'vue'
 import {email, minLength, required} from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+
+const props = defineProps({
+  dialog: { type: Boolean, required: true }
+});
+const emit = defineEmits(["update:dialog", "reservations-added"]);
+
 
 const tables = [21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 31, 32, 33, 34];
 const reservationData = ref({
@@ -262,6 +268,10 @@ const reserveTable = async () => {
     });
     successMessage.value = true;
     message.value = "Réservation effectuée avec succès !";
+    setTimeout(() => {
+      emit('reservation-added');
+      emit('update:dialog', false);
+    }, 1000);
 
   } catch (error) {
     console.error("error:", error);

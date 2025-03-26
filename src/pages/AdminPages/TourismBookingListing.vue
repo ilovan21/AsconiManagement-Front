@@ -111,6 +111,7 @@ const reservationDetails = ref({
   language:""
 });
 const handleAddedReservation = () =>{
+  console.log("handle added reservation")
   getReservations();
 };
 const handleDeletedReservation = (reservation_id) =>{
@@ -217,7 +218,7 @@ const handleDeletedReservation = (reservation_id) =>{
                     :reservationDetails="reservationDetails"
                     :dialog="dialog"
                     @update:dialog="dialog = $event"
-                    @reservation-deleted="handleDeletedReservation"/>/>
+                    @reservation-deleted="handleDeletedReservation"/>
               </v-dialog>
             </v-col>
           </v-row>

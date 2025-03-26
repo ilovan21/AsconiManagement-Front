@@ -8,6 +8,7 @@ const currentFormatedDate = currentDate.toISOString().split('T')[0];
 import { watch } from 'vue';
 import ReservationRestaurantDetailsCard from "@/components/ReservationRestaurantDetailsCard.vue";
 import AddReservation from "@/components/AddReservation.vue";
+import AddServiceReservation from "@/components/AddServiceReservation.vue";
 const reservations=ref([]);
 function formatForRequest(date) {
   if (date) {
@@ -101,6 +102,10 @@ const reservationDetails = ref({
   specification:"",
   tableIds:[]
 });
+
+const handleAddedReservation = () =>{
+  getReservations();
+}
 
 const responseStatus = ref(false);
 const getReservations = async () => {
@@ -230,7 +235,9 @@ const handleReservationDeleted = (reservation_id) => {
                 v-bind="activatorProps"
                 icon="mdi-plus" size="small"></v-btn>
             </template>
-              <AddReservation/>
+              <AddReservation :dialog="addDialog"
+                                     @update:dialog="addDialog = $event"
+                                     @reservation-added="handleAddedReservation"/>
               </v-dialog>
       </v-container>
       <v-container class="pa-0">

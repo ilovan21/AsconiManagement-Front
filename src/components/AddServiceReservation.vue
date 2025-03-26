@@ -187,7 +187,7 @@ const reserveService = async () => {
       nameSurname: reservationData.value.nameSurname,
       email: reservationData.value.email,
       phone: reservationData.value.phone,
-      date: availabilityData.value.date,
+      date: formatForRequest(availabilityData.value.date),
       hour: String(availabilityData.value.hour).slice(0, 5),
       language: reservationData.value.language,
       nrPeople: Number(availabilityData.value.nrPeople),

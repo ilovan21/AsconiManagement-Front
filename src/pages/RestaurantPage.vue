@@ -14,25 +14,31 @@ import {hallList, hallList2} from "@/constants/hallList.js";
   <ImageComponent :src="restaurant"/>
   <TraditionalElement/>
   <h2 class="text">Restaurants</h2>
-  <p>From our passion for hospitality was born the idea to develop the tourist part of the winery.
-    Our goal is to keep rural traditions intact, while maintaining the standards and new trends of wine tourism.</p>
+  <p>C'est de notre passion pour l'hospitalité qu'est née l'idée de développer la partie touristique de la cave.
+    Notre objectif est de préserver intactes les traditions rurales tout en respectant les standards et les nouvelles tendances de l'œnotourisme.</p>
   <TraditionalElement/>
   <RestaurantCard
       title="Asconi Restaurant"
-      description="With the aim of showcasing the most authentic Moldovan traditions, the winery’s first restaurant, ASCONI brings you the true heritage, tastes and aromas of Moldova. Together with our kitchen team, we have researched our families’ recipes and compiled our favorites, bringing you authentic tastes, cooked with fresh ingredients and sprinkled with love, just like Grandmother used to make it!"
-      additionalInfo="ASCONI restaurant covers a couple of halls and terraces:"
+      description="Dans le but de mettre en valeur les traditions les plus authentiques de la Moldavie,
+       le premier restaurant de la cave, ASCONI, vous offre le véritable héritage, les saveurs et les arômes de la Moldavie.
+        Nous avons étudié les recettes de nos familles et compilé nos préférées,
+        vous apportant des saveurs authentiques, préparées avec des ingrédients frais et saupoudrées d'amour!"
+      additionalInfo="Le restaurant ASCONI comprend plusieurs salles et terrasses :"
       :list="hallList"
       image="src/assets/vinoteca.jpg"
-      availability="Daily from 11:00 to 22:00"
+      availability="Tous les jours de 11h00 à 22h00"
   />
   <TraditionalElement/>
   <RestaurantCard
       title="Sol Negru Restaurant"
-      description="With the aim of showcasing the most authentic Moldovan traditions, the winery’s first restaurant, ASCONI brings you the true heritage, tastes and aromas of Moldova. Together with our kitchen team, we have researched our families’ recipes and compiled our favorites, bringing you authentic tastes, cooked with fresh ingredients and sprinkled with love, just like Grandmother used to make it!"
-      additionalInfo="ASCONI restaurant covers a couple of halls and terraces:"
+      description="Dans le but de mettre en valeur les traditions les plus authentiques de la Moldavie,
+       le premier restaurant de la cave, SOL NEGRU, vous offre le véritable héritage, les saveurs et les arômes de la Moldavie.
+        Nous avons étudié les recettes de nos familles et compilé nos préférées,
+        vous apportant des saveurs authentiques!"
+      additionalInfo="Le restaurant SOL NEGRU comprend plusieurs salles et terrasses :"
       :list= "hallList2"
       image="src/assets/solnegru2.jpg"
-      availability="Only in weekends, from 11:00 to 22:00"
+      availability="Tous les jours de 11h00 à 22h00"
   />
 
   <TraditionalElement/>

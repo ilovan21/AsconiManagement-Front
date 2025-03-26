@@ -85,24 +85,24 @@ import {ref} from "vue";
 export default {
   data: () => ({
     links: [
-      { name: 'HOME', url: '/' },
-      { name: 'THE WINERY', url: '#' },
-      { name: 'GUEST HOUSE', url: '#' },
+      { name: 'ACCUEIL', url: '/' },
+      { name: 'CAVE', url: '#' },
+      { name: 'MAISON D’HÔTES', url: '#' },
       { name: 'RESTAURANT', url: '/restaurant' },
-      { name: 'EXPERIENCES', url: '/experiences' },
+      { name: 'EXPÉRIENCES', url: '/experiences' },
       { name: 'EVENTS', url: '#' },
-      { name: 'GALLERY', url: '#' },
-      { name: 'CSR', url: '#' },
-      { name: 'WINES', url: '#' },
-      { name: 'CONTACT US', url: '#' }
+      { name: 'ÉVÉNEMENTS', url: '#' },
+      { name: 'RSE', url: '#' },
+      { name: 'VINS', url: '#' },
+      { name: 'SE CONNECTER', url: '#' }
     ],
     links2: [
-      { name: 'PRIVACY POLICY', url: '#' },
-      { name: 'TERMS OF SERVICE', url: '#' },
-      { name: 'SHIPPING POLICY', url: '#' },
-      { name: 'TERMS AND CONDITIONS', url: '#' },
-      { name: 'SECURITY POLICY AND CARD PAYMENTS', url: '#' },
-      { name: 'FOOD SAFETY POLICY', url: '#' },
+      { name: 'POLITIQUE DE CONFIDENTIALITÉ', url: '#' },
+      { name: 'CONDITIONS D’UTILISATION', url: '#' },
+      { name: 'POLITIQUE D’EXPÉDITION', url: '#' },
+      { name: 'TERMES ET CONDITIONS', url: '#' },
+      { name: 'POLITIQUE DE SÉCURITÉ ET PAIEMENTS PAR CARTE', url: '#' },
+      { name: 'POLITIQUE DE SÉCURITÉ ALIMENTAIRE', url: '#' },
     ],
   }),
 }

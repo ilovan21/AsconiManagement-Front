@@ -15,9 +15,9 @@ const section = ref(route.path.includes('tourism') ? 'tourism' : 'restaurant');
 const tab = ref(section.value);
 
 const links = computed(() => [
-  { title: 'Overview', path: `/overview/${section.value}`, icon: 'mdi-view-dashboard' },
-  { title: 'Management', path: `/management/${section.value}`, icon: 'mdi-cog' },
-  { title: 'Booking Listing', path: `/listing/${section.value}`, icon: 'mdi-format-list-bulleted' }
+  { title: 'Aperçu', path: `/overview/${section.value}`, icon: 'mdi-view-dashboard' },
+  { title: 'Gestion', path: `/management/${section.value}`, icon: 'mdi-cog' },
+  { title: 'Liste des Réservations', path: `/listing/${section.value}`, icon: 'mdi-format-list-bulleted' }
 ]);
 
 watch(section, (newSection) => {

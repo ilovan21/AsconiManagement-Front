@@ -12,15 +12,15 @@ const imageOptions = [
 const selectedImage = ref(romania);
 
 const links = ref([
-  { name: 'HOME', url: '/' },
-  { name: 'WINERY', url: 'events' },
-  { name: 'GUESTHOUSE', url: '/guesthouse' },
-  { name: 'RESTAURANTS & POOL', url: '/restaurant' },
-  { name: 'EXPERIENCES', url: '/experiences' },
-  { name: 'EVENTS', url: '/events' },
-  { name: 'GALLERY', url: '/gallery' },
-  { name: 'CSR', url: '/csr' },
-  { name: 'WINES', url: '/gallery' },
+  { name: 'ACCUEIL', url: '/' },
+  { name: 'CAVE', url: 'events' },
+  { name: 'MAISON D’HOTES', url: '/guesthouse' },
+  { name: 'RESTAURANTS', url: '/restaurant' },
+  { name: 'EXPÉRIENCES', url: '/experiences' },
+  { name: 'ÉVÉNEMENTS', url: '/events' },
+  { name: 'GALLERIE', url: '/gallery' },
+  { name: 'RSE', url: '/csr' },
+  { name: 'VINS', url: '/gallery' },
   { name: 'CONNECT', url: '/auth' }
 ]);
 </script>

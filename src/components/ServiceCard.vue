@@ -8,7 +8,7 @@ defineProps({
   title: { type: String, required: true },
   description: { type: String, required: true },
   additionalInfo: { type: String, default: '' },
-  buttonText: { type: String, default: 'Make A Reservation' },
+  buttonText: { type: String, default: 'Reserver un place' },
   image: { type: String, required: true },
 });
 

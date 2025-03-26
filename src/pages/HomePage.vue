@@ -18,26 +18,26 @@ import HomePageElement from "@/components/HomePageElement.vue";
   <HomePageElement
                title="Asconi Winery"
                image="src/assets/asconi-winery-home.png"
-               description="Wine, food, and hospitality runs through the veins of every Moldovan, however for us it has a separate place in our hearts. For us this is more than just a business, it’s the fruit of our passion and hard work. Every single bottle, dish and the entire atmosphere within, is created with love. We strive for the highest quality of wine, mouthwatering meals and warmest welcomes.
-As Vince Lombardi once said “Perfection is not attainable but if we chase perfection we can catch excellence!”">
+               description="Le vin, la nourriture et l'hospitalité coulent dans les veines de chaque Moldave, mais pour nous, cela occupe une place particulière dans nos cœurs. Pour nous, c'est bien plus qu'un simple commerce, c'est le fruit de notre passion et de notre travail acharné. Chaque bouteille, chaque plat et toute l'atmosphère qui y règne sont créés avec amour. Nous visons la plus haute qualité de vin, des repas savoureux et un accueil chaleureux.
+Comme l'a dit Vince Lombardi : La perfection n'est pas atteignable, mais si nous poursuivons la perfection, nous pourrons atteindre l'excellence !">
   </HomePageElement>
   <TraditionalElement/>
   <HomePageElement
-      title="The Production"
+      title="La Production"
       image="src/assets/tour.jpg"
-      description="Using the latest Italian technology, Asconi Winery has a production of over 3 million bottles per year, focusing mainly on white and red wines. The winery also produces roses, sparkling and dessert wines in more exclusive productions.
-Stainless steel tanks for both fermentation and storage that can hold up to 30,000, 60,000 and 150,000 liters each, juice concentrator*, a state-of-the-art bottling line with a speed of 8,000 bottles per hour – all these add to the quality of our wines."
-      additional-info="*A juice concentrator is used to produce concentrated juice from the grapes in order to produce semi dry, semi sweet and sweet wines."></HomePageElement>
+      description="Utilisant la dernière technologie italienne, la cave Asconi produit plus de 3 millions de bouteilles par an, se concentrant principalement sur les vins blancs et rouges. La cave produit également des rosés, des vins effervescents et des vins de dessert dans des productions plus exclusives.
+Des cuves en inox pour la fermentation et le stockage, un concentrateur de jus*, une ligne de mise en bouteille à la pointe de la technologie avec une capacité de 8 000 bouteilles par heure – tous ces éléments contribuent à la qualité de nos vins."
+      additional-info="*Un concentrateur de jus est utilisé pour produire du jus concentré à partir des raisins afin de produire des vins demi-secs, demi-doux et doux."></HomePageElement>
   <TraditionalElement/>
-  <h2 class="text"> “Perfection is not attainable but if we chase perfection we can catch excellence!”</h2>
+  <h2 class="text"> “La perfection est inatteignable, mais en poursuivant la perfection, nous pouvons atteindre l’excellence!”</h2>
   <TraditionalElement/>
   <HomePageElement
-      title="Family Passsion"
+      title="Passion Familiale"
       image="src/assets/as.jpg"
-      description="Asconi Winery is a family business founded in 1994, which aims at producing the best possible wine, using the latest technology, whilst maintaining the traditions of the local people.
-As a family business, Asconi Winery is a home, the local people are our community and the local traditions our heritage, thus we are excited to share our home with you. "
-      additional-info="Visit our winery, discover our wines, taste our food and share our success and accomplishments with us, because no matter where you are from, you will always have a home at Asconi Winery."></HomePageElement>
-
+      description="La cave Asconi est une entreprise familiale fondée en 1994, qui vise à produire le meilleur vin possible en utilisant les dernières technologies, tout en préservant les traditions locales.
+En tant qu'entreprise familiale, la cave Asconi est notre maison, les habitants sont notre communauté et les traditions locales, notre héritage. C'est avec enthousiasme que nous partageons notre maison avec vous."
+      additional-info="Visitez notre cave, découvrez nos vins, goûtez notre cuisine et partagez notre succès et nos réalisations avec nous, car peu importe d'où vous venez, vous aurez toujours une maison à la cave Asconi.."></HomePageElement>
+<TraditionalElement/>
   <ClientFooter/>
 </template>
 <style scoped>
