@@ -13,48 +13,54 @@ import TraditionalElement from "@/components/TraditionalElement.vue";
   <ClientNavbar/>
   <ImageComponent :src="experiences" />
   <TraditionalElement/>
-  <h2 class="text">Experiences &amp; Activities</h2>
-  <p>From our passion for hospitality was born the idea to develop the tourist part of the winery.
-    Our goal is to keep rural traditions intact, while maintaining the standards and new trends of wine tourism.</p>
+  <h2 class="text">Expériences &amp; Activités</h2>
+  <p>De notre passion pour l'hospitalité est née l'idée de développer la partie touristique du domaine.
+    Notre objectif est de préserver les traditions rurales, tout en conservant les standards et les nouvelles tendances de l'œnotourisme.</p>
   <TraditionalElement/>
   <ServiceCard
       id="1"
-      title="Wine Tour"
-      description="Have you ever seen the heat of wine making? Is rosé wine a mix of white and red wines? What is the difference between coupage and cepage? Why does Ice Wine have such intense aroma and taste? Book a tour around our winery and you will find the answers to all these questions and much more."
-      additionalInfo="The tour is guided and lasts 30 minutes."
-      buttonText="Make A Reservation"
+      title="Visite du crame"
+      description="Avez-vous déjà vu la chaleur de la vinification? Le rosé est-il un mélange de vins blancs et de vins rouges ? Quelle est la différence entre coupage et cépage ? Pourquoi le vin de glace a-t-il un arôme et un goût si intenses ?
+       Réservez une visite de notre domaine et vous trouverez les réponses à toutes ces questions et bien plus encore."
+      additionalInfo="La visite est guidée et dure 30 minutes."
+      buttonText="Reserver un place"
       image="src/assets/tour.jpg"
   />
   <TraditionalElement/>
   <ServiceCard
       id="2"
-      title="Wine Tasting"
-      description="Have you ever seen the heat of wine making? Is rosé wine a mix of white and red wines? What is the difference between coupage and cepage? Why does Ice Wine have such intense aroma and taste? Book a tour around our winery and you will find the answers to all these questions and much more."
-      additionalInfo="The tour is guided and lasts 30 minutes."
-      buttonText="Make A Reservation"
+      title="Degustation"
+      description="Vous êtes-vous déjà demandé ce qui rend chaque vin unique en termes de goût et d'arôme ?Réservez une séance de dégustation et découvrez le monde fascinant du vin, apprenez les secrets derrière chaque bouteille et explorez
+      les accords parfaits qui sublimeront votre expérience culinaire."
+      additionalInfo="La dégustation dure un maximum de 45 minutes, en fonction du nombre de vins choisis."
+      buttonText="Reserver un place"
       image="src/assets/tasting.jpg"
   />
 <TraditionalElement/>
   <ServiceCard
       id="4"
-      title="Baking Workshop"
-      description="One of the best things about Moldova is our plăcinta which is a sweet or savoury pastry with fillings that vary from pumpkin to cottage cheese, potatoes and many more. Here at Asconi we are known for our mouthwatery, flaky and just melt in your mouth plăcintas."
-      additionalInfo="Book your baking masterclass now, so that you can make your own plăcinta later!"
-      buttonText="Make A Reservation"
+      title="Atelier de Pâtisserie"
+      description="L'un des meilleurs aspects de la Moldavie est notre plăcintă, une pâtisserie sucrée ou salée avec des garnitures variées, allant de la citrouille au fromage cottage, aux pommes de terre et bien plus encore. Ici, à Asconi, nous sommes connus pour nos
+      plăcinte."
+      additionalInfo="Réservez dès maintenant votre masterclass de pâtisserie, afin de pouvoir préparer votre propre plăcintă plus tard !"
+      buttonText="Reserver un place"
       image="src/assets/baking.jpg"
   />
 <TraditionalElement/>
   <ServiceCard
       id="3"
-      title="Wine Art"
-      description="Did you know that wine painting is considered one of the most unpredictable forms of art? The color ranges offered by wines cannot be imitated by any other pigment!
-Book now and discover this unique art form with Vasile Botnaru! And the best part, you get to take home a bottle of wine with the label painted by none other than you!"
+      title="Art du Vin"
+      description="Saviez-vous que la peinture au vin est considérée comme l'une des formes d'art les plus imprévisibles ?
+Les gammes de couleurs offertes par les vins ne peuvent être imitées par aucun autre pigment !
+Réservez maintenant et découvrez cette forme d'art unique avec Vasile Botnaru ! Et le meilleur dans tout ça,
+vous repartirez avec une bouteille de vin dont l'étiquette sera peinte par vous-même !
+"
       additionalInfo=""
-      buttonText="Make A Reservation"
+      buttonText="Reserver un place"
       image="src/assets/wine-art.jpeg"
   />
 <TraditionalElement/>
-  <h2 class="text-bottom">More infos at asconi@winery.md</h2>
+  <h2 class="text-bottom">Plus d'infos sur asconi@winery.md</h2>
   <ClientFooter/>
 </template>
 

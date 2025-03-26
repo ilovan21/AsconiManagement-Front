@@ -4,8 +4,8 @@ export const hallList = [
         id: 1,
         title: "Casa cu Sobe",
         list: [
-            {text: 'Capacity: 72 pax'},
-            {text: 'Style: traditional, rustic'}
+            {text: 'Capacité : 72 pax'},
+            {text: 'Style: traditionnel, rustique'}
         ],
         image: "src/assets/casacusobe.jpg",
     },
@@ -14,9 +14,9 @@ export const hallList = [
         id: 2,
         title: "Vinoteca",
         list: [
-            {text: 'Capacity: 100 pax'},
-            {text: 'Area: 200 m2'},
-            {text: 'Style: the winery’s young collection, with traditional elements'}
+            {text: 'Capacité: 100 pax'},
+            {text: 'Surface: 200 m2'},
+            {text: 'Style:  la jeune collection de la cave, avec des éléments traditionnels'}
         ],
         image: "src/assets/vinoteca.jpeg"
     },
@@ -25,9 +25,9 @@ export const hallList = [
         id: 3,
         title: "Cerdac",
         list: [
-            {text: 'Capacity: 70 pax'},
-            {text: 'Area: 90 m2'},
-            {text: 'Style: traditional, rustic'}
+            {text: 'Capacité: 70 pax'},
+            {text: 'Surface: 90 m2'},
+            {text: 'Style: traditionnel, rustique'}
         ],
         image: "src/assets/cerdac.jpeg",
     },
@@ -36,9 +36,9 @@ export const hallList = [
         id: 4,
         title: "Casa de Vară",
         list: [
-            {text: 'Capacity: 40 pax'},
-            {text: 'Area: 75 m2'},
-            {text: 'Style: classic with rustic elements'}
+            {text: 'Capacité: 40 pax'},
+            {text: 'Surface: 75 m2'},
+            {text: 'Style: classic avec elements rustiques'}
         ],
         image: "src/assets/casadevara.jpeg"
     },
@@ -47,9 +47,9 @@ export const hallList = [
         id: 6,
         title: "Terasa de la Cuptor",
         list: [
-            {text: 'Capacity: 52 pax'},
-            {text: 'Area: 72 m2'},
-            {text: 'Style: traditional, accompanied by the aroma of freshly baked bread'}
+            {text: 'Capacité: 52 pax'},
+            {text: 'Surface: 72 m2'},
+            {text: 'Style : traditionnel, accompagné de l\'arôme du pain fraîchement cuit'}
         ],
         image: "src/assets/terasacuptor.jpeg"
     },
@@ -58,9 +58,9 @@ export const hallList = [
         id: 5,
         title: "Terasa de la Găini",
         list: [
-            {text: 'Capacity: 40 pax'},
-            {text: 'Area: 60 m2'},
-            {text: 'Style: traditional, covered with vines'}
+            {text: 'Capacité: 40 pax'},
+            {text: 'Surface: 60 m2'},
+            {text: 'Style: traditionnel, couvert des vignes'}
         ],
         image: "src/assets/terasagaini.jpeg"
     }
@@ -72,8 +72,8 @@ export const hallList2 = [
         id: 9,
         title: "Entrance",
         list: [
-            {text: 'Capacity: 16 pax'},
-            {text: 'Style: traditional with a Balkan twist'}
+            {text: 'Capacité: 16 pax'},
+            {text: 'Style: traditionnel avec une touche balkanique'}
         ],
         image: "src/assets/entrance.jpg"
     },
@@ -82,9 +82,9 @@ export const hallList2 = [
         id: 10,
         title: "Left Room",
         list: [
-            {text: 'Capacity: 26 pax'},
-            {text: 'Area: 26 m2'},
-            {text: 'Style: traditional, rustic'}
+            {text: 'Capacité: 26 pax'},
+            {text: 'Surface: 26 m2'},
+            {text: 'Style: traditionnel, rustique'}
         ],
         image: "src/assets/leftroom.jpg"
     },
@@ -93,9 +93,9 @@ export const hallList2 = [
         id: 11,
         title: "Right Room",
         list: [
-            {text: 'Capacity: 40 pax'},
-            {text: 'Area: 51 m2'},
-            {text: 'Style: warm and colourful, decorated with carpets and rustic elements'}
+            {text: 'Capacité: 40 pax'},
+            {text: 'Surface: 51 m2'},
+            {text: 'Style : chaleureux et coloré, décoré avec des tapis et des éléments rustiques'}
         ],
         image: "src/assets/rightroom.jpg"
     },
@@ -104,9 +104,9 @@ export const hallList2 = [
         id: 12,
         title: "SOL NEGRU Terrace",
         list: [
-            {text: 'Capacity: 80 pax'},
-            {text: 'Area: 176 m2'},
-            {text: 'Style: traditional rustic'}
+            {text: 'Capacité: 80 pax'},
+            {text: 'Surface: 176 m2'},
+            {text: 'Style: traditionnel, rustique'}
         ],
         image: "src/assets/terrace.jpeg"
     },
@@ -115,8 +115,8 @@ export const hallList2 = [
         id: 13,
         title: "2nd Floor",
         list: [
-            {text: 'Capacity: 100 pax'},
-            {text: 'Style: traditional rustic'}
+            {text: 'Capacité: 100 pax'},
+            {text: 'Style: traditionnel, rustique'}
         ],
         image: "src/assets/2ndfloor.jpg"
     },
@@ -125,8 +125,8 @@ export const hallList2 = [
         id: 14,
         title: "Terasa de la Salcâmi (Acacia Terrace)",
         list: [
-            {text: 'Capacity: 50 pax'},
-            {text: 'Style: on the grass, under the shadow of the acacias'}
+            {text: 'Capacité: 50 pax'},
+            {text: 'Style : sur l\'herbe, à l\'ombre des acacias'}
         ],
         image: "src/assets/accacia.jpg"
     }
@@ -145,7 +145,7 @@ export const restaurants = [
             {text: 'Terasa de la Găini'}
         ],
         image: "src/assets/asconirest.jpg",
-        buttonText: "Menu and Wine List",
+        buttonText: "Menu et Carte des Vins",
     },
     {
         hash: "sol-negru",
@@ -160,6 +160,6 @@ export const restaurants = [
             {text: 'Terasa Cuptor'}
         ],
         image: "src/assets/solnegru2.jpg",
-        buttonText: "Menu and Wine List"
+        buttonText: "Menu et Carte des Vins"
     }
 ]

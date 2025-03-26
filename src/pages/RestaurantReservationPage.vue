@@ -27,6 +27,12 @@ const checkAvailabilityRules = computed(() => ({
   nrPeople:{required}
 }));
 
+const leavingHours=ref([]);
+const filterHours = (selectedHour) =>{
+  return hours.filter((hour) => {
+    return hour > selectedHour;
+  });
+};
 function formatForRequest(date) {
   if (date) {
     const year = date.getFullYear();
@@ -87,6 +93,16 @@ const restaurantReservationData = ref({
   specifications: ""
 });
 
+
+watch(restaurantAvailabilityData, (newValue) => {
+  console.log(newValue.arrivingTime);
+  if(newValue.arrivingTime) {
+    leavingHours.value = filterHours(newValue.arrivingTime);
+    console.log("leavingHours from watch", leavingHours.value);
+  }
+},{ deep: true });
+
+
 const v$ = useVuelidate(rules, restaurantReservationData);
 const c$=useVuelidate(checkAvailabilityRules,restaurantAvailabilityData);
 
@@ -105,25 +121,17 @@ watch(restaurantAvailabilityData, async (newValue) => {
   if (formatForRequest(newValue.date) === minDate) {
     const today = new Date();
     const time = today.getHours() + ":" + today.getMinutes();
-    hours = hours.filter((hour) => {
-      return hour >= time;
-    });
+    hours = hours.filter((hour) => hour >= time);
     console.log("available hours: ", hours);
   }
 }, {deep: true});
-
-watch(restaurantAvailabilityData, (newData) => {
-  date.value = newData.date;
-  arrivingTime.value = newData.arrivingTime;
-  leavingTime.value = newData.leavingTime;
-  nrPeople.value = newData.nrPeople;
-});
 const errorMessage=ref(null);
 
 watch(restaurantAvailabilityData, () => {
   availability.value = null;
   reservationMessage.value = "";
 }, { deep: true });
+
 watch(() => restaurantAvailabilityData.value.nrPeople, (newValue) => {
   const maxPeople = 20;
   if (newValue > maxPeople) {
@@ -134,6 +142,8 @@ watch(() => restaurantAvailabilityData.value.nrPeople, (newValue) => {
     errorMessage.value = "";
   }
 });
+
+
 const checkAvailability = async () => {
   const isValid = await c$.value.$validate();
   if (!isValid) {
@@ -232,10 +242,10 @@ const reserveTable = async () => {
     <v-row justify="center" align="start">
       <v-col cols="12" md="6">
         <v-card class="pa-5" elevation="0">
-          <h1 class="text-title">Book a table in {{ hallName }}</h1>
+          <h1 class="text-title">Réservez une table dans {{ hallName }}</h1>
           <v-card-text>
             <v-form>
-              <p class="form-text">Select the date</p>
+              <p class="form-text">Sélectionnez la date</p>
                 <v-date-input
                     prepend-icon=""
                     variant="outlined"
@@ -243,20 +253,21 @@ const reserveTable = async () => {
                     :min="minDate"
                 :allowed-dates="isAllowedDate"
                     :error-messages="c$.date.$errors.map(e => e.$message)"></v-date-input>
-              <p class="form-text">Select the arriving hour</p>
+              <p class="form-text">Sélectionnez l'heure d'arrivée</p>
               <v-select
                   v-model="restaurantAvailabilityData.arrivingTime"
                   :items="hours"
                   :error-messages="c$.arrivingTime.$errors.map(e => e.$message)">
                   variant="outlined"
               ></v-select>
-              <p class="form-text">Select the leaving hour</p>
-              <v-text-field
-                  v-model="restaurantAvailabilityData.leavingTime"
-                  variant="outlined"
-                  required
-                  :error-messages="c$.leavingTime.$errors.map(e => e.$message)"></v-text-field>
-              <p class="form-text">Select the number of people</p>
+              <p class="form-text">Sélectionnez l'heure de départ</p>
+              <v-select
+              v-model="restaurantAvailabilityData.leavingTime"
+              :items="leavingHours"
+              :error-messages="c$.leavingTime.$errors.map(e => e.$message)">
+              variant="outlined"
+              ></v-select>
+              <p class="form-text">Sélectionnez le nombre de personnes</p>
               <v-text-field
                   v-model="restaurantAvailabilityData.nrPeople"
                   variant="outlined"
@@ -264,7 +275,7 @@ const reserveTable = async () => {
                   :min="1"
                   type="number"
                   :error-messages="errorMessage"></v-text-field>
-              <v-btn class="custom-button" @click="checkAvailability">Check Availability</v-btn>
+              <v-btn class="custom-button" @click="checkAvailability">Vérifier la disponibilité</v-btn>
               <p v-if="availabilityErrorMessage" class="message">{{ availabilityErrorMessage }}</p>
             </v-form>
           </v-card-text>
@@ -272,11 +283,12 @@ const reserveTable = async () => {
       </v-col>
       <v-col>
         <v-img
-            class="mt-3 align-center mt-1"
+            class="ml-5 align-center "
+            style="margin-top:10px"
             :src="image"
             contain
-            width="450"
-            height="450"
+            width="520"
+            height="600"
         ></v-img>
       </v-col>
     </v-row>
@@ -285,13 +297,13 @@ const reserveTable = async () => {
     <v-row>
       <v-col cols="12" md="6">
         <div v-if="availability === true">
-          <p class="booking-details">Table available in {{hallName}} on {{ date }} at {{ arrivingTime.slice(0,-3) }} for {{ nrPeople }} people.</p>
+          <p class="booking-details">Table disponible en {{hallName}} le {{ date }} à {{ arrivingTime.slice(0,-3) }} pour {{ nrPeople }} personnes.</p>
           <v-card class="pa-5" elevation="0">
-            <v-card-title class="text-h5">Booking Details</v-card-title>
+            <v-card-title class="text-h5">Détails de la réservation</v-card-title>
             <v-card-text>
               <v-form>
                 <v-text-field
-                    label="Name"
+                    label="Nom"
                     v-model="restaurantReservationData.nameSurname"
                     variant="outlined"
                     required
@@ -303,7 +315,7 @@ const reserveTable = async () => {
                     required
                     :error-messages="v$.email.$errors.map(e => e.$message)"></v-text-field>
                 <v-text-field
-                    label="Phone Number"
+                    label="Nombre de telephone"
                     v-model="restaurantReservationData.phone"
                     variant="outlined"
                     required
@@ -315,11 +327,11 @@ const reserveTable = async () => {
                 <v-btn
                     class="custom-button"
                     @click="reserveTable"
-                    :disabled="isBookingInProgress">Confirm Booking</v-btn>
+                    :disabled="isBookingInProgress">Confirmer la réservation</v-btn>
                 <p v-if="errorMessage" class="message">{{ errorMessage }}</p>
                 <div v-if="successMessage" class="message">
                   <v-snackbar v-model="message" color="success" timeout="3000">
-                    Reservation confirmed successfully!
+                    Réservation confirmée avec succès !
                   </v-snackbar>
                 </div>
               </v-form>
@@ -355,10 +367,10 @@ const reserveTable = async () => {
   padding: 2rem 0;
 }
 .custom-button {
-  min-width: fit-content;
-  padding: 40px 30px;
+  min-width: 200px;
+  padding: 30px 20px;
   color: #b9523b;
-  font-size: 17px;
+  font-size: 14px;
   font-family: 'Nunito', Helvetica, Arial, Lucida, sans-serif;
   font-weight: bold;
   text-transform: uppercase;

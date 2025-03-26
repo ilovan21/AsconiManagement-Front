@@ -15,7 +15,9 @@ const props = defineProps({
 const emit = defineEmits(["update:dialog", "reservations-added"]);
 
 
-const tables = [21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 31, 32, 33, 34];
+let hours = ["10:00", "10:30", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
+  "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30"];
+const tables = [21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 34];
 const reservationData = ref({
   name: '',
   email: '',
@@ -30,6 +32,19 @@ const availabilityData = ref({
   leavingTime: '',
   nrPeople: '1'
 });
+const leavingHours=ref([]);
+const filterHours = (selectedHour) =>{
+  return hours.filter((hour) => {
+    return hour > selectedHour;
+  });
+};
+watch(availabilityData, (newValue) => {
+  console.log(newValue.arrivingTime);
+  if(newValue.arrivingTime) {
+    leavingHours.value = filterHours(newValue.arrivingTime);
+    console.log("leavingHours from watch", leavingHours.value);
+  }
+},{ deep: true });
 
 const checkAvailabilityRules = computed(() => ({
   hall: {required},
@@ -114,8 +129,6 @@ const halls = [
   }
 ]
 
-let hours = ["10:00", "10:30", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
-  "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30"];
 const availability = ref(null);
 const availabilityMessage = ref("");
 const availabilityErrorMessage = ref("");
@@ -375,7 +388,7 @@ const reserveTable = async () => {
                                 density="compact"
                                 v-model="availabilityData.leavingTime"
                                 :error-messages="c$.leavingTime.$errors.map(e => e.$message)"
-                                :items="hours">
+                                :items="leavingHours">
                               >
                             </v-select>
                           </v-col>

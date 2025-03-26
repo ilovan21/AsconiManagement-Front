@@ -43,12 +43,12 @@ const deleteReservation = async (reservation_id) => {
         </v-col>
         <v-divider></v-divider>
         <v-col cols="12" md="6" sm="2">
-          <p>Service</p>
+          <p>Type de service</p>
         </v-col>
         <v-col cols="12" md="6" sm="2">
           <p>{{reservationDetails.serviceName}}</p></v-col>
         <v-col cols="12" md="6">
-          <p>Language</p>
+          <p>Langue</p>
         </v-col>
         <v-col cols="12" md="6">
           <p >
@@ -56,13 +56,13 @@ const deleteReservation = async (reservation_id) => {
           </p>
         </v-col>
         <v-col cols="12" md="6">
-          <p>Number of People</p>
+          <p>Nombre de personnes</p>
         </v-col>
         <v-col cols="12" md="6">
           <p>{{ reservationDetails.nrPeople }}</p>
         </v-col>
         <v-col cols="12" md="6">
-          <p>Hour </p>
+          <p>Heure </p>
         </v-col>
         <v-col cols="12" md="6">
           <p> {{reservationDetails.hour.slice(0,-3)}} </p>
@@ -78,19 +78,19 @@ const deleteReservation = async (reservation_id) => {
     <v-divider></v-divider>
     <v-card-actions>
       <v-row>
-        <v-col>
-          <v-btn text="Delete" variant="plain" @click="deleteReservation(reservationDetails.id)"></v-btn>
-          <v-btn text="Edit" variant="plain"></v-btn>
+        <v-col cols="12">
+          <v-btn text="Supprimer" variant="plain" @click="deleteReservation(reservationDetails.id)"></v-btn>
+          <v-btn text="Modifier" variant="plain"></v-btn>
         </v-col>
-        <v-col offset="7" class="text-end">
-          <v-btn text="Close" variant="plain" @click="emit('update:dialog', false)"></v-btn>
+        <v-col offset="4" class="text-end">
+          <v-btn text="Fermer" variant="plain" @click="emit('update:dialog', false)"></v-btn>
         </v-col>
       </v-row>
     </v-card-actions>
   </v-card>
   <div v-if="deleteMessage" class="message">
     <v-snackbar v-model="deleteMessage" color="success" timeout="3000">
-      Reservation deleted successfully!
+      Réservation supprimée avec succès !
     </v-snackbar>
   </div>
 </template>

@@ -50,7 +50,7 @@ const deleteReservation = async (reservation_id) => {
           <p>Asconi</p>
         </v-col>
           <v-col cols="12" md="6" sm="2">
-            <p>Hall</p>
+            <p>Salle</p>
           </v-col>
           <v-col cols="12" md="6" sm="2">
             <p>{{reservationDetails.hallName}}</p></v-col>
@@ -66,19 +66,19 @@ const deleteReservation = async (reservation_id) => {
             </p>
         </v-col>
         <v-col cols="12" md="6">
-          <p>Number of People</p>
+          <p>Nombre de personnes</p>
         </v-col>
         <v-col cols="12" md="6">
           <p>{{ reservationDetails.nrPeople }}</p>
         </v-col>
         <v-col cols="6" md="4">
-          <p>Hours </p>
+          <p>Heures </p>
         </v-col>
         <v-col cols="6" md="4">
-          <p>From : {{reservationDetails.arrivingTime.slice(0,-3)}} </p>
+          <p>De : {{reservationDetails.arrivingTime.slice(0,-3)}} </p>
         </v-col>
         <v-col cols="6" md="4">
-          <p>Until: {{reservationDetails.leavingTime.slice(0,-3)}}</p>
+          <p> à : {{reservationDetails.leavingTime.slice(0,-3)}}</p>
         </v-col>
         <v-col cols="12" md="6">
           <p>Specifications</p>
@@ -92,18 +92,18 @@ const deleteReservation = async (reservation_id) => {
     <v-card-actions>
       <v-row>
         <v-col>
-          <v-btn text="Delete" variant="plain" @click="deleteReservation(reservationDetails.id)"></v-btn>
-          <v-btn text="Edit" variant="plain"></v-btn>
+          <v-btn text="Supprimer" variant="plain" @click="deleteReservation(reservationDetails.id)"></v-btn>
+          <v-btn text="Modifier" variant="plain"></v-btn>
         </v-col>
         <v-col offset="7" class="text-end">
-          <v-btn text="Close" variant="plain" @click="emit('update:dialog', false)"></v-btn>
+          <v-btn text="Fermer" variant="plain" @click="emit('update:dialog', false)"></v-btn>
         </v-col>
       </v-row>
     </v-card-actions>
   </v-card>
   <div v-if="deleteMessage" class="message">
     <v-snackbar v-model="deleteMessage" color="success" timeout="3000">
-      Reservation deleted successfully!
+      Réservation supprimée avec succès !
     </v-snackbar>
   </div>
 </template>

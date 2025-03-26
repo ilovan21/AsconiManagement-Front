@@ -84,6 +84,14 @@ const halls = [
   }
 ]
 
+const leavingHours=ref([]);
+const filterHours = (selectedHour) =>{
+  console.log("filter hours: ", selectedHour)
+  return hours.filter((hour) => {
+    return hour > selectedHour;
+  });
+};
+
 const filterData = ref({
   date: new Date(),
   hallId: 0,

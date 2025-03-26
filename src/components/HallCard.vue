@@ -12,7 +12,7 @@ defineProps({
   list: {type: Array, required: true},
   additionalInfo: {type: String, default: ''},
   image: {type: String, required: true},
-  buttonText: {type: String, default: 'Reserver la table'},
+  buttonText: {type: String, default: 'Reserver une table'},
 });
 
 function redirectToReservation(hallId, hallName) {

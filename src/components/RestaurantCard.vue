@@ -9,7 +9,7 @@ defineProps({
   image: { type: String, required: true },
   availability:{type:String,required:true},
   contact:{type:String, default:'+373 (0)79988637'},
-  buttonText: { type: String, default: 'Make a reservation' },
+  buttonText: { type: String, default: 'Reserver une table' },
 });
 
 const router = useRouter();
