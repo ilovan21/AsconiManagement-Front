@@ -67,7 +67,7 @@ const login = async () => {
 
     await new Promise((resolve) => setTimeout(resolve, 100));
     if (response.data.role === "ROLE_ADMIN") {
-      router.push("/overview/restaurant");
+      router.push("/listing/restaurant");
     } else if (response.data.role === "ROLE_HOSTESS") {
       router.push("/list");
     } else if (response.data.role === "ROLE_PERSONNEL") {
@@ -107,15 +107,15 @@ const register = async () => {
     console.error("Registration error: ", error);
   }
 };
+const registerForum=ref(false);
 </script>
-
 <template>
   <ClientNavbar />
   <v-container fluid class="auth-container">
     <v-row justify="center">
       <v-col cols="12" md="4">
         <v-card class="pa-5" elevation="3">
-          <v-card-title class="text-h5">Login</v-card-title>
+          <v-card-title class="text-h5">Connexion</v-card-title>
           <v-card-text>
             <v-form>
               <v-text-field
@@ -126,7 +126,7 @@ const register = async () => {
                   :error-messages="vLogin.email.$errors.map(e => e.$message)"
               ></v-text-field>
               <v-text-field
-                  label="Password"
+                  label="Parole"
                   v-model="loginData.password"
                   variant="outlined"
                   :type="showPassword ? 'text' : 'password'"
@@ -138,16 +138,16 @@ const register = async () => {
               <div v-if="errorLoginMessage" class="errorMessage">
                 <p>{{errorLoginMessage}}</p>
               </div>
-              <v-checkbox label="Remember me" v-model="loginData.remember"></v-checkbox>
-              <v-btn class="custom-button" @click="login">Log In</v-btn>
+              <v-checkbox label="Mémoriser mes informations" v-model="loginData.remember"></v-checkbox>
+              <v-btn class="custom-button" @click="login">Se connecter</v-btn>
               <p class="mt-2 text-caption text-start">
-                <a href="#">Lost your password?</a>
+                <a href="#">Pas de compte?</a>
               </p>
             </v-form>
           </v-card-text>
         </v-card>
       </v-col>
-
+<div v-if="registerForum">
       <v-col cols="12" md="4">
         <v-card class="pa-5" elevation="3">
           <v-card-title class="text-h5">Register</v-card-title>
@@ -189,6 +189,7 @@ const register = async () => {
           </v-card-text>
         </v-card>
       </v-col>
+</div>
     </v-row>
   </v-container>
   <ClientFooter/>

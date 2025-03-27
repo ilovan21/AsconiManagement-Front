@@ -130,7 +130,7 @@ const handleDeletedReservation = (reservation_id) =>{
           <v-col cols="4">
             <v-sheet class="pa-2 mt-2 mb-2">
               <v-date-input
-                  label="Select a date"
+                  label="Selectionnez une date"
                   class="date-input"
                   :density="'compact'"
                   variant="outlined"
@@ -151,7 +151,7 @@ const handleDeletedReservation = (reservation_id) =>{
                   :items="services"
                   item-title="name"
                   item-value="id"
-                  label="Filter by service">
+                  label="Filtrer par service">
               </v-select>
             </v-sheet>
           </v-col>
@@ -165,7 +165,7 @@ const handleDeletedReservation = (reservation_id) =>{
                     variant="outlined"
                     density="compact"
                     hide-details="auto"
-                    label="Find by name"
+                    label="Trouver par nom"
                 ></v-text-field>
             </v-sheet>
           </v-col>

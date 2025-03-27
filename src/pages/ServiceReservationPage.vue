@@ -11,6 +11,7 @@ import {required, email, minLength} from "@vuelidate/validators";
 import {watch, toRaw} from "vue";
 import {VDateInput} from 'vuetify/labs/VDateInput';
 import useVuelidate from "@vuelidate/core";
+import router from "@/router/index.js";
 
 const route = useRoute();
 const reservationId = route.params.id;
@@ -203,20 +204,7 @@ const reserveService = async () => {
     });
     successMessage.value = "Réservation effectuée avec succès !";
     message.value = true;
-    setTimeout(() => {
-      serviceReservationData.value = {
-        nameSurname: "",
-        email: "",
-        phone: "",
-        language: "",
-        specifications: ""
-      };
-      serviceAvailabilityData.value = {
-        date: null,
-        hour: "",
-        nrPeople: "1"
-      };
-    }, 1500);
+    setTimeout(() => { router.push("/experiences")}, 1000);
 
   } catch (error) {
     console.error("error:", error);
@@ -283,7 +271,7 @@ const reserveService = async () => {
           <p class="booking-details">Place disponible le {{ date }} à {{ hour.slice(0, -3) }} pour {{ nrPeople }}
             people.</p>
           <v-card class="pa-5" elevation="0">
-            <v-card-title class="text-h5">Détails de la réservation</v-card-title>
+            <v-card-title class="text-h5">Informations personnelles</v-card-title>
             <v-card-text>
               <v-form>
                 <v-text-field
@@ -299,15 +287,15 @@ const reserveService = async () => {
                     required
                     :error-messages="v$.email.$errors.map(e => e.$message)"></v-text-field>
                 <v-text-field
-                    label="Phone Number"
+                    label="Nombre de téléphone"
                     v-model="serviceReservationData.phone"
                     variant="outlined"
                     required
                     :error-messages="v$.phone.$errors.map(e => e.$message)"></v-text-field>
                 <v-select
                     v-model="serviceReservationData.language"
-                    label="Language"
-                    :items="['Romanian', 'French', 'English']"
+                    label="Langue"
+                    :items="['Roumain', 'Français', 'Anglais']"
                     :error-messages="c$.hour.$errors.map(e => e.$message)"
                     variant="outlined"
                 ></v-select>
@@ -317,7 +305,7 @@ const reserveService = async () => {
                 <p v-if="errorMessage" class="message">{{ errorMessage }}</p>
                 <div v-if="successMessage" class="message">
                   <v-snackbar v-model="message" color="success" timeout="1500">
-                    Reservation confirmed successfully!
+                    Réservation effectuée avec succès !
                   </v-snackbar>
                 </div>
               </v-form>

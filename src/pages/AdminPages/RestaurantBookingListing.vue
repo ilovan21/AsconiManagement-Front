@@ -186,7 +186,7 @@ const handleReservationDeleted = (reservation_id) => {
           <v-col cols="4">
             <v-sheet class="pa-2 mt-2 mb-2">
               <v-date-input
-                  label="Select a date"
+                  label="Selectionnez une date"
                   class="date-input"
                   :density="'compact'"
                   variant="outlined"
@@ -207,7 +207,7 @@ const handleReservationDeleted = (reservation_id) => {
                   :items="halls"
                   item-title="name"
                   item-value="id"
-                  label="Filter by hall">
+                  label="Filtrer par salle">
                 <template v-slot:item="{ props: itemProps, item }">
                   <v-list-item v-bind="itemProps" :subtitle="item.raw.restaurant"></v-list-item>
                 </template>
@@ -224,7 +224,7 @@ const handleReservationDeleted = (reservation_id) => {
                   variant="outlined"
                   density="compact"
                   hide-details="auto"
-                  label="Find by name"
+                  label="Trouver par nom"
               ></v-text-field>
             </v-sheet>
           </v-col>

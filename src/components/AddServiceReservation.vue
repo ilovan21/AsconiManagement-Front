@@ -50,7 +50,7 @@ const handleNext = () =>{
 }
 const c$ = useVuelidate(checkAvailabilityRules, availabilityData);
 const v$ = useVuelidate(rules, reservationData);
-const languages = [ 'Roumain', 'Francais', 'Anglais'];
+const languages = [ 'Roumain', 'Français', 'Anglais'];
 const services = [
   {
     id: 1,

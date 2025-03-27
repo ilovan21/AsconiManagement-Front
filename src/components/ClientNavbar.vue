@@ -2,14 +2,14 @@
 import { ref } from "vue";
 import romania from '@/assets/ro.png';
 import logo from '@/assets/images.png'
-import england from '@/assets/en.png';
+import french from '@/assets/download.png';
 
 const imageOptions = [
   { label: "Romania", src: romania },
-  { label: "England", src: england }
+  { label: "French", src: french }
 ];
 
-const selectedImage = ref(romania);
+const selectedImage = ref(french);
 
 const links = ref([
   { name: 'ACCUEIL', url: '/' },
