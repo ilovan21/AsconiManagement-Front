@@ -179,7 +179,7 @@ const checkAvailability = async () => {
     }
   } catch (error) {
     availability.value = false;
-    availabilityErrorMessage.value = "Erreur";
+    availabilityErrorMessage.value = "Aucune table disponible pour les détails spécifiés.";
   }
 };
 const successMessage=ref(null);

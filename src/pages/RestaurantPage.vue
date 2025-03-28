@@ -21,7 +21,6 @@ import {hallList, hallList2} from "@/constants/hallList.js";
       title="Asconi Restaurant"
       description="Dans le but de mettre en valeur les traditions les plus authentiques de la Moldavie,
        le premier restaurant de la cave, ASCONI, vous offre le véritable héritage, les saveurs et les arômes de la Moldavie.
-        Nous avons étudié les recettes de nos familles et compilé nos préférées,
         vous apportant des saveurs authentiques, préparées avec des ingrédients frais et saupoudrées d'amour!"
       additionalInfo="Le restaurant ASCONI comprend plusieurs salles et terrasses :"
       :list="hallList"

@@ -1,15 +1,14 @@
 <script setup>
-import { ref } from "vue";
+import {computed, ref, shallowRef} from "vue";
 import romania from '@/assets/ro.png';
 import logo from '@/assets/images.png'
 import french from '@/assets/download.png';
-
-const imageOptions = [
-  { label: "Romania", src: romania },
-  { label: "French", src: french }
-];
-
-const selectedImage = ref(french);
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { faUserLock } from '@fortawesome/free-solid-svg-icons';
+import {library} from "@fortawesome/fontawesome-svg-core";
+import AddReservation from "@/components/AddReservation.vue";
+import RegisterForm from "@/components/RegisterForm.vue";
+library.add(faUserLock);
 
 const links = ref([
   { name: 'ACCUEIL', url: '/' },
@@ -20,9 +19,16 @@ const links = ref([
   { name: 'ÉVÉNEMENTS', url: '/events' },
   { name: 'GALLERIE', url: '/gallery' },
   { name: 'RSE', url: '/csr' },
-  { name: 'VINS', url: '/gallery' },
-  { name: 'CONNECT', url: '/auth' }
+  { name: 'VINS', url: '/gallery' }
 ]);
+const dialogStyles = computed(() => ({
+  position: "fixed",
+  left: "130px",
+  top: "50%",
+  transform: "translateY(-50%)"
+}));
+const formDialog = shallowRef(false);
+const position = { X: 130}
 </script>
 
 <template>
@@ -50,16 +56,21 @@ const links = ref([
       </v-tab>
     </v-tabs>
     <v-spacer></v-spacer>
-
-    <v-img
-        class="custom-image"
-        :src="selectedImage"
-        :width="45"
-        :height="21"
-    />
+    <v-dialog
+        v-model="formDialog"
+        max-width="800px"
+        max-height="600px"
+        :style="dialogStyles"
+    >
+      <template v-slot:activator="{ props: activatorProps }">
+        <font-awesome-icon v-bind="activatorProps" class="icon" :icon="faUserLock" />
+      </template>
+      <RegisterForm :dialog="formDialog"
+                      @update:dialog="formDialog = $event"/>
+      <v-overlay :value="formDialog" :opacity="0.6" class="custom-overlay"></v-overlay>
+    </v-dialog>
   </v-app-bar>
 </template>
-
 <style scoped>
 .custom-image img {
   object-fit: contain;
@@ -75,5 +86,13 @@ const links = ref([
   text-decoration: none;
   background: none;
   font-weight: normal;
+}
+.icon{
+  width: 20px;
+  height: 20px;
+  padding-right: 20px;
+}
+.custom-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
 }
 </style>

@@ -107,91 +107,10 @@ const register = async () => {
     console.error("Registration error: ", error);
   }
 };
-const registerForum=ref(false);
 </script>
 <template>
   <ClientNavbar />
-  <v-container fluid class="auth-container">
-    <v-row justify="center">
-      <v-col cols="12" md="4">
-        <v-card class="pa-5" elevation="3">
-          <v-card-title class="text-h5">Connexion</v-card-title>
-          <v-card-text>
-            <v-form>
-              <v-text-field
-                  label="Email"
-                  v-model="loginData.email"
-                  variant="outlined"
-                  required
-                  :error-messages="vLogin.email.$errors.map(e => e.$message)"
-              ></v-text-field>
-              <v-text-field
-                  label="Parole"
-                  v-model="loginData.password"
-                  variant="outlined"
-                  :type="showPassword ? 'text' : 'password'"
-                  :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-                  @click:append-inner="showPassword = !showPassword"
-                  required
-                  :error-messages="vLogin.password.$errors.map(e => e.$message)"
-              ></v-text-field>
-              <div v-if="errorLoginMessage" class="errorMessage">
-                <p>{{errorLoginMessage}}</p>
-              </div>
-              <v-checkbox label="Mémoriser mes informations" v-model="loginData.remember"></v-checkbox>
-              <v-btn class="custom-button" @click="login">Se connecter</v-btn>
-              <p class="mt-2 text-caption text-start">
-                <a href="#">Pas de compte?</a>
-              </p>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-col>
-<div v-if="registerForum">
-      <v-col cols="12" md="4">
-        <v-card class="pa-5" elevation="3">
-          <v-card-title class="text-h5">Register</v-card-title>
-          <v-card-text>
-            <v-form>
-              <v-text-field
-                  label="Name Surname"
-                  v-model="registerData.nameSurname"
-                  variant="outlined"
-                  required
-                  :error-messages="v$.nameSurname.$errors.map(e => e.$message)"
-              ></v-text-field>
-              <v-text-field
-                  label="Email"
-                  v-model="registerData.email"
-                  variant="outlined"
-                  required
-                  :error-messages="v$.email.$errors.map(e => e.$message)"
-              ></v-text-field>
-              <v-text-field
-                  label="Phone"
-                  v-model="registerData.phone"
-                  variant="outlined"
-                  required
-                  :error-messages="v$.phone.$errors.map(e => e.$message)"
-              ></v-text-field>
-              <v-text-field
-                  label="Password"
-                  v-model="registerData.password"
-                  variant="outlined"
-                  required
-                  :type="showPassword ? 'text' : 'password'"
-                  :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-                  @click:append-inner="showPassword = !showPassword"
-                  :error-messages="v$.password.$errors.map(e => e.$message)"
-              ></v-text-field>
-              <v-btn class="custom-button" @click="register">Register</v-btn>
-            </v-form>
-          </v-card-text>
-        </v-card>
-      </v-col>
-</div>
-    </v-row>
-  </v-container>
+
   <ClientFooter/>
 </template>
 
