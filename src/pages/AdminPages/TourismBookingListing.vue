@@ -197,7 +197,7 @@ const handleDeletedReservation = (reservation_id) =>{
         </div>
         <div v-if="responseStatus">
           <v-row class="list-row">
-            <v-col v-for="(item, index) in reservations" :key="item.id" class="list-col">
+            <v-col v-for="(item) in reservations" :key="item.id" class="list-col">
               <v-dialog
                   v-model="dialog"
                   max-width="800"

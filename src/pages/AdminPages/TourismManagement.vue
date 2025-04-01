@@ -1,14 +1,14 @@
 <script setup>
 import StaffNavbar from "@/components/StaffNavbar.vue";
 import axios from "axios";
-import {onMounted, ref, shallowRef} from "vue";
+import {nextTick, onMounted, ref, shallowRef} from "vue";
 import ServiceDetailsCard from "@/components/ServiceDetailsCard.vue";
 import EditServiceDetailsCard from "@/components/EditServiceDetailsCard.vue";
 
 onMounted(() => {
   getAllServices();
 });
-
+const selectedService= ref(null);
 const services = ref([]);
 const getAllServices = async() => {
   const token=localStorage.getItem('user_token');
@@ -28,20 +28,26 @@ const detailsDialog= shallowRef(false);
 const dialog = shallowRef(false);
 const position = { X: 150, Y: 0}
 
-const serviceCache = new Map();
-
+const openDialog = async (serviceId) => {
+  await getServiceDetails(serviceId);
+  await nextTick();
+  selectedService.value = serviceId;
+  detailsDialog.value = true;
+}
 const getServiceDetails = async (serviceId) => {
-  if (serviceCache.has(serviceId)) {
-    serviceDetails.value = serviceCache.get(serviceId);
-    return;
-  }
   try {
     const token = localStorage.getItem('user_token');
     const response = await axios.get(`http://localhost:8080/api/admin/service/${serviceId}`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
-    serviceCache.set(serviceId, response.data);
-    serviceDetails.value = response.data;
+    serviceDetails.value.id= response.data.id;
+    serviceDetails.value.name= response.data.name;
+    serviceDetails.value.duration= response.data.duration;
+    serviceDetails.value.capacity=response.data.capacity;
+    serviceDetails.value.about= "La visite comprend l’exploration de la zone de production, où les " +
+        "processus de fermentation, de maturation et de conservation du vin sont expliqués en" +
+        " détail. Elle se termine par la découverte des étapes finales, de la mise en bouteille à " +
+        "l’étiquetage, révélant tout le savoir-faire de notre domaine.\n";
   } catch (error) {
     console.error('Error fetching service details:', error);
   }
@@ -51,7 +57,8 @@ const serviceDetails = ref({
   id:"",
   name:"",
   duration:"",
-  capacity:""
+  capacity:"",
+  about: ""
 });
 </script>
 
@@ -71,35 +78,36 @@ const serviceDetails = ref({
         <v-row class="list-row">
     <v-row  v-for="(item) in services" :key="item.id" class="list-col">
     <v-col cols="11" style="padding: 5px; margin: 0px;">
-          <v-card class="reservation-card">
+      <v-dialog
+          v-model="detailsDialog"
+          max-width="800"
+          :style="{ top: position.Y + 'px', left: position.X + 'px', position: 'absolute' }"
+      >
+        <template v-slot:activator="{ props: activatorProps }">
+          <v-card link class="reservation-card" v-bind="activatorProps" @click="openDialog(item.id)">
             <v-card-title class="card-components d-flex align-center">
               <span class="card-text text-left" style="flex: 1;"> {{item.name}}</span>
               <span class="category-hall text-center" style="flex:1;" > max {{item.capacity}} p.</span>
               <span class="category-hall text-center" style="flex: 2;text-align: center;">{{item.duration}} min.</span>
-              <v-dialog
-                  v-model="detailsDialog"
-                  max-width="800"
-                  :style="{ top: position.Y + 'px', left: position.X + 'px', position: 'absolute' }"
-              >
-                <template v-slot:activator="{ props: activatorProps }">
-              <span class="view-more text-end" v-bind="activatorProps" @click="getServiceDetails(item.id)"> view more</span>
-                </template>
-                  <ServiceDetailsCard
-                      :dialog="detailsDialog"
-                      :serviceDetails="serviceDetails"
-                      @update:dialog="dialog = $event"/>
-              </v-dialog>
+              <span class="view-more text-end"> view more</span>
             </v-card-title>
           </v-card>
+                </template>
+                  <ServiceDetailsCard
+                      v-if="selectedService === item.id"
+                      :dialog="detailsDialog"
+                      :serviceDetails="serviceDetails"
+                      @update:dialog="detailsDialog = $event"/>
+              </v-dialog>
     </v-col>
     </v-row>
   </v-row>
         <v-row no-gutters>
-          <p class="res-section">Service responsibles</p>
+          <p class="res-section">Service responsables</p>
         </v-row>
         <v-row no-gutters style="padding-left: 20px; padding-bottom:5px">
           <v-col cols="3">Service</v-col>
-          <v-col style="margin-left: 73px">Responsibles</v-col>
+          <v-col style="margin-left: 73px">Responsables</v-col>
         </v-row>
         <v-row class="list-row">
           <v-row  v-for="(item) in services" :key="item.id" class="list-col">
@@ -107,7 +115,7 @@ const serviceDetails = ref({
               <v-card class="reservation-card">
                 <v-card-title class="card-components d-flex align-center">
                   <span class="card-text text-left" style="flex: 1;"> {{item.name}}</span>
-                  <span class="view-more text-center" style="flex:1; padding-left:180px;" > Ilovan Maria, Marin Petrescu, Daniela Savciuc, Mirela BBB</span>
+                  <span class="view-more text-center" style="flex:1; padding-left:180px;" > Ilovan Maria, Marin Petrescu, Daniela Savciuc, Mirela Dogari</span>
                   <span class="category-hall text-center" style="flex: 2;text-align: center;">  </span>
                   <span class="view-more text-end ">Modifier</span>
                 </v-card-title>
@@ -119,8 +127,6 @@ const serviceDetails = ref({
     </v-main>
   </v-app>
 </template>
-
-
 <style scoped>
 .res-section{
   padding-left:20px;
