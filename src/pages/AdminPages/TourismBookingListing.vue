@@ -57,7 +57,6 @@ const getReservations = async () => {
   console.log(dateToSend);
   try {
     const token=localStorage.getItem('user_token');
-    console.log("Token: ",token);
     const response = await axios.get(`http://localhost:8080/api/service/view/filtered?date=${dateToSend}&serviceId=${filterData.value.serviceId}&nameSurname=${filterData.value.nameSurname}`,
         {headers: {
             'Authorization': `Bearer ${token}`
