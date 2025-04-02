@@ -103,10 +103,8 @@ watch(restaurantAvailabilityData, (newValue) => {
   }
 },{ deep: true });
 
-
 const v$ = useVuelidate(rules, restaurantReservationData);
 const c$=useVuelidate(checkAvailabilityRules,restaurantAvailabilityData);
-
 const availability = ref(null);
 const availabilityMessage = ref("");
 const availabilityErrorMessage = ref("");

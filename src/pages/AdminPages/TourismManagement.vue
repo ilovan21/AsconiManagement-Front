@@ -8,6 +8,9 @@ import EditServiceDetailsCard from "@/components/EditServiceDetailsCard.vue";
 onMounted(() => {
   getAllServices();
 });
+const handleEditedService = () =>{
+  getAllServices();
+};
 const selectedService= ref(null);
 const services = ref([]);
 const getAllServices = async() => {
@@ -97,6 +100,7 @@ const serviceDetails = ref({
                       v-if="selectedService === item.id"
                       :dialog="detailsDialog"
                       :serviceDetails="serviceDetails"
+                      @edited-service="handleEditedService"
                       @update:dialog="detailsDialog = $event"/>
               </v-dialog>
     </v-col>
