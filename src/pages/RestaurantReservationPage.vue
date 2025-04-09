@@ -237,7 +237,7 @@ const reserveTable = async () => {
                     variant="outlined"
                     v-model="restaurantAvailabilityData.date"
                     :min="minDate"
-                :allowed-dates="isAllowedDate"
+                    :allowed-dates="isAllowedDate"
                     :error-messages="c$.date.$errors.map(e => e.$message)"></v-date-input>
               <p class="form-text">Sélectionnez l'heure d'arrivée</p>
               <v-select

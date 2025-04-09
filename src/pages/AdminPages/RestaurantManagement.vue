@@ -1,9 +1,7 @@
 <script setup>
 import StaffNavbar from "@/components/StaffNavbar.vue";
 import axios from "axios";
-import {nextTick, onMounted, ref, shallowRef, watch} from "vue";
-import ServiceDetailsCard from "@/components/ServiceDetailsCard.vue";
-import EditServiceDetailsCard from "@/components/EditServiceDetailsCard.vue";
+import {onMounted, ref, watch} from "vue";
 import HallDetailsCard from "@/components/HallDetailsCard.vue";
 
 onMounted(() => {
@@ -15,8 +13,9 @@ const handleEditedService = () =>{
 const selectedHall= ref(null);
 const asconiHalls = ref([]);
 const solHalls=ref([]);
+
+const token = localStorage.getItem('user_token');
 const getAllHalls = async() => {
-  const token = localStorage.getItem('user_token');
   try {
     const response = await Promise.all([
       axios.get(`http://localhost:8080/api/admin/hall/by-restaurant/1`, {
@@ -38,10 +37,9 @@ const getAllHalls = async() => {
 };
 
 const hallTables = ref({});
+const disabledDates = ref([]);
 const getHallTables = async (hallId) => {
-  const token = localStorage.getItem('user_token');
   if (hallTables.value[hallId]) return;
-  console.log(hallId);
   try {
     const response = await axios.get(`http://localhost:8080/api/admin/restaurant/tables/by-hall/${hallId}`, {
       headers: {
@@ -54,13 +52,31 @@ const getHallTables = async (hallId) => {
     console.error('Error fetching the tables:', error);
   }
 };
+const getUnavailableDates = async (hallId) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/api/unavailable-dates/hall?hallId=${hallId}`);
+    if (Array.isArray(response.data)) {
+      disabledDates.value = response.data.map(date => {
+        const dateObj = new Date(date);
+        return dateObj.toISOString().split('T')[0];
+      });
+      console.log(disabledDates.value);
+    } else {
+      console.error('Invalid data format:', response.data);
+    }
+  } catch (error) {
+    console.error('Error fetching disabled dates:', error);
+  }
+};
 const expandedPanel = ref(null);
 watch(expandedPanel, (newVal) => {
   if (newVal !== null && solHalls.value[newVal]) {
     const hall = solHalls.value[newVal];
     getHallTables(hall.id);
+    getUnavailableDates(hall.id);
   }
 });
+
 </script>
 
 <template>
@@ -81,8 +97,9 @@ watch(expandedPanel, (newVal) => {
               <HallDetailsCard
                   v-if="hallTables[item.id]"
                   :tables="hallTables[item.id]"
+                  :disabledDates="disabledDates[item.id]"
               />
-              <div v-else>Se încarcă mesele...</div>
+              <div v-else>Loading...</div>
             </v-expansion-panel-text>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -101,6 +118,7 @@ watch(expandedPanel, (newVal) => {
               <HallDetailsCard
                   v-if="hallTables[item.id]"
                   :tables="hallTables[item.id]"
+                  :disabledDates="disabledDates"
               />
               <div v-else>Se încarcă mesele...</div>
             </v-expansion-panel-text>
@@ -111,53 +129,13 @@ watch(expandedPanel, (newVal) => {
   </v-app>
 </template>
 <style scoped>
-.res-section{
-  padding-left:20px;
-  font-size: 20px;
-  padding-top:40px;
-  padding-bottom: 20px;
-}
 .category-manage{
   font-size: 20px;
   padding-top:20px;
   padding-bottom: 20px;
 }
-.view-more{
-  font-size: 13px;
-  font-weight: 400;
-}
 .container{
   margin-left: 0px;
-}
-.reservation-card{
-  background-color: rgba(189, 185, 185, 0.4);
-  border-color: rgb(158, 31, 31);
-  height: 40px;
-  width:1150px;
-}
-.list-row{
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: fit-content;
-}
-.list-col{
-  padding-left:15px;
-  width:1300px;
-}
-.category-hall{
-  font-size: 13px;
-  font-weight: 300;
-}
-.card-text{
-  font-size:15px;
-}
-.card-components{
-  display:flex;
-  justify-content: space-around;
-  align-items: center;
-  padding-bottom: 10px;
-  padding-left: 25px;
-  padding-right: 25px;
 }
 </style>
 
