@@ -19,7 +19,7 @@ const isAllowedDate = (dateToCheck) => {
 const hallDetails = ref({
   name:"",
   capacity:"120",
-  style:"Traditional, with rustic styles",
+  style:"Traditionnel, avec des styles rustiques",
   area:" 120m2"
 });
 const isEditing = ref(false);

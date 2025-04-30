@@ -1,12 +1,12 @@
 <script setup>
 import {onMounted, ref} from 'vue'
 import { useRoute } from 'vue-router';
-import StaffNavbar from '@/components/StaffNavbar.vue'
+import StaffNavbar from '@/components/pageElements/StaffNavbar.vue'
 import { VDateInput } from 'vuetify/labs/VDateInput';
 import axios from "axios";
 import { watch, shallowRef } from 'vue';
-import ReservationServiceDetailsCard from "@/components/ReservationServiceDetailsCard.vue";
-import AddServiceReservation from "@/components/AddServiceReservation.vue";
+import ReservationServiceDetailsCard from "@/components/restaurant/reservation/ReservationServiceDetailsCard.vue";
+import AddServiceReservation from "@/components/tourism/reservation/AddServiceReservation.vue";
 const reservations=ref([]);
 function formatForRequest(date) {
   if (date) {

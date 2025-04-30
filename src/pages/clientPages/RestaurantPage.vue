@@ -1,10 +1,10 @@
 <script setup>
 import restaurant from "@/assets/restaurant.jpg"
-import ImageComponent from "@/components/ImageComponent.vue";
-import ClientNavbar from "@/components/ClientNavbar.vue";
-import ClientFooter from "@/components/ClientFooter.vue";
-import RestaurantCard from "@/components/RestaurantCard.vue";
-import TraditionalElement from "@/components/TraditionalElement.vue";
+import ImageComponent from "@/components/pageElements/ImageComponent.vue";
+import ClientNavbar from "@/components/pageElements/ClientNavbar.vue";
+import ClientFooter from "@/components/pageElements/ClientFooter.vue";
+import RestaurantCard from "@/components/restaurant/hall/RestaurantCard.vue";
+import TraditionalElement from "@/components/pageElements/TraditionalElement.vue";
 import {hallList, hallList2} from "@/constants/hallList.js";
 </script>
 

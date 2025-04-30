@@ -3,7 +3,7 @@ import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { logout } from "@/services/authService.js";
 import logo from "@/assets/images.png";
-import { useUserStore } from '@/stores/userStore'
+import { useUserStore } from '@/stores/userStore.js'
 
 const userStore = useUserStore();
 const route = useRoute();

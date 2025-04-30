@@ -1,11 +1,11 @@
 <script setup>
 import { useRoute } from 'vue-router';
-import ClientNavbar from "@/components/ClientNavbar.vue";
-import ClientFooter from "@/components/ClientFooter.vue";
+import ClientNavbar from "@/components/pageElements/ClientNavbar.vue";
+import ClientFooter from "@/components/pageElements/ClientFooter.vue";
 import {computed, onMounted, ref, toRaw} from "vue";
 import axios from "axios";
 import casa from "@/assets/casa.jpg";
-import ImageComponent from "@/components/ImageComponent.vue";
+import ImageComponent from "@/components/pageElements/ImageComponent.vue";
 import image from "@/assets/as.jpg";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
@@ -134,7 +134,7 @@ watch(restaurantAvailabilityData, () => {
 watch(() => restaurantAvailabilityData.value.nrPeople, (newValue) => {
   const maxPeople = 20;
   if (newValue > maxPeople) {
-    errorMessage.value = `Le nombre maximum autorisé est ${maxPeople}`;
+    errorMessage.value = `Pour plus de 20 personnes, veuillez contacter directement la cave`;
   } else if (newValue < 1) {
     errorMessage.value = "Veuillez saisir au moins une personne.";
   } else {

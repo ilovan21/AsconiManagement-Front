@@ -1,10 +1,10 @@
 <script setup>
 import restaurant from "@/assets/restaurant.jpg"
-import ImageComponent from "@/components/ImageComponent.vue";
-import ClientNavbar from "@/components/ClientNavbar.vue";
-import ClientFooter from "@/components/ClientFooter.vue";
-import HallCard from "@/components/HallCard.vue";
-import TraditionalElement from "@/components/TraditionalElement.vue";
+import ImageComponent from "@/components/pageElements/ImageComponent.vue";
+import ClientNavbar from "@/components/pageElements/ClientNavbar.vue";
+import ClientFooter from "@/components/pageElements/ClientFooter.vue";
+import HallCard from "@/components/restaurant/hall/HallCard.vue";
+import TraditionalElement from "@/components/pageElements/TraditionalElement.vue";
 import {onMounted, watch} from "vue";
 import {useRoute} from "vue-router";
 

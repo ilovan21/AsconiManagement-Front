@@ -1,14 +1,14 @@
 <script setup>
 import {onMounted, ref, shallowRef} from 'vue'
-import StaffNavbar from '@/components/StaffNavbar.vue'
+import StaffNavbar from '@/components/pageElements/StaffNavbar.vue'
 import { VDateInput } from 'vuetify/labs/VDateInput';
 import axios from "axios";
 const currentDate = new Date();
 const currentFormatedDate = currentDate.toISOString().split('T')[0];
 import { watch } from 'vue';
-import ReservationRestaurantDetailsCard from "@/components/ReservationRestaurantDetailsCard.vue";
-import AddReservation from "@/components/AddReservation.vue";
-import AddServiceReservation from "@/components/AddServiceReservation.vue";
+import ReservationRestaurantDetailsCard from "@/components/restaurant/reservation/ReservationRestaurantDetailsCard.vue";
+import AddReservation from "@/components/restaurant/reservation/AddReservation.vue";
+import AddServiceReservation from "@/components/tourism/reservation/AddServiceReservation.vue";
 const reservations=ref([]);
 function formatForRequest(date) {
   if (date) {
@@ -24,7 +24,7 @@ const addDialog = shallowRef(false)
 const halls = [
   {
     id: 0,
-    name: 'All',
+    name: 'Toutes',
     restaurant: ' ',
   },
   {

@@ -1,11 +1,11 @@
 <script setup>
 import experiences from "@/assets/experiences.jpg"
 import element from "@/assets/traditional-element.png"
-import ImageComponent from "@/components/ImageComponent.vue";
-import ServiceCard from '@/components/ServiceCard.vue'
-import ClientNavbar from "@/components/ClientNavbar.vue";
-import ClientFooter from "@/components/ClientFooter.vue";
-import TraditionalElement from "@/components/TraditionalElement.vue";
+import ImageComponent from "@/components/pageElements/ImageComponent.vue";
+import ServiceCard from '@/components/tourism/service/ServiceCard.vue'
+import ClientNavbar from "@/components/pageElements/ClientNavbar.vue";
+import ClientFooter from "@/components/pageElements/ClientFooter.vue";
+import TraditionalElement from "@/components/pageElements/TraditionalElement.vue";
 
 </script>
 

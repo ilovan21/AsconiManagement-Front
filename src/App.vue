@@ -1,7 +1,7 @@
 <script setup>
 import {RouterView} from 'vue-router'
-import ClientNavbar from "@/components/ClientNavbar.vue";
-import ClientFooter from "@/components/ClientFooter.vue"
+import ClientNavbar from "@/components/pageElements/ClientNavbar.vue";
+import ClientFooter from "@/components/pageElements/ClientFooter.vue"
 </script>
 
 <template>

@@ -1,8 +1,8 @@
 <script setup>
-import StaffNavbar from "@/components/StaffNavbar.vue";
+import StaffNavbar from "@/components/pageElements/StaffNavbar.vue";
 import axios from "axios";
 import {onMounted, ref, watch} from "vue";
-import HallDetailsCard from "@/components/HallDetailsCard.vue";
+import HallDetailsCard from "@/components/restaurant/hall/HallDetailsCard.vue";
 
 onMounted(() => {
   getAllHalls();

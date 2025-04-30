@@ -14,6 +14,8 @@ library.add(faPhone)
 library.add(faUserLock);
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
+import CoreuiVue from '@coreui/vue'
+import '@coreui/coreui/dist/css/coreui.min.css'
 import {createVuetify} from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -32,5 +34,6 @@ app.use(router)
 const pinia = createPinia()
 app.use(pinia)
 app.use(vuetify)
+app.use(CoreuiVue)
 
 app.mount('#app')

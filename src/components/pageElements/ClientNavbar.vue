@@ -6,8 +6,8 @@ import french from '@/assets/download.png';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import { faUserLock } from '@fortawesome/free-solid-svg-icons';
 import {library} from "@fortawesome/fontawesome-svg-core";
-import AddReservation from "@/components/AddReservation.vue";
-import RegisterForm from "@/components/RegisterForm.vue";
+import AddReservation from "@/components/restaurant/reservation/AddReservation.vue";
+import RegisterForm from "@/components/pageElements/RegisterForm.vue";
 library.add(faUserLock);
 
 const links = ref([
@@ -25,7 +25,7 @@ const dialogStyles = computed(() => ({
   position: "fixed",
   left: "130px",
   top: "50%",
-  transform: "translateY(-50%)"
+  transform: "translateY(-90%)"
 }));
 const formDialog = shallowRef(false);
 const position = { X: 130}
@@ -60,14 +60,14 @@ const position = { X: 130}
         v-model="formDialog"
         max-width="800px"
         max-height="600px"
-        :style="dialogStyles"
+        scrim="rgba(0, 0, 0, 0.9)"
     >
       <template v-slot:activator="{ props: activatorProps }">
         <font-awesome-icon v-bind="activatorProps" class="icon" :icon="faUserLock" />
       </template>
       <RegisterForm :dialog="formDialog"
+                    style="margin-left: 75px"
                       @update:dialog="formDialog = $event"/>
-      <v-overlay :value="formDialog" :opacity="0.6" class="custom-overlay"></v-overlay>
     </v-dialog>
   </v-app-bar>
 </template>
@@ -91,8 +91,5 @@ const position = { X: 130}
   width: 20px;
   height: 20px;
   padding-right: 20px;
-}
-.custom-overlay {
-  background-color: rgba(0, 0, 0, 0.6);
 }
 </style>

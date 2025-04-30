@@ -1,11 +1,11 @@
 <script setup>
 import {useRoute} from 'vue-router';
-import ClientNavbar from "@/components/ClientNavbar.vue";
-import ClientFooter from "@/components/ClientFooter.vue";
+import ClientNavbar from "@/components/pageElements/ClientNavbar.vue";
+import ClientFooter from "@/components/pageElements/ClientFooter.vue";
 import {computed, onMounted, ref} from "vue";
 import axios from "axios";
 import experiences from "@/assets/experiences.jpg";
-import ImageComponent from "@/components/ImageComponent.vue";
+import ImageComponent from "@/components/pageElements/ImageComponent.vue";
 import image from "@/assets/tasting.jpg";
 import {required, email, minLength} from "@vuelidate/validators";
 import {watch, toRaw} from "vue";

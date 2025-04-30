@@ -4,8 +4,8 @@ import axios from "axios";
 import router from "@/router/index.js";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
-import ClientNavbar from "@/components/ClientNavbar.vue";
-import ClientFooter from "@/components/ClientFooter.vue";
+import ClientNavbar from "@/components/pageElements/ClientNavbar.vue";
+import ClientFooter from "@/components/pageElements/ClientFooter.vue";
 import { useUserStore } from '@/stores/userStore.js';
 
 const userStore = useUserStore();

@@ -1,16 +1,18 @@
 <script setup>
-import StaffNavbar from "@/components/StaffNavbar.vue";
+import StaffNavbar from "@/components/pageElements/StaffNavbar.vue";
 import axios from "axios";
 import {nextTick, onMounted, ref, shallowRef} from "vue";
-import ServiceDetailsCard from "@/components/ServiceDetailsCard.vue";
-import EditServiceDetailsCard from "@/components/EditServiceDetailsCard.vue";
+import ServiceDetailsCard from "@/components/tourism/service/ServiceDetailsCard.vue";
+import EditServiceDetailsCard from "@/components/tourism/service/EditServiceDetailsCard.vue";
 
 onMounted(() => {
   getAllServices();
 });
+
 const handleEditedService = () =>{
   getAllServices();
 };
+
 const selectedService= ref(null);
 const services = ref([]);
 const getAllServices = async() => {
@@ -27,7 +29,9 @@ const getAllServices = async() => {
   console.error('Error fetching the reservations:', error);
   }
 };
-const detailsDialog= shallowRef(false);
+
+const detailsDialog = ref({});
+
 const dialog = shallowRef(false);
 const position = { X: 150, Y: 0}
 
@@ -37,6 +41,7 @@ const openDialog = async (serviceId) => {
   selectedService.value = serviceId;
   detailsDialog.value = true;
 }
+
 const getServiceDetails = async (serviceId) => {
   try {
     const token = localStorage.getItem('user_token');
@@ -63,6 +68,7 @@ const serviceDetails = ref({
   capacity:"",
   about: ""
 });
+
 </script>
 
 <template>
@@ -82,7 +88,7 @@ const serviceDetails = ref({
     <v-row  v-for="(item) in services" :key="item.id" class="list-col">
     <v-col cols="11" style="padding: 5px; margin: 0px;">
       <v-dialog
-          v-model="detailsDialog"
+          v-model="detailsDialog[item.id]"
           max-width="800"
           :style="{ top: position.Y + 'px', left: position.X + 'px', position: 'absolute' }"
       >

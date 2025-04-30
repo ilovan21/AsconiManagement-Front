@@ -1,28 +1,26 @@
 import {createRouter, createWebHistory} from "vue-router";
-import HomePage from "@/pages/HomePage.vue";
-import Reservation from "@/components/Reservation.vue";
-import AuthPage from "@/pages/AuthPage.vue";
-import GuestHousePage from "@/pages/GuestHousePage.vue";
-import AdminPage from "@/pages/AdminPages/AdminPage.vue";
-import ListReservations from "@/components/ListReservations.vue";
-import ExperiencePage from "@/pages/ExperiencePage.vue";
-import ServiceReservationPage from "@/pages/ServiceReservationPage.vue";
-import RestaurantPage from "@/pages/RestaurantPage.vue";
-import HallsPage from "@/pages/HallsPage.vue";
-import RestaurantReservationPage from "@/pages/RestaurantReservationPage.vue";
-import AdminListPage from "@/pages/AdminListPage.vue";
-import RestaurantManagement from "@/pages/AdminPages/RestaurantManagement.vue";
-import RestaurantBookingListing from "@/pages/AdminPages/RestaurantBookingListing.vue";
-import TourismBookingListing from "@/pages/AdminPages/TourismBookingListing.vue";
-import TourismOverview from "@/pages/AdminPages/TourismOverview.vue";
-import TourismManagement from "@/pages/AdminPages/TourismManagement.vue";
-import EventsPage from "@/pages/EventsPage.vue";
-import GalleryPage from "@/pages/GalleryPage.vue";
-import CSRPage from "@/pages/CSRPage.vue";
+import HomePage from "@/pages/clientPages/HomePage.vue";
+import AuthPage from "@/pages/clientPages/AuthPage.vue";
+import GuestHousePage from "@/pages/clientPages/GuestHousePage.vue";
+import AdminPage from "@/pages/adminPages/AdminPage.vue";
+import ListReservations from "@/components/pageElements/ListReservations.vue";
+import ExperiencePage from "@/pages/clientPages/ExperiencePage.vue";
+import ServiceReservationPage from "@/pages/clientPages/ServiceReservationPage.vue";
+import RestaurantPage from "@/pages/clientPages/RestaurantPage.vue";
+import HallsPage from "@/pages/clientPages/HallsPage.vue";
+import RestaurantReservationPage from "@/pages/clientPages/RestaurantReservationPage.vue";
+import AdminListPage from "@/pages/adminPages/AdminListPage.vue";
+import RestaurantManagement from "@/pages/adminPages/RestaurantManagement.vue";
+import RestaurantBookingListing from "@/pages/adminPages/RestaurantBookingListing.vue";
+import TourismBookingListing from "@/pages/adminPages/TourismBookingListing.vue";
+import TourismOverview from "@/pages/adminPages/TourismOverview.vue";
+import TourismManagement from "@/pages/adminPages/TourismManagement.vue";
+import EventsPage from "@/pages/clientPages/EventsPage.vue";
+import GalleryPage from "@/pages/clientPages/GalleryPage.vue";
+import CSRPage from "@/pages/clientPages/CSRPage.vue";
 
 const routes = [
     {path: "/", name: "home", component: HomePage},
-    {path: "/reservation", name: "reservation", component: Reservation},
     {path: "/auth", name: "auth", component: AuthPage},
     {path: "/experiences", name: "Experiences", component: ExperiencePage},
     {path: "/restaurant", name: "Restaurant", component: RestaurantPage},

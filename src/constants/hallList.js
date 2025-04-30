@@ -43,6 +43,17 @@ export const hallList = [
         image: "src/assets/casadevara.jpeg"
     },
     {
+        hash: "terasa-gaini",
+        id: 5,
+        title: "Terasa de la Găini",
+        list: [
+            {text: 'Capacité: 40 pax'},
+            {text: 'Surface: 60 m2'},
+            {text: 'Style: traditionnel, couvert des vignes'}
+        ],
+        image: "src/assets/terasagaini.jpeg"
+    },
+    {
         hash: "terasa-cuptor",
         id: 6,
         title: "Terasa de la Cuptor",
@@ -53,17 +64,7 @@ export const hallList = [
         ],
         image: "src/assets/terasacuptor.jpeg"
     },
-    {
-        hash: "terasa-gaini",
-        id: 5,
-        title: "Terasa de la Găini",
-        list: [
-            {text: 'Capacité: 40 pax'},
-            {text: 'Surface: 60 m2'},
-            {text: 'Style: traditionnel, couvert des vignes'}
-        ],
-        image: "src/assets/terasagaini.jpeg"
-    }
+
 ];
 
 export const hallList2 = [

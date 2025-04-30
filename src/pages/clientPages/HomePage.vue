@@ -1,11 +1,11 @@
 <script setup>
-import ClientNavbar from "@/components/ClientNavbar.vue";
-import ClientFooter from "@/components/ClientFooter.vue";
-import ImageComponent from "@/components/ImageComponent.vue";
+import ClientNavbar from "@/components/pageElements/ClientNavbar.vue";
+import ClientFooter from "@/components/pageElements/ClientFooter.vue";
+import ImageComponent from "@/components/pageElements/ImageComponent.vue";
 import homeImage from "@/assets/asconi.jpg";
-import TraditionalElement from "@/components/TraditionalElement.vue";
-import ServiceCard from "@/components/ServiceCard.vue";
-import HomePageElement from "@/components/HomePageElement.vue";
+import TraditionalElement from "@/components/pageElements/TraditionalElement.vue";
+import ServiceCard from "@/components/tourism/service/ServiceCard.vue";
+import HomePageElement from "@/components/pageElements/HomePageElement.vue";
 
 </script>
 
