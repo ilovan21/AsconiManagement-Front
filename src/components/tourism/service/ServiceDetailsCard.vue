@@ -158,7 +158,7 @@ watch(unavailableDate, () => {
 </script>
 
 <template>
-  <v-card title="Service Details">
+  <v-card title="Informations du Service">
     <v-card-text>
       <v-row dense>
         <v-divider></v-divider>
@@ -166,11 +166,11 @@ watch(unavailableDate, () => {
           <p v-if="!isEditing" style="padding-bottom: 20px; padding-top: 20px; font-size: 20px">
             {{ serviceDetails.name }}
           </p>
-          <v-text-field style="padding-top:30px" variant="plain" density="compact" v-else v-model="editedService.name" label="Service Name"></v-text-field>
+          <v-text-field style="padding-top:30px" variant="plain" density="compact" v-else v-model="editedService.name" label="Nom du service"></v-text-field>
 
           <v-row>
             <v-col cols="6">
-              <p class="category">Capacity</p>
+              <p class="category">Capacité</p>
             </v-col>
             <v-col cols="6">
               <p v-if="!isEditing">max. {{ serviceDetails.capacity }} personnes</p>
@@ -180,7 +180,7 @@ watch(unavailableDate, () => {
 
           <v-row>
             <v-col cols="6">
-              <p class="category">Duration</p>
+              <p class="category">Durée </p>
             </v-col>
             <v-col>
               <p v-if="!isEditing">{{ serviceDetails.duration }} min.</p>
@@ -189,7 +189,7 @@ watch(unavailableDate, () => {
           </v-row>
           <v-row dense>
             <v-col cols="12">
-              <p class="category" style="padding-top: 5px">About</p>
+              <p class="category" style="padding-top: 5px">À propos</p>
             </v-col>
             <v-col cols="12">
               <p v-if="!isEditing">{{ serviceDetails.about }}</p>
@@ -203,7 +203,7 @@ watch(unavailableDate, () => {
           </v-row>
           <v-row dense>
             <v-col cols="3">
-              <p class="category" style="padding-top: 15px">Hours</p>
+              <p class="category" style="padding-top: 15px">Heures</p>
             </v-col>
             <v-col cols="8">
               <v-chip-group multiple v-if="!isEditing">
@@ -221,9 +221,9 @@ watch(unavailableDate, () => {
                 >
                   {{ hour }}
                 </v-chip>
-                <v-text-field density="compact" variant="plain" v-model="newHour" label="Add Hour" @keyup.enter="addHour"></v-text-field>
+                <v-text-field density="compact" variant="plain" v-model="newHour" label="Ajouter heure" @keyup.enter="addHour"></v-text-field>
                 <v-row>
-                  <v-col cols="6"><v-btn @click="addHour">Add Hour</v-btn>
+                  <v-col cols="6"><v-btn @click="addHour">Ajouter</v-btn>
                   </v-col>
                   <p v-if="hourMessage">{{hourMessage}}</p>
                 </v-row>
@@ -235,7 +235,7 @@ watch(unavailableDate, () => {
         <v-col cols="12" md="6">
           <v-container>
             <v-row justify="space-around">
-              <p style="font-weight: 500">Unavailable Dates</p>
+              <p style="font-weight: 500">Dates indisponibles</p>
               <v-date-picker v-if="!isEditing"
                   class="no-header"
                   v-model="date"
@@ -247,7 +247,7 @@ watch(unavailableDate, () => {
                                :allowed-dates="isAllowedDate"
                                ></v-date-picker>
                 <v-text-field class="pb-1" v-model="unavailableDate" variant="outlined" density="compact" label="Selected Date">{{ formatForRequest(unavailableDate) }}</v-text-field>
-                <v-btn @click="addUnavailableDate">Add</v-btn>
+                <v-btn @click="addUnavailableDate">Ajouter</v-btn>
               </div>
             </v-row>
           </v-container>

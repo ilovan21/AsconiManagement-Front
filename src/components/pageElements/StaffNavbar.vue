@@ -83,7 +83,7 @@ function handleLogout() {
     <v-card :height="50" dense elevation="0" class="navbar-sections">
       <v-tabs v-model="tab" align-tabs="center" bg-color="white" color="red-darken-3">
         <v-tab value="restaurant" @click="changeSection('restaurant')">Restaurant</v-tab>
-        <v-tab value="tourism" @click="changeSection('tourism')">Tourism</v-tab>
+        <v-tab value="tourism" @click="changeSection('tourism')">Tourisme</v-tab>
       </v-tabs>
     </v-card>
 </template>

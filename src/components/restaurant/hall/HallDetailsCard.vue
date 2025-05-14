@@ -92,11 +92,11 @@ const unavailableDate=ref();
       <v-container class="container">
         <v-container style="border-color: #b9523b">
         <v-row style="margin-left:2px;">
-          <p style="font-weight: 400">Detailles</p>
+          <p style="font-weight: 400">Informations</p>
         </v-row>
         <v-row class="mt-4">
           <v-col class="12">
-            <p>Total Capacity</p>
+            <p>Capacité totale</p>
           </v-col>
           <v-col class="12">
             <p v-if="!isEditing">{{ hallDetails.capacity }} </p>
@@ -114,7 +114,7 @@ const unavailableDate=ref();
         </v-row>
           <v-row >
             <v-col class="12">
-              <p>Area</p>
+              <p>Surface</p>
             </v-col>
             <v-col class="12">
               <p v-if="!isEditing">{{ hallDetails.area }} </p>
@@ -146,7 +146,7 @@ const unavailableDate=ref();
             </template>
           </v-tooltip>
         </v-col>
-          <v-card  v-if="isEditing" class="card add">Add</v-card>
+          <v-card  v-if="isEditing" class="card add">Ajouter</v-card>
         </v-row>
       </v-container>
     </v-col>
@@ -162,7 +162,7 @@ const unavailableDate=ref();
               v-model="unavailableDate"
               :allowed-dates="isAllowedDate"
           ></v-date-picker>
-          <v-text-field  v-model="unavailableDate" variant="outlined" density="compact" label="Selected Date">{{ formatForRequest(unavailableDate) }}</v-text-field>
+          <v-text-field  v-model="unavailableDate" variant="outlined" density="compact" label="Date sélectionnée">{{ formatForRequest(unavailableDate) }}</v-text-field>
           <v-btn @click="addUnavailableDate">Add</v-btn>
         </div>
       </v-row>
@@ -187,8 +187,7 @@ const unavailableDate=ref();
 .card{
   padding-top: 13px;
   display: flex;
-  align:center;
-  justify-content: center;
+  align-items: center;
   margin:10px;
   background-color: #9e1f1f;
   width:100px;

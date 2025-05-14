@@ -289,7 +289,7 @@ const reserveTable = async () => {
             <v-card-text>
               <v-form>
                 <v-text-field
-                    label="Nom"
+                    label="Name"
                     v-model="restaurantReservationData.nameSurname"
                     variant="outlined"
                     required

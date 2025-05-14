@@ -120,7 +120,7 @@ watch(expandedPanel, (newVal) => {
                   :tables="hallTables[item.id]"
                   :disabledDates="disabledDates"
               />
-              <div v-else>Se încarcă mesele...</div>
+              <div v-else>Loading...</div>
             </v-expansion-panel-text>
           </v-expansion-panel>
         </v-expansion-panels>

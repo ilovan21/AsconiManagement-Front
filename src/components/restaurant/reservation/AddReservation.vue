@@ -415,7 +415,7 @@ const reserveTable = async () => {
                             </v-select>
                           </v-col>
 
-                          <v-col cols="6" class="pl-2 ma-0 d-flex align-center ">
+                          <v-col cols="6" class="pl-2 ma-0 pt-3 d-flex align-center ">
                             <v-btn elevation="0" style="height: 40px; background-color: rgba(200,194,192,0.56)"
                                    @click="checkAvailability">Obtenir table
                             </v-btn>

@@ -1,5 +1,4 @@
 <script setup>
-import Chart from 'primevue/chart';
 import StaffNavbar from '@/components/pageElements/StaffNavbar.vue'
 import Charts from "@/components/tourism/charts/Charts.vue";
 import {CCol, CRow} from "@coreui/vue/dist/esm/components/grid/index.js";
@@ -10,9 +9,9 @@ import {CWidgetStatsB} from "@coreui/vue/dist/esm/components/widgets/index.js";
 <template>
   <StaffNavbar/>
   <div>
-    <h4 class="mb-3 ml-3">Admin Overview</h4>
+    <h4 class="mb-3 ml-3">Tableau de bord</h4>
     <CRow class="custom-row">
-      <CCol :sm="4" :lg="3">
+      <CCol :sm="5" :lg="3">
         <CWidgetStatsB
             class="mb-4 ml-2 custom-card"
             :progress="{ color: 'success', value: 80 }"
@@ -65,17 +64,15 @@ import {CWidgetStatsB} from "@coreui/vue/dist/esm/components/widgets/index.js";
 
 <style scoped>
 .custom-card {
-
   height: 130px;
-  margin-bottom: 15px;
 }
 .custom-row {
-  margin-left: -8px;
+  margin-left: -5px;
   margin-right: -8px;
 }
 :deep(.col) {
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 </style>
 

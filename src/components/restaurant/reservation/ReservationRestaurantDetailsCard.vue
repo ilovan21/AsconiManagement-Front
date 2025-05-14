@@ -31,7 +31,7 @@ const deleteReservation = async (reservation_id) => {
 </script>
 
 <template>
-  <v-card title="Reservation Details">
+  <v-card title="Détails de la réservation">
     <v-card-text>
       <v-row dense>
         <v-divider></v-divider>
