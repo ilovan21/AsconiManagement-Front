@@ -179,12 +179,20 @@ const checkAvailability = async () => {
     availabilityErrorMessage.value = "Pas de places disponibles.";
   }
 };
+
+const gdprAccepted = ref(false);
+const gdprError = ref(false);
 const reserveService = async () => {
   const isValid = await v$.value.$validate();
   if (!isValid) {
     console.error("Validation failed!");
     return;
   }
+  if (!gdprAccepted.value) {
+    gdprError.value = true;
+    return;
+  }
+  gdprError.value = false;
   try {
     const requestReservation = {
       touristicServiceId: reservationId,
@@ -275,7 +283,7 @@ const reserveService = async () => {
             <v-card-text>
               <v-form>
                 <v-text-field
-                    label="Name"
+                    label="Nom"
                     v-model="serviceReservationData.nameSurname"
                     variant="outlined"
                     required
@@ -301,6 +309,16 @@ const reserveService = async () => {
                 ></v-select>
                 <v-text-field label="Specifications" v-model="serviceReservationData.specifications"
                               variant="outlined"></v-text-field>
+                <v-checkbox v-model="gdprAccepted">
+                  <template #label>
+                  <span class="mt-3"> J’ai lu et j’accepte les <a href="/termes">conditions générales </a> et la
+                  <a href="/confidentialite"> politique de confidentialite </a> .
+    </span>
+                  </template>
+                </v-checkbox>
+                <div v-if="gdprError" class="mb-2">
+                  Vous devez accepter les conditions pour continuer.
+                </div>
                 <v-btn class="custom-button" @click="reserveService">Confirmer Reservation</v-btn>
                 <p v-if="errorMessage" class="message">{{ errorMessage }}</p>
                 <div v-if="successMessage" class="message">
@@ -317,13 +335,11 @@ const reserveService = async () => {
   </v-container>
   <ClientFooter/>
 </template>
-
 <style scoped>
 .image-service {
   margin-left: 60px;
   margin-top: 25px;
 }
-
 .text-title {
   margin-left: 20px;
   font-weight: 200;

@@ -73,9 +73,9 @@ function handleLogout() {
       </v-list>
 
       <template v-slot:append>
-        <div class="pa-2">
+        <div class="pa-2 elevation-0" >
           <v-btn class="custom-button" block @click="handleLogout">
-            Logout
+            Se déconnecter
           </v-btn>
         </div>
       </template>
@@ -102,7 +102,6 @@ function handleLogout() {
 .custom-button {
   border-color: #b9523b;
   background-color: white;
-  border-radius: 10px;
 }
 .b-navigation-drawer {
   border-radius: 6px;

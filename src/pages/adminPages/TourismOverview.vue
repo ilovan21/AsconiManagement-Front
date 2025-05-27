@@ -14,9 +14,9 @@ import {CWidgetStatsB} from "@coreui/vue/dist/esm/components/widgets/index.js";
       <CCol :sm="5" :lg="3">
         <CWidgetStatsB
             class="mb-4 ml-2 custom-card"
-            :progress="{ color: 'success', value: 80 }"
+            :progress="{ color: 'success', value: 40 }"
             title="Réservations aujourd’hui"
-            value="45"
+            value="12"
         >
           <template #text>Services</template>
         </CWidgetStatsB>
@@ -27,9 +27,9 @@ import {CWidgetStatsB} from "@coreui/vue/dist/esm/components/widgets/index.js";
             class="mb-4 custom-card"
             color="info"
             inverse
-            :progress="{ value: 65 }"
+            :progress="{ value: 12 }"
             title="Tour"
-            value="128"
+            value="7"
             text="Service plus réservés"
         />
       </CCol>
@@ -38,9 +38,9 @@ import {CWidgetStatsB} from "@coreui/vue/dist/esm/components/widgets/index.js";
         <CWidgetStatsB
             class="mb-4 custom-card"
             color="warning"
-            :progress="{ value: 40 }"
+            :progress="{ value: 12 }"
             title="Capacité de réservation"
-            value="12%"
+            value="7%"
         >
           <template #text>Toutes les services</template>
         </CWidgetStatsB>
@@ -53,7 +53,7 @@ import {CWidgetStatsB} from "@coreui/vue/dist/esm/components/widgets/index.js";
             inverse
             :progress="{ value: 90 }"
             title="Employés actifs"
-            value="8"
+            value="12"
             text="sur l'échange actuel"
         />
       </CCol>

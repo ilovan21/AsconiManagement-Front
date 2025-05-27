@@ -183,13 +183,19 @@ const checkAvailability = async () => {
 const successMessage=ref(null);
 const message=ref(null);
 
-
+const gdprAccepted = ref(false);
+const gdprError=ref(false);
 const reserveTable = async () => {
   const isValid = await v$.value.$validate();
   if (!isValid) {
     console.error("Validation failed!");
     return;
   }
+  if (!gdprAccepted.value) {
+    gdprError.value = true;
+    return;
+  }
+  gdprError.value = false;
   if (isBookingInProgress.value) return;
   isBookingInProgress.value = true;
   try {
@@ -289,7 +295,7 @@ const reserveTable = async () => {
             <v-card-text>
               <v-form>
                 <v-text-field
-                    label="Name"
+                    label="Nom"
                     v-model="restaurantReservationData.nameSurname"
                     variant="outlined"
                     required
@@ -310,6 +316,16 @@ const reserveTable = async () => {
                     label="Specifications"
                     v-model="restaurantReservationData.specifications"
                     variant="outlined"></v-text-field>
+                <v-checkbox v-model="gdprAccepted">
+                  <template #label>
+                  <span class="mt-3"> J’ai lu et j’accepte les <a href="/termes">conditions générales </a> et la
+                  <a href="/confidentialite"> politique de confidentialite </a> .
+    </span>
+                  </template>
+                </v-checkbox>
+                <div v-if="gdprError" class="mb-2">
+                  Vous devez accepter les conditions pour continuer.
+                </div>
                 <v-btn
                     class="custom-button"
                     @click="reserveTable"

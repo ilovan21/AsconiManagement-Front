@@ -54,7 +54,6 @@ const filterData = ref({
 const responseStatus = ref(false);
 const getReservations = async () => {
   const dateToSend = formatForRequest(filterData.value.date);
-  console.log(dateToSend);
   try {
     const token=localStorage.getItem('user_token');
     const response = await axios.get(`http://localhost:8080/api/service/view/filtered?date=${dateToSend}&serviceId=${filterData.value.serviceId}&nameSurname=${filterData.value.nameSurname}`,
